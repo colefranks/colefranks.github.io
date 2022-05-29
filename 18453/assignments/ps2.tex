@@ -1,0 +1,40 @@
+\documentclass[12pt]{article} \input{../newmac}
+\usepackage{graphicx,../lp,amsmath} 
+
+
+\begin{document}
+
+
+
+\handout{Problem set 2}{Feb 21, 2019}
+\medskip
+This problem set is due at 11:00 pm on Mar 18, 2021. Instructions same as the first pset; some key points: collaboration is encouraged but you {\bf must} write up
+your answers in your own words. You are required to list and identify clearly all sources and collaborators except instructors, TA or lecture notes.  %Your grade will not count unless you submit this information.
+
+To submit your homework, upload it in PDF format using the Gradescope tool in Canvas before the deadline.
+%1-4/1-5, 1-6, 1-7?, 1-8?, 1-10, 1-11, 1-15, 1-18, 1-20*
+Unless otherwise indicated, the problems are graded out of 4 points. The graduate questions are worth 2 bonus points each for undergraduates.
+
+
+\begin{enumerate}
+\item
+Exercise 2-2 from the notes on (non-bipartite) matchings. 
+\item
+Exercise 2-6 from the notes on (non-bipartite) matchings.
+
+\item (For undergrads; optional for grads) Exercise 2-7, Parts 1 and 2 (Part 3 optional). You may want to look at the new and improved pdf file on non-bipartite matching. \textbf{Hint:}\footnote{Try to show that if $B$ is a blossom with respect to a maximum matching in a factor critical graph $G$, $G/B$ is also factor critical.}
+
+\item
+Consider $S=\{(1,0,1),(0,1,1),(1,1,2),(0,2,2)\}\subseteq \R^3\}.$ Describe lin$(S)$, aff$(S)$, cone$(S)$ and conv$(S)$ (as a polyhedron, in terms of the linear equalities/inequalities). \textbf{Hint: }\footnote{ For example, conv$(\{(0,1), (1,0)\}) = \{x: x_1 + x_2 = 1, x_1 \geq 0, x_2 \geq 0\}$. It's ok if you do this in an ad-hoc manner using pictures etc, as long as your final inequalities are correct.}
+
+\item
+%Let $G=(V,E)$ be a bipartite graph having a perfect matching. Consider the set ${\cal M}\subseteq \R^E$ of the incidence vectors of all perfect matchings of $G$. We have seen a description of conv$({\cal M})$ as a system of linear inequalities/equalities. Give a description (and a proof) of the conic hull, cone$({\cal M})$, as the solution set of a system of linear inequalities and equalities.
+Suppose you are given a description of a polyhedron $P$ as the solution set to a system of linear inequalities/equalities. Describe a procedure for finding a description of the conic hull, cone$(P)$, as the solution set of a system of linear inequalities and equalities. \textbf{Hint:} \footnote{ You may use that for a polyhedron $P$,  cone$(P) = \{x: \exists \lambda > 0\text{ such that } \lambda x \in P\} \cup \{0\}$. Introduce a new variable and use Fourier-Motzkin elimination to get rid of it.}
+
+\item
+For graduate students, exercise 2-5. 
+
+\end{enumerate}
+
+
+\end{document}

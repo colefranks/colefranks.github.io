@@ -1,0 +1,1130 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx,../lp,amsmath}
+\newcommand{\aff}{\operatorname{aff}}
+\newcommand{\lin}{\operatorname{lin}}
+\newcommand{\cone}{\operatorname{cone}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\rank}{\operatorname{rank}}
+
+\input{../newmac}
+
+\setcounter{chapnum}{3}
+
+
+\begin{document}
+
+\handout{\arabic{chapnum}. Linear Programming and Polyhedral Combinatorics}{\today}
+
+Summary of what was seen in the introductory lectures on
+linear programming and polyhedral combinatorics. The book "A first course on combinatorial optimization" by Lee is a good second supplementary source.
+
+\begin{definition} A halfspace in $\R^n$ is a set of the form $\{x\in
+  \R^n: a^Tx\leq b\}$ for some vector $a\in \R^n$ and $b\in \R$.
+\end{definition}
+
+\begin{definition} A polyhedron is the intersection of finitely many
+  halfspaces: $P=\{x\in \R^n: Ax \leq b\}$. 
+\end{definition}
+
+\begin{definition} \label{def1} A polytope is a bounded polyhedron. 
+\end{definition}
+
+\begin{definition}
+If $P$ is a polyhedron in $\R^n$, the projection $P_k\subseteq
+\R^{n-1}$ of $P$ is defined as \\
+$\{y=(x_1,x_2,\cdots,x_{k-1},x_{k+1},\cdots, x_n): x\in P$ for some
+$x_k\in\R\}$.
+\end{definition}
+This is a special case of a projection onto a linear space (here, we
+consider only coordinate projection). By repeatedly projecting, we can
+eliminate any subset of coordinates.  
+
+We claim that $P_k$ is also a polyhedron and this can be proved by
+giving an explicit description of $P_k$ in terms of linear
+inequalities. For this purpose, one uses {\it Fourier-Motzkin elimination}. 
+Let $P=\{x: Ax\leq b\}$ and let
+\begin{itemize}
+\item
+$S_+=\{i: a_{ik} >0\}$,
+\item
+$S_-=\{i: a_{ik}<0\}$,
+\item
+$S_0=\{i:a_{ik}=0\}$.
+\end{itemize}
+%
+Clearly, any element in $P_k$ must satisfy the inequality $a_i^Tx\leq
+b_i$ for all $i\in S_0$ (these inequalities do not involve $x_k$).
+Similarly, we can take a linear combination of an inequality in $S_+$
+and one in $S_-$ to eliminate the coefficient of $x_k$. This shows
+that the inequalities:
+%
+\begin{equation} \label{proj}
+a_{ik} \left(\sum_j a_{lj}x_j \right) -a_{lk} \left(\sum_j a_{ij}
+x_j\right) \leq a_{ik} b_l - a_{lk} b_i 
+\end{equation}
+for $i\in S_+$ and $l\in S_-$ are satisfied by all elements of
+$P_k$. Conversely, for any vector
+$(x_1,x_2,\cdots,x_{k-1},x_{k+1},\cdots, x_n)$ satisfying (\ref{proj})
+for all $i\in S_+$ and $l\in S_-$ and also 
+\begin{equation} \label{proj2}
+a_i^Tx\leq b_i \mbox{ for all } i\in S_0
+\end{equation}
+ we can find a value of $x_k$ such that the resulting $x$ belongs to
+ $P$ (by looking at the bounds on $x_k$ that each constraint imposes,
+ and showing that the largest lower bound is smaller than the smallest
+ upper bound). This shows that $P_k$ is described by (\ref{proj}) and
+ (\ref{proj2}), and therefore is a polyhedron. 
+
+\begin{definition}
+Given points $a^{(1)}, a^{(2)}, \cdots, a^{(k)}\in \R^n$, 
+\begin{itemize}
+\item
+a {\bf linear} combination is  $\sum_i \lambda_i a^{(i)}$ where
+$\lambda_i\in \R$ for all $i$,
+\item
+an {\bf affine} combination is  $\sum_i \lambda_i a^{(i)}$ where
+$\lambda_i\in \R$ and $\sum_i \lambda_i=1$,
+\item
+a {\bf conical} combination is  $\sum_i \lambda_i a^{(i)}$ where
+$\lambda_i\geq 0$ for all $i$,
+\item
+a {\bf convex} combination is  $\sum_i \lambda_i a^{(i)}$ where
+$\lambda_i \geq 0$ for all $i$ and $\sum_i \lambda_i=1$.
+\end{itemize}
+\end{definition}
+
+The set of all linear combinations of elements of $S$ is called the
+linear hull of $S$ and denoted by $\lin(S)$. Similarly, by replacing
+{\it linear} by {\it affine, conical or convex},  we define the
+affine hull, $\aff(S)$, the conic hull, $\cone(S)$ and the convex hull,
+$\conv(S)$.  We can give an equivalent definition of a polytope.
+
+\begin{definition} \label{def2}
+A polytope is the convex hull of a finite set of points.
+\end{definition}
+
+The fact that Definition \ref{def2} implies Definition \ref{def1} can be seen as follows. Take $P$ be the convex hull of a finite set $\{a^{(k)}\}_{k\in[m]}$ of points. To show that $P$ can be described as the intersection of a finite number of halfspaces, we can apply 
+Fourier-Motzkin elimination repeatedly on
+$$x-\sum_k \lambda_k a^{(k)} = 0$$
+$$  \sum_k \lambda_k=1$$
+$$\lambda_k\geq 0$$
+to eliminate all variables $\lambda_k$ and keep only the variables
+$x$. Furthermore, $P$ is bounded since for any $x\in P$, we have 
+$$||x||=||\sum_k \lambda_k a^{(k)}|| \leq \sum_k \lambda_k ||a^{(k)}|| \leq \max_k ||a^{(k)}||.$$ The converse  will be proved later in these notes.
+
+\section{Solvability of
+  System of Inequalities}
+
+In linear algebra, we saw that, for $A\in \R^{m\times n}$, $b\in \R^m$,
+$Ax=b$ has no solution $x\in \R^n$ if and only if
+there exists a $y\in \R^m$ with $A^Ty=0$ and $b^Ty\neq 0$ (in 18.06
+notation/terminology, this is because the column
+space $C(A)$ is orthogonal to the left null space $N(A^T)$).
+
+One can state a similar {\it Theorem of the Alternatives} for systems
+of linear inequalities. 
+
+\begin{theorem}[Theorem of the Alternatives]
+$Ax \leq b$ has no solution $x\in \R^n$ if and only if there exists
+  $y\in \R^m$ such that $y\geq 0$, $A^Ty=0$ and $b^Ty<0$.
+\end{theorem}
+
+One can easily show that both systems indeed cannot have a solution
+since otherwise $0>b^Ty=y^Tb \geq y^TAx =0^Tx=0$. For the other
+direction, one takes the insolvable system $Ax\leq b$ and use 
+Fourier-Motzkin elimination repeatedly to eliminate all variables and
+thus obtain an inequality of the form $0^Tx\leq c$ where $c<0$. In the
+process one has derived a vector $y$ with the desired properties (as
+Fourier-Motzkin only performs nonnegative combinations of linear
+inequalities). 
+
+Another version of the above theorem is Farkas' lemma:
+\begin{lemma}
+$Ax=b$, $x\geq 0$ has no solution if and only if there exists $y$ with
+  $A^Ty\geq 0$ and $b^Ty<0$.
+\end{lemma}
+
+\begin{exercises}
+\item
+Prove Farkas' lemma from the Theorem of the Alternatives.
+\end{exercises} 
+We may also interpret Farkas' lemma in the context of separating hyperplanes.
+\begin{theorem}
+Suppose $K, L$ are convex bodies in $\mathbb{R}^n$ and suppose one of them is compact. There is a hyperplane separating $K$ and $L$; namely there is $\alpha \in \mathbb{R}^n$ and $b \in \mathbb{R}$ such that $\alpha^T x < b$ for all $x \in K$ and $\alpha^T x > b$ for all $x \in L$. 
+\end{theorem}
+
+\noindent \textbf{Exercise 3-1.1} Prove the forward implication in Farkas' lemma using the separating hyperplane theorem. 
+\section{Linear Programming Basics}
+
+A linear program (LP) is the problem of minimizing or maximizing a linear
+function over a polyhedron:
+\lps
+  &  &  & \mbox{Max} &  c^Tx\\
+  & \lefteqn{\mbox{subject to:}} \\
+  &  (P)      &   &  &   Ax \leq b,
+\elps
+where $A\in \R^{m\times n}$, $b\in \R^m$, $c\in \R^n$ and the
+variables $x$ are in $\R^n$. 
+Any $x$ satisfying $Ax\leq b$ is said to be {\it feasible}. If no $x$
+satisfies $Ax\leq b$, we say that the linear program is {\it
+infeasible}, and its optimum value is $-\infty$ (as we are maximizing
+over an empty set). If the objective function value of the linear
+program can be made arbitrarily large, we say that the linear program
+is {\it unbounded} and its optimum value is $+\infty$; otherwise it is
+{\it bounded}. If it is neither infeasible, nor unbounded, then its
+optimum value is finite.
+
+Other equivalent forms involve equalities as well, or nonnegative
+constraints $x\geq 0$. One version that is often considered when
+discussing algorithms for linear programming (especially the simplex
+algorithm) is $\min\{c^Tx: Ax=b, x\geq 0\}$. 
+
+Another linear program, {\it dual} to $(P)$, plays a crucial role:
+\lps
+  &  &  & \mbox{Min} &  b^Ty\\
+  & \lefteqn{\mbox{subject to:}} \\
+  &  (D)      &   &  &   A^Ty=c \\
+ & & & & y\geq 0. 
+\elps
+$(D)$ is the dual and $(P)$ is the {\it primal}. The terminology for
+the dual is similar. If $(D)$ has no feasible solution, it is said to
+be {\it infeasible} and its optimum value is $+\infty$ (as we are
+minimizing over an empty set). If $(D)$ is unbounded (i.e. its value
+can be made arbitrarily negative) then its optimum value is
+$-\infty$. 
+
+The primal and dual spaces should not be confused. If $A$ is $m \times
+n$ then we have $n$ primal variables and $m$ dual variables.
+
+{\bf Weak duality} is clear: For any feasible solutions $x$ and $y$ to
+$(P)$ and $(D)$, we have that $c^Tx\leq b^Ty$. Indeed,
+$c^Tx=y^TAx\leq b^Ty$. The dual was precisely built to get an upper
+bound on the value of any primal solution. For example, to get the inequality
+$y^TAx \leq b^Ty$, we need that $y\geq 0$ since we know that $Ax\leq
+b$. In particular, weak duality implies that if the primal is
+unbounded then the dual must be infeasible. 
+
+{\bf Strong duality} is the most important result in linear
+programming; it says that we can prove the optimality of a primal
+solution $x$ by exhibiting an optimum dual solution $y$. 
+\begin{theorem}[Strong Duality]
+Assume that $(P)$ and $(D)$ are feasible, and let $z^*$ be the optimum
+value of the primal and $w^*$ the optimum value of the dual. Then
+$z^*=w^*$. 
+\end{theorem}
+
+One proof of strong duality is obtained by writing a big system of
+inequalities in $x$ and $y$ which says that (i) $x$ is primal
+feasible, (ii) $y$ is dual feasible and (iii) $c^Tx\geq b^Ty$. Then use
+the Theorem of the Alternatives to show that the infeasibility of this
+system of inequalities would contradict the feasibility of either
+$(P)$ or $(D)$. 
+
+\begin{proof}
+  Let $x^*$ be a feasible solution to the primal, and $y^*$ be a
+  feasible solution to the dual. The proof is by contradiction.
+  Because of weak duality, this means that there are no solution $x\in
+  \R^n$ and $y\in \R^m$ such that
+$$\left\{ \begin{array}{lll} Ax & & \leq b \\ & A^T y & =c \\ & -Iy &
+    \leq 0 \\ -c^Tx & + b^Ty & \leq 0 \end{array} \right.$$
+By a variant of the Theorem of the Alternatives or Farkas' lemma (for
+the case when we have a combination of inequalities and equalities),
+we derive that there must exist $s\in \R^m$, $t\in \R^n$,
+$u\in \R^m$, $v\in \R$ such that:
+\begin{eqnarray*}
+ A^Ts-vc&=0 \\
+ At -u + vb& = 0 \\
+s&\geq 0 \\
+ u&\geq 0 \\
+ v&\geq 0 \\
+ b^Ts + c^Tt &< 0.
+\end{eqnarray*}
+We distinguish two cases. 
+
+\paragraph{Case 1: $v=0$.} Then $s$ satisfies $s\geq 0$ and
+$A^Ts=0$. This means that, for any $\alpha\geq 0$, $y^*+\alpha s$ is
+feasible for the dual. Similarly, $At=u \geq 0$ and therefore, for any
+$\alpha\geq 0$, we have that $x^*-\alpha t$ is primal feasible. By
+weak duality, this
+means that, for any $\alpha\geq 0$, we have $$c^T(x^*-\alpha t) \leq
+b^T(y^*+\alpha s)$$ or $$c^Tx^*-b^Ty^* \leq \alpha (b^Ts+c^Tt).$$
+The right-hand-side tend to $-\infty$ as $\alpha$ tends to $\infty$,
+and this is a contradiction as the left-hand-side is fixed. 
+
+\paragraph{Case 2: $v>0$.} By dividing throughout by $v$ (and renaming
+all the variables), we get that
+there exists $s\geq 0$, $u\geq 0$ with 
+\begin{eqnarray*}
+A^Ts & = & c \\
+At-u & = & -b \\
+b^Ts + c^T t & < & 0.
+\end{eqnarray*}
+This means that $s$ is dual feasible and $-t$ is primal feasible, and
+therefore by weak duality $c^T(-t) \leq b^Ts$ contradicting $b^Ts+c^Tt<0$. 
+\end{proof}
+
+We can also prove strong duality directly using Fourier-Motzkin elimination.
+
+\begin{proof} Suppose that $c \ne \vec{0}$ (if $c = \vec{0}$, then the theorem follows from the Theorem of Alternatives). Then there is an invertible $n\times n$ matrix $L$ whose first row is $c^T$. Letting $z = Lx$, we see that we can rewrite our linear program in terms of $z$ as
+\lps
+  &  &  & \mbox{Max} &  z_1\\
+  & \lefteqn{\mbox{subject to:}} \\
+  &  (P)      &   &  &   AL^{-1}z \leq b.
+\elps
+The dual linear program is given by
+\lps
+  &  &  & \mbox{Min} &  b^Ty\\
+  & \lefteqn{\mbox{subject to:}} \\
+  &  (D)      &   &  &   (AL^{-1})^Ty=e_1 \\
+ & & & & y\geq 0,
+\elps
+where $e_1$ is the first basis vector. Multiplying both sides of $(AL^{-1})^Ty=e_1$ with $L^T$ on the left, we see that
+\[
+(AL^{-1})^Ty=e_1 \;\;\; \iff \;\;\; A^Ty = c,
+\]
+so the dual linear program is unchanged.
+
+Now we apply Fourier-Motzkin elimination to the system $AL^{-1}z \le b$ to eliminate the variables $z_2, ..., z_n$, getting a system of linear inequalities in $z_1$, each of which is formed by some nonnegative linear combination of the rows of the system $(AL^{-1})z \le b$. We can divide these inequalities on $z_1$ into three types: upper bounds on $z_1$, lower bounds on $z_1$, and inequalities not involving $z_1$ at all. The inequalities not involving $z_1$ at all must be \emph{true} inequalities between constants by the assumption that the primal problem was feasible, and for the same reason every upper bound on $z_1$ must be at least as large as every lower bound on $z_1$. By the assumption that the dual problem was feasible, we see that there is at least one upper bound on $z_1$. So the maximum value $z_1 = c^Tx$ can take on our polytope is equal to the minimum upper bound which can be proved on $z_1$ by adding together some nonnegative linear combination of the rows of the system $Ax = AL^{-1}z \le b$.
+\end{proof}
+
+\begin{exercises}
+\item
+Show that the dual of the dual is the primal.
+\item 
+Show that we only need either the primal or the dual to be
+  feasible for strong duality to hold. More precisely, if the primal
+  is feasible but the dual is infeasible, prove that the primal will
+  be unbounded, implying that $z^*=w^*=+\infty$.
+\end{exercises}
+
+Looking at $c^Tx=y^TAx\leq b^Ty$, we observe that to get equality
+between $c^Tx$ and $b^Ty$, we need {\it complementary slackness}:
+
+\begin{theorem}[Complementary Slackness]
+If $x$ is feasible in $(P)$ and $y$ is feasible in $(D)$ then $x$ is
+optimum in $(P)$ and $y$ is optimum in $(D)$ if and only if for all
+$i$ either $y_i=0$ or $\sum_j a_{ij} x_j =b_i$ (or both). 
+\end{theorem}
+
+Linear programs can be solved using the simplex method; this is not
+going to be explained in these notes. No variant of the simplex method
+is known to provably run in polynomial time, but there are other
+polynomial-time algorithms for linear programming, namely the
+ellipsoid algorithm and the class of interior-point algorithms. 
+
+\section{Faces of Polyhedra}
+
+\begin{definition}
+$\{a^{(i)}\in \R^n: i\in K\}$ are linearly independent if $\sum_i \lambda_i
+  a^{(i)}=0$ implies that $\lambda_i=0$ for all $i\in K$.
+\end{definition} 
+
+\begin{definition}
+$\{a^{(i)}\in \R^n: i\in K\}$ are {\it affinely} independent if
+  $\sum_i \lambda_i a^{(i)}=0$ and $\sum_i \lambda_i=0$ together imply
+  that $\lambda_i=0$ for all $i\in K$.
+\end{definition} 
+
+Observe that $\{a^{(i)}\in \R^n: i\in K\}$ are {\it affinely}
+independent  if and only if $$\left\{\left[\begin{array}{c} a^{(i)}\\
+    1\end{array} \right]\in \R^{n+1}: i\in K\right\}$$ are {\it linearly}
+independent.  
+
+\begin{definition}
+The dimension, $\dim(P)$,  of a polyhedron $P$ is the maximum number of affinely
+independent points in $P$ minus 1. 
+\end{definition}
+
+(This is the same notion as the dimension of the affine hull $\aff(S)$.) The dimension can be -1 (if $P$ is empty), 0 (when $P$ consists of a
+single point), 1 (when $P$ is a line segment), and up to $n$ when $P$
+affinely spans $\R^n$. In the latter case, we say that $P$ is {\it
+  full-dimensional}.  The dimension of a cube in $\R^3$ is 3, and so
+is the dimension of $\R^3$ itself (which is a trivial polyhedron). 
+
+\begin{definition}
+$\alpha^Tx\leq \beta$ is a {\it valid inequality} for $P$ if
+  $\alpha^Tx \leq \beta$ for all $x\in P$.
+\end{definition}
+
+Observe that for an inequality to be valid for $\conv(S)$ we only need
+to make sure that it is satisfied by all elements of $S$, as this will
+imply that the inequality is also satisfied by points in
+$\conv(S)\setminus S$. This observation will be important when dealing
+with convex hulls of combinatorial objects such as matchings or
+spanning trees. 
+
+\begin{definition}
+A {\it face} of a polyhedron $P$ is $\{x\in P: \alpha^Tx=\beta\}$
+where $\alpha^Tx\leq \beta$ is some valid inequality of $P$.
+\end{definition}
+
+By definition, all faces are polyhedra. The empty face (of dimension
+-1) is {\it trivial}, and so is the entire polyhedron $P$
+(which corresponds to the valid inequality $0^Tx\leq 0$). Non-trivial
+are those whose dimension is between 0 and $\dim(P)-1$. Faces of
+dimension 0 are called {\it extreme points} or {\it vertices}, faces
+of dimension 1 are called {\it edges}, and faces of dimension
+$\dim(P)-1$ are called {\it facets}. Sometimes, one uses {\it ridges}
+for faces of dimension $\dim(P)-2$. 
+
+\begin{exercises}
+\item List all 28 faces of the cube $P=\{x\in \R^3: 0\leq x_i \leq 1$
+  for $i=1,2,3\}$.  
+\end{exercises}
+
+Although there are infinitely many valid inequalities, there are only
+finitely many faces. 
+
+\begin{theorem} \label{thface}
+Let $A\in \R^{m\times n}$. Then any non-empty face of $P=\{x\in \R^n: Ax \leq
+b\}$ corresponds to the set of solutions to  
+$$ \sum_j a_{ij} x_j = b_i \mbox{ for all } i\in I $$
+$$ \sum_j a_{ij} x_j \leq b_i \mbox{ for all } i\notin I, $$
+for some set $I\subseteq \{1,\cdots,m\}$. Therefore, the number of
+non-empty faces of $P$ is at most $2^m$. 
+\end{theorem}
+\begin{proof}
+Consider any valid inequality $\alpha^Tx\leq \beta$. Suppose the
+corresponding face $F$ is non-empty. Thus $F$ are all optimum
+solutions to 
+\lps
+  &  &  & \mbox{Max} &  \alpha^Tx \\
+  & \lefteqn{\mbox{subject to:}} \\
+  &  (P)      &   &  &   Ax \leq b.
+\elps
+Choose an optimum solution $y^*$ to the dual LP. By complementary
+slackness, the face $F$ is defined by those elements $x$ of $P$ such
+that $a_i^Tx=b_i$ for $i\in I=\{i: y_i^*>0\}$. Thus $F$ is defined by 
+$$ \sum_j a_{ij} x_j = b_i \mbox{ for all } i\in I $$
+$$ \sum_j a_{ij} x_j \leq b_i \mbox{ for all } i\notin I. $$
+As there are $2^m$ possibilities for $I$, there are at most $2^m$
+non-empty faces. 
+\end{proof}
+
+The number of faces given in Theorem \ref{thface} is tight for
+polyhedra (see exercise below), but can be considerably improved for
+polytopes in the so-called {\it upper bound theorem} (which is not given in these notes).
+
+\begin{exercises}
+\item
+Let $P=\{x\in \R^n: x_i\geq 0$ for $i=1,\cdots, n\}$. Show that $P$
+has $2^n+1$ faces. How many faces of dimension $k$ does $P$ have? 
+\end{exercises}
+
+For extreme points (faces of dimension 0), the characterization is
+even stronger (we do not need the inequalities):
+
+\begin{theorem}
+Let $x^*$ be an extreme point for $P=\{x: Ax \leq b\}$. Then there
+exists $I$ such that $x^*$ is the {\it unique} solution to 
+$$ \sum_j a_{ij} x_j = b_i \mbox{ for all } i\in I. $$
+Moreover, if $x^* \in P$ is such a unique solution for some $I$, then $x^*$ is extreme. 
+ \end{theorem}
+
+\begin{proof}
+Given an extreme point $x^*$, define $I=\{i: \sum_j a_{ij}
+x^*_j=b_i\}$. This means that for $i\notin I$, we have $\sum_j a_{ij}
+x^*_j<b_i$.  
+
+From Theorem \ref{thface}, we know that $x^*$ is uniquely
+defined by 
+\begin{equation} \label{r1}
+ \sum_j a_{ij} x_j = b_i \mbox{ for all } i\in I
+\end{equation}
+\begin{equation} \label{r2}
+\sum_j a_{ij} x_j \leq b_i \mbox{ for all } i\notin I. 
+\end{equation}
+Now suppose there exists another solution $\hat{x}$ {\it when} we
+consider only the equalities for $i\in I$. Then because of $\sum_j a_{ij}
+x^*_j<b_i$, we get that $(1-\epsilon)x^* + \epsilon \hat{x}$ also
+satisfies (\ref{r1}) and (\ref{r2}) for $\epsilon$ sufficiently
+small. A contradiction (as the face was supposed to contain a single point). 
+
+\noindent \textbf{Exercise 3-5.5:} Prove the converse of what we just proved, namely that if $x^*$ is a unique solution for some $I$ then $x^*$ is extreme.
+\end{proof}
+
+If $P$ is given as $\{x: Ax=b, x\geq 0\}$ (as is often the case), the
+theorem still applies (as we still have a system of inequalities). In
+this case, the theorem says that every extreme point $x^*$ can be obtained
+by setting some of the variables to 0, and solving for the unique
+solution to the resulting system of equalities.
+
+In fact, we can say more. Without loss of
+generality, we can remove from $Ax=b$ equalities that are redundant;
+this means that we can assume that $A$ has full row rank ($\rank(A)=m$
+for $A\in \R^{m\times n}$). Let $N$ denote the
+indices of the {\it non-basic} variables that we set to 0 and $B$
+denote the remaining indices (of the so-called {\it basic} variables).
+We can partition $x^*$ into $x^*_B$ and $x_N^*$ (corresponding to
+these two sets of variables) and rewrite $Ax=b$ as $A_Bx_B+A_Nx_N=b$,
+where $A_B$ and $A_N$ are the restrictions of $A$ to the indices in
+$B$ and $N$ respectively. The theorem says that $x^*$ is the unique
+solution to $A_Bx_B+A_Nx_N=0$ and $x_N=0$, which means $x^*_N=0$ and
+$A_Bx_B^*=b$. This latter system must have a unique solution, which
+means that $A_B$ must have full column rank ($\rank(A_B)=|B|$). As $A$
+itself has rank $m$, we have that $|B|\leq m$ and we can augment $B$
+to include indices of $N$ such that the resulting $B$ satisfies (i)
+$|B|=m$ and (ii) $A_B$ is a $m\times m$ invertible matrix (and thus
+there is still a unique solution to $A_Bx_B=b$). In linear programming
+terminology, a {\it basic feasible solution} or {\it bfs} of $\{x:
+Ax=b, x\geq 0\}$ is obtained by choosing a set $|B|=m$ of indices with
+$A_B$ invertible and letting $x_B=A_B^{-1} b$ and $x_N=0$ where $N$
+are the indices not in $B$. We have thus shown that all extreme points are bfs, and vice versa. Observe that 
+ two different bases $B$ may lead to the same extreme point,
+as there might be many ways of extending $A_B$ into a $m\times m$
+invertible matrix in the discussion above.
+
+One consequence we could derive from Theorem \ref{thface} is:
+\begin{corollary} \label{corfacets}
+The maximal (inclusion-wise) non-trivial faces of a non-empty
+polyhedron $P$ are the facets.
+\end{corollary}
+For the vertices, one needs one additional condition:
+\begin{corollary} \label{corvertices}
+If $\rank(A)=n$ (full column rank) then the minimal (inclusion-wise)
+non-trivial faces of a non-empty polyhedron $P=\{x\in \R^n: Ax\leq
+b\}$ are the vertices.
+\end{corollary}
+Exercise 3-\ref{ex-novertex} shows that the rank condition is necessary. 
+
+This means that, if a linear program $\max\{c^Tx: x\in P\}$ with
+$P=\{x: Ax\leq b\}$ is feasible, bounded and $\rank(A)=n$, then there
+exists an optimal solution which is a vertex of $P$ (indeed, the set
+of all optimal solutions defines a face --- the optimal face --- and if
+this face is not itself a vertex of $P$, it must contain vertices of
+$P$).
+
+We now prove Corollary \ref{corvertices}. 
+
+\begin{proof}
+Let $F$ be a minimal (inclusion-wise) non-trivial face of $P$. This
+means that we have a set $I$ such that 
+$$\begin{array}{lll}
+F=\{x: & a_i^Tx = b_i  & \forall i\in I \\
+       & a_j^Tx\leq b_j & \forall j\notin I \}
+\end{array}
+$$ and adding any element to $I$ makes this set empty. Consider two
+cases. Either $F=\{x\in \R^n: a^T_ix=b_i$ for $i\in I\}$ or not. In
+the first case, it means that for every $j\notin I$ we have $a_j\in
+\lin(\{a_i: i\in I\})$ (otherwise there would be a solution $x$ to
+$a_i^Tx = b_i$ for all $i\in I$ and $a_j^Tx=b_j+1$ and hence not in
+$F$) and therefore since $\rank(A)=n$ we have that the
+system $a_i^Tx=b_i$ for all $i\in I$ has a unique solution and thus $F$ is
+a vertex. 
+
+On the other hand, if $F\neq \{x\in \R^n: a^T_ix=b_i$ for $i\in I\}$
+then let $j\notin I$ such that there exists $\tilde{x}$ with 
+$$\begin{array}{ll}
+a_i^T\tilde{x} = b_i  & i\in I \\
+a_j^T\tilde{x} > b_j. 
+\end{array}
+$$ Since $F$ is not trivial, there exists $\hat{x}\in F$. In
+particular, $\hat{x}$ satisfies $$\begin{array}{ll}
+a_i^T\hat{x} = b_i  & i\in I \\
+a_j^T\hat{x} \leq b_j. 
+\end{array}$$ Consider a convex combination $x'=\lambda \tilde{x} + (1-\lambda)
+\hat{x}$. Consider the largest $\lambda$ such that $x'$ is in
+$P$. This is well-defined as $\lambda=0$ gives a point in $P$ while it
+is not for $\lambda=1$. The corresponding $x'$ satisfies  $a_i^T x' =
+b_i $ for $i\in I\cup\{k\}$ for some $k$ (possibly $j$),
+contradicting the maximality of $I$.   
+\end{proof}
+
+
+We now go back to the equivalence between Definitions \ref{def1} and
+\ref{def2} and claim that we can show that Definition \ref{def1}
+implies Definition \ref{def2}. 
+\begin{theorem} \label{boundedconv}
+If $P=\{x: Ax \leq b\}$ is bounded then $P=\conv(X)$ where $X$ is the
+set of extreme points of $P$.
+\end{theorem}
+This is a nice exercise using the Theorem of the Alternatives.
+
+\begin{proof}
+Since $X\subseteq P$, we have $\conv(X)\subseteq P$. Assume, by
+contradiction, that we do not have equality. Then there must exist
+$\tilde{x}\in P\setminus \conv(X)$. The fact that $\tilde{x}\notin
+\conv(X)$ means that there is no solution to:
+$$\left\{\begin{array}{ll}
+\sum_{v\in X} \lambda_v v = \tilde{x} \\
+\sum_{v\in X} \lambda_v = 1 \\
+\lambda_v\geq 0 & v\in X.
+\end{array}\right.$$
+By the Theorem of the alternatives, this implies that $\exists c\in
+\R^n, t\in \R$: 
+$$\left\{\begin{array}{ll}
+t + \sum_{j=1}^n c_j v_j \geq 0 & \forall v\in X\\
+t + \sum_{j=1}^n c_j \tilde{x}_j < 0.
+\end{array}\right.
+$$
+Since $P$ is bounded, $\min\{c^Tx: x\in P\}$ is finite (say equal to
+$z^*$), and the face induced by $c^Tx \geq z^*$ is non-empty but does
+not contain any vertex (as all vertices are dominated by $\tilde{x}$
+by the above inequalities). This is a contradiction with Corollary
+\ref{corvertices}. Observe, indeed, that Corollary \ref{corvertices} applies. If $\rank(A)<n$ there would exists $y\neq 0$ with $Ay=0$ and this would contradict the boundedness of $P$ (as we could go infinitely in the direction of $y$). 
+\end{proof}
+
+
+
+
+When describing a polyhedron $P$ in terms of linear inequalities, the only
+inequalities that are needed are the ones that define facets of
+$P$. This is stated in the next few theorems. We say that an inequality in the
+system $Ax\leq b$ is {\it redundant} if the corresponding polyhedron is
+unchanged by removing the inequality. For $P=\{x: Ax\leq b\}$, we let
+$I_=$ denote the indices $i$ such that $a_i^Tx=b_i$ for all $x\in P$,
+and $I_<$ the remaining ones (i.e. those for which there exists $x\in
+P$ with $a_i^Tx<b_i$). 
+
+This theorem shows that facets are sufficient:
+\begin{theorem}
+If the face associated with $a_i^Tx\leq b_i$ for $i\in I_<$ is not a facet
+then the inequality is redundant. 
+\end{theorem}
+\begin{proof} If the inequality $a_i^Tx \le b_i$ is not redundant, then there must be a point $\hat{x}$ such that $a_i^T\hat{x} > b_i$ but $a_j^T\hat{x} \le b_j$ for all $j \ne i$. Let $F_i$ be the face of $P$ associated to the inequality $a_i^Tx \le b_i$. Then for every $x \in P$, the line segment connecting $x$ to $\hat{x}$ must contain a unique point $x_0 \ne \hat{x}$ with $a_i^Tx_0 = b_i$, and for every $j \ne i$ we have $a_j^Tx_0 \le b_j$ (since $x_0$ is a convex combination of points satisfying the $j$th inequality), so $x_0 \in F_i$. Since $x_0 \in F_i$ is on the line segment connecting $x$ to $\hat{x}$ and $x_0 \ne \hat{x}$, we see that $x$ is in the affine span of $\hat{x}$ and the face $F_i$. Since $x$ was an arbitrary point of $P$, we see that the affine spane of the face $F_i$ together with $\hat{x}$ contains the affine span of $P$, so $\dim(P) \le \dim(F_i) + 1$.
+
+To see that $\dim(P) \ne \dim(F_i)$, we use the fact that $i \in I_<$, which means that $P$ contains a point $x_<$ with $a_i^Tx_< < b_i$, and this point $x_<$ is not in the affine span of $F_i$.
+\end{proof}
+
+And this one shows that facets are necessary:
+\begin{theorem}
+If $F$ is a facet of $P$ then there must exists $i\in I_<$ such that
+the face induced by $a_i^T x\leq b_i$ is precisely $F$. 
+\end{theorem}
+
+In a {\it minimal} description of $P$, we must have a set of {\it
+  linearly independent equalities} together with precisely one
+  inequality for each facet of $P$.
+
+Now that we understand the vertices and facets of a polyhedron, we may wish to understand the local geometry around the vertices, and some basic properties of the graph formed by the edges and vertices of the polyhedron.
+
+\begin{theorem} Let $v_0$ be a vertex of $P$, corresponding to the valid inequality $c^Tx \le m$, and choose $\epsilon > 0$ such that $c^Tv' < m-\epsilon$ for all vertices $v'$ of $P$ other than $v_0$. Define the polyhedron $P_0$ to be $P \cap \{x \mid c^Tx = m-\epsilon\}$. Then $P_0$ is a {\it polytope} (that is, it is bounded), and for each $k$ there is a bijection between the set of faces of $P_0$ of dimension $k$ and the set of faces of $P$ which contain $v_0$ and have dimension $k + 1$.
+\end{theorem}
+We use the following exercise.\\
+\noindent \textbf{Exercise 3-5.6:} Show that for any point $x_0$ in an unbounded polyhedron $P \subset \mathbb{R}^n$, $P$ contains a \emph{ray} from $x$, a set of the form $\{x_0 + \alpha y: \alpha \geq 0\}$ for some $y \in \mathbb{R}^n$. \textbf{Hint:} use LP duality and Farkas' lemma.\\
+%cute with Farkas lemma.
+
+\begin{proof}
+%If $\rank(A) < n$, the theorem is vacuous. Thus we assume $\rank(A) = n$. 
+First we show that $P_0$ is bounded. Suppose not; let $x_0 \in P_0$. Using the exercise, $P_0$ contains a \emph{ray} $\{x_0 + \alpha y: \alpha \geq 0\}$. As $P_0$ is contained within the affine space $x_0 + c^\perp$, $y$ is contained in $c^\perp$. We claim that the ray yields another minimizer; if we take the convex combination between $v_0$ and $x_0 + \alpha y$ given by 
+$x(\alpha) := (1- \alpha^{-1}) v_0 + \alpha^{-1}(x_0 + \alpha y)$ we have $\lim_{\alpha \to \infty} x(\alpha) = v_0 + y \in P,$ and $c^T(v_0 + y) = c^T v_0.$ This contradicts the uniqueness of $v_0$.
+
+
+
+
+%%%% old Zeb/Michel proof
+%Suppose that $P = \{x \mid a_i^Tx \le b_i \;\; \forall i\}$. By LP-duality, there is a vector $y \ge 0$ such that $\sum_i y_ia_i = c$ and $\sum_i y_ib_i = m$. Moreover, we may assume that for $I := \{i \mid y_i > 0\}$, we have $\lin \{a_i: i \in I\} = \mathbb{R}^n$. We may assume this because the set of $c$'s that has $v_0$ as a unique minimizer has a positive volume ($v_0$ is still a unique minimizer on the intersection of $P$ and the unit cube, which is the convex hull of finitely many vertices), and the set of $c's$ expressible as linear combinations of non-spanning $a_i$'s is of zero measure. Thus $c$ can be perturbed so that $I$ has the desired property). For $x \in P_0$ and $i \in I$, if we set $z_i = y_i(b_i - a_i^Tx)$, then each $z_i \ge 0$ (since $x \in P$) and we have \[\sum_{i \in I} z_i = \sum_{i \in I} y_i(b_i - a_i^Tx) = \Big(\sum_i y_ib_i\Big) - \Big(\sum_i y_ia_i^T\Big)x = m - c^Tx = \epsilon.\]Thus, each $z_i$ is bounded between $0$ and $\epsilon$. Since the span of the $a_i$s with $i \in I$ is full-dimensional, we can recover the coordinates of $x$ from the $z_i$s, and since the set of possible tuples of $z_i$s is bounded, we see that $P_0$ must be bounded as well.
+
+Next we show that every face of $P_0$ is the intersection of a face of $P$ containing $v_0$ and the hyperplane $c^Tx = m-\epsilon$. Let $F_0$ be a nonempty face of $P_0$, defined by $a_i^Tx = b_i$ for $i \in I$, $c^Tx = m-\epsilon$, and $a_j^T \le b_j$ for $j \not\in I$, and let $F$ be the face of $P$ defined by all the same equalities and inequalities other than $c^Tx = m-\epsilon$. We just need to show that $v_0 \in F$. Since $c^Tx$ is bounded above by $m$ on $F$, it reaches some maximum value $m'$ on $F$. Let $F'$ be the face of $F$ defined by $c^Tx = m'$, then $F'$ must have a vertex $v$ (since $P$ has a vertex). Since $F_0 \subseteq F$ was nonempty, we must have $m' \ge m-\epsilon$, and since $v \in F'$ we have $c^Tv = m' \ge m-\epsilon$, so by the choice of $\epsilon$ we must have $v = v_0$, so $v_0 \in F' \subseteq F$.
+
+Finally, we show that if $F$ is a face of $P$ which contains $v_0$, and if $F_0 = F \cap \{x \mid c^Tx = m-\epsilon\}$, then $\dim(F_0) = \dim(F) - 1$. We will prove this by showing that for every $x \in F \setminus \{v_0\}$, the ray from $v_0$ to $x$ intersects $F_0$ - this will show that the affine span of $F_0$ together with the vertex $v_0$ contains the affine span of $F$. If $c^Tx \le m-\epsilon$, this is easy: the line segment connecting $v_0$ to $x$ will already intersect $F_0$. Otherwise, $x$ is in the polyhedron $F' = F \cap \{x \mid c^Tx \ge m-\epsilon\}$. By the same argument showing $P_0$ is bounded, we see that $F'$ is bounded, so $F'$ is the convex hull of its vertices. But the vertices of $F'$ are all either on the hyperplane $c^Tx = m-\epsilon$, in which case they are vertices of $F_0$, or they are vertices of $F$ which satisfy the inequality $c^Tv \ge m-\epsilon$, in which case they must be $v_0$ by the choice of $\epsilon$. Thus every point $x$ in $F'$ is a convex combination of the vertex $v_0$ and a point in $F_0$, so the ray from $v_0$ to $x$ intersects $F_0$.
+\end{proof}
+
+\begin{corollary} The graph of vertices and edges of a polyhedron $P$ is always connected. In fact, if $v_0, v^*$ are vertices of $P$ such that for some cost function $c^Tx$ we have $c^Tv^* = \max_{x \in P} c^Tx$, then there is a path $v_0, v_1, ..., v_k = v^*$ of vertices of $P$ with each pair $(v_i, v_{i+1})$ giving the two endpoints of an edge of $P$, such that $c^Tv_{i+1} \ge c^Tv_i$ for all $i$.
+\end{corollary}
+\begin{proof} Suppose for simplicity that $v^*$ is the unique maximizer of $c^Tx$. Suppose $v_0 \ne v^*$. We will show how to find an edge from $v_0$ to some vertex $v_1$ with $c^Tv_1 > c^Tv_0$: applying this iteratively and using the fact that $P$ has finitely many vertices will show the existence of the path. Define the polytope $P_0$ for the vertex $v_0$ as in the previous theorem, and let $x$ be the intersection point between the line segment connecting $v_0$ to $v^*$ and $P_0$. Since $v_0 \not\in P_0$ and $c^Tv^* > c^Tv_0$, we have $c^Tx > c^Tv_0$. Since $P_0$ is a polytope, it is the convex hull of its vertices, so some vertex $w$ of $P_0$ must have $c^Tw \ge c^Tx > c^Tv_0$. This vertex $w$ of $P_0$ is the intersection of an edge $e$ of $P$ containing $v_0$ with $P_0$, and this edge $e$ is contained in the ray from $v_0$ to $w$. If $e$ was unbounded, then $c^Tx$ would go to infinity along this ray (since $c^Tw > c^Tv_0$), contradicting the assumption that $c^Tx$ is bounded above by $c^Tv^*$. Thus $e$ is bounded, so it has a second endpoint $v_1$ with $c^Tv_1 \ge c^Tw > c^Tv_0$.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+\item
+Prove Corollary \ref{corfacets}.
+\item \label{ex-novertex}
+Show that if $\rank(A)<n$ then $P=\{x\in \R^n: Ax \leq b\}$ has no vertices.
+
+\item \label{ex-face}
+Suppose $P=\{x\in \R^n: Ax\leq b, Cx\leq d\}$. Show that the
+set of  vertices of $Q=\{x\in \R^n: Ax \leq b, Cx = d\}$ is a subset
+of the set of vertices of $P$.
+
+(In particular, this means that if the vertices of $P$ all belong to
+$\{0,1\}^n$, then so do the vertices of $Q$.)
+
+\item
+Given two extreme points $a$ and $b$ of a polyhedron $P$, we say that they are
+{\it adjacent} if the line segment between them forms an edge (i.e. a face
+of dimension 1) of the polyhedron $P$. This can be rephrased by saying
+that $a$ and $b$ are adjacent on $P$ if and only if there exists a
+cost function $c$ such that $a$ and $b$ are the only two extreme
+points of $P$ minimizing $c^Tx$ over $P$.
+
+Consider the polyhedron (polytope) $P$ defined as the convex hull of
+all perfect matchings in a (not necessarily bipartite) graph $G$. Give
+a necessary and sufficient condition for two matchings $M_1$ and $M_2$
+to be adjacent on this polyhedron (hint: think about $M_1
+\bigtriangleup M_2=(M_1\setminus M_2) \cup (M_2\setminus M_1)$) and
+prove that your condition is necessary and sufficient.)
+
+\item Show that two vertices $u$ and $v$ of a polytope $P$ are
+  adjacent if and only there is a unique way to express their midpoint
+  ($\frac{1}{2}(u+v)$) as a convex combination of vertices of $P$.
+
+\end{exercises}
+
+\section{Polyhedral Combinatorics}
+
+In one sentence, polyhedral combinatorics deals with the study of
+polyhedra or polytopes associated with discrete sets arising from
+combinatorial optimization problems (such as matchings for example).
+If we have a discrete set $X$ (say the incidence vectors of matchings
+in a graph, or the set of incidence vectors of spanning trees of a
+graph, or the set of incidence vectors of {\it stable} sets\footnote{A
+set $S$ of vertices in a graph $G=(V,E)$ is stable if there are no
+edges between any two vertices of $S$.} in a graph), we can consider
+$\conv(X)$ and attempt to describe it in terms of linear
+inequalities. This is useful in order to apply the machinery of linear
+programming. However, in some (most) cases, it is actually hard to
+describe the set of all inequalities defining $\conv(X)$; this occurs
+whenever optimizing over $X$ is hard and this statement can be made
+precise in the setting of computational complexity. For matchings, or
+spanning trees, and several other structures (for which the
+corresponding optimization problem is polynomially solvable), we will
+be able to describe their convex hull in terms of linear inequalities.
+
+Given a set $X$ and a proposed system of inequalities $P=\{x: Ax \leq
+b\}$, it is usually easy to check whether $\conv(X) \subseteq
+P$. Indeed, for this, we only need to check that every member of $X$
+satisfies every  inequality in the description of
+$P$. The reverse inclusion is more difficult. Here are 3 general
+techniques to prove that $P \subseteq \conv(X)$ (if it is true!) (once
+we know that $\conv(X) \subseteq P$).
+
+\begin{enumerate}
+\item
+{\bf Algorithmically.} This involves linear programming duality. This
+is what we did in the notes  about the assignment problem (minimum
+weight matchings in bipartite graphs). In general, consider any cost
+function $c$ and consider the combinatorial optimization problem of
+maximizing $c^Tx$ over $x\in X$. We know that:
+\begin{eqnarray*} 
+\max\{c^T x: x\in X\} & = & \max\{c^Tx: x\in \conv(X)\}\\ &  \leq  & \max\{c^T x:
+Ax \leq b\} \\
+& =  &\min \{b^T y: A^Ty=c, y\geq 0\},
+\end{eqnarray*} the last equality
+coming from strong duality. If we can exhibit a solution $x\in X$
+(say the incidence vector of a perfect matching in the assignment problem) and a dual feasible
+solution $y$ (values $u_i$, $v_j$ in the assignment problem) such that
+$c^Tx=b^Ty$ we will have shown that we have equality throughout, and
+if this is true for {\it any} cost function $c$, this implies that  $P =
+\conv(X)$. 
+
+This is usually the most involved approach but also the one that works
+most often. 
+
+\item {\bf Focusing on extreme points.} Show first that $P=\{x: Ax
+  \leq b\}$ is bounded (thus a polytope) and then study its extreme
+  points. If we can show that every extreme point of $P$ is in $X$
+  then we would be done since $P=\conv(ext(P))\subseteq \conv(X)$, where
+  $ext(P)$ denotes the extreme points of $P$ (see Theorem
+  \ref{boundedconv}). The assumption that $P$ is bounded is needed to
+  show that indeed $P=\conv(ext(P))$ (not true if $P$ is unbounded).
+
+In the case of the convex hull of bipartite matchings, this can be
+done easily and this leads to the notion of {\it totally unimodular}
+Matrices (TU), see the next section. 
+
+\item
+{\bf Focusing on the facets of $\conv(X)$.} This leads usually to the
+shortest and cleanest proofs. Suppose that our proposed $P$ is of the
+form $\{x\in \R^n: Ax\leq b, Cx=d\}$. We have already argued
+that $\conv(X) \subseteq P$ and we want to show that $P\subseteq
+\conv(X)$. 
+
+First we need to show that we are not missing any equality. This can
+be done for example by showing that $\dim(\conv(X))=\dim(P)$. We already know that $\dim(\conv(X))\leq \dim(P)$ (as $\conv(X)\subseteq P$), and so we need to argue that $\dim(conv(X))\geq \dim(P)$. This means showing that 
+if there are $n-d$ linearly independent rows in
+$C$ we can find $d+1$ affinely independent points in $X$.
+
+Then we need to show that we are not missing a valid inequality that
+induces a {\it facet} of $\conv(X)$. Consider any valid inequality
+$\alpha^T x\leq \beta$ for $\conv(X)$ with $\alpha\neq 0$. We can
+assume that $\alpha$ is any vector in $\R^n\setminus \{0\}$ and that
+$\beta=\max\{\alpha^T x: x\in \conv(X)\}$. The face of $\conv(X)$ this
+inequality defines is $F=\conv(\{x\in X: \alpha^T x=\beta\})$. Assume
+that this is a non-trivial face; this will happen precisely when
+$\alpha$ is not in the row space of $C$. We need to make sure that if
+$F$ is a facet then we have in our description of $P$ an inequality
+representing it. What we will show is that if $F$ is non-trivial then
+we can find an inequality $a_i^T x\leq b_i$ in our description of $P$
+such that (i) $F\subseteq \{x: a_i^T x=b_i\}$ and (ii) $a_i^Tx\leq
+b_i$ defines a non-trivial face of $P$ (this second condition is not
+needed if $P$ is full-dimensional), or simply that every optimum
+solution to $\max\{\alpha^T x: x\in X\}$ satisfies $a_i^Tx=b_i$, and
+that this equality is not satisfied by all points in $P$. This
+means that if $F$ was a facet, by maximality, we have a representative
+of $F$ in our description.
+
+This is a very simple and powerful technique, and this is best
+illustrated on an example. 
+
+\paragraph{Example.} Let $X=\{(\sigma(1), \sigma(2), \cdots,
+\sigma(n)): \sigma$ is a permutation of $\{1,2,\cdots, n\}\}$. 
+We claim that 
+\begin{eqnarray*} 
+  \conv(X)=\{x\in \R^n: & \sum_{i=1}^n x_i ={n+1 \choose 2} \\
+  & \sum_{i\in S} x_i \geq {|S|+1 \choose 2} & S \subset \{1,\cdots,
+  n\} \}.
+\end{eqnarray*}
+This is known as the {\it permutahedron}.
+
+Here $\conv(X)$ is not full-dimensional; we only need to show that we
+are not missing any facets and any equality in the description of
+$\conv(P)$. For the equalities, this can be seen easily as it is easy
+to exhibit $n$ affinely independent permutations in $X$. For the
+facets, suppose that $\alpha^T x\leq \beta$ defines a non-trivial
+facet $F$ of $\conv(X)$. Consider maximizing $\alpha^T x$ over all
+permutations $x$. Let $S=\arg\min\{\alpha_i\}$; by our assumption that
+$F$ is non-trivial we have that $S\neq \{1,2,\cdots,n\}$ (otherwise,
+we would have the equality $\sum_{i=1}^n x_i ={n+1 \choose
+  2}$). Moreover, it is easy to see (by an exchange argument) that any
+permutation $\sigma$ whose incidence vector $x$ maximizes $\alpha^Tx$
+will need to satisfy $\sigma(i)\in\{1,2,\cdots,|S|\}$ for $i\in S$, in
+other words, it will satisfy the inequality $\sum_{i \in S} x_i \geq
+{|S|+1 \choose 2}$ at equality (and this is a non-trivial face as
+there exist permutations that do not satisfy it at equality). Hence,
+$F$ is contained in a non-trivial face corresponding to an inequality
+in our description, and hence our description contains inequalities
+for all facets. This is what we needed to prove.  That's it!
+
+\end{enumerate}     
+
+\subsection*{Exercises}
+\begin{exercises}
+\item Consider the set $X=\{(\sigma(1), \sigma(2), \cdots, \sigma(n)):
+  \sigma$ is a permutation of $\{1,2\cdots,n\}\}$. Show that
+  $\dim(\conv(X))=n-1$. (To show that $\dim(\conv(X))\geq n-1$, exhibit
+  $n$ affinely independent permutations $\sigma$ (and prove that they
+  are affinely independent).)
+
+\item
+A {\it stable set} $S$ (sometimes, it is called also an independent
+set) in a graph $G=(V,E)$ is a set of vertices such that there are no
+edges between any two vertices in $S$. If we let $P$ denote the convex
+hull of all (incidence vectors of) stable sets of $G=(V,E)$, it is clear
+that $x_i + x_j \leq 1$ for any edge $(i,j)\in E$ is a valid
+inequality for $P$. 
+
+\begin{enumerate}
+\item
+Give a graph $G$ with no isolated vertices for which $P$ is {\it not} equal to 
+\begin{eqnarray*} 
+\{x\in \R^{|V|}: &  x_i + x_j \leq 1 & \mbox{ for all } (i,j)\in E \\
+ &  x_i \geq 0 & \mbox{ for all } i \in V\} 
+\end{eqnarray*}
+
+\item
+Show that if the graph $G$ is bipartite and has no isolated vertices then $P$ equals
+\begin{eqnarray*} 
+\{x\in \R^{|V|}: &  x_i + x_j \leq 1 & \mbox{ for all } (i,j)\in E \\
+ &  x_i \geq 0 & \mbox{ for all } i \in V\}. 
+\end{eqnarray*}
+\end{enumerate}
+
+\item
+Let $e_k\in \R^n$ ($k=0,\ldots,n-1$) be a vector with the first $k$
+entries being $1$, and the following $n-k$ entries being  $-1$. Let
+$S=\{e_0, e_1, \ldots, e_{n-1}, -e_0, -e_1,\ldots, -e_{n-1}\}$, i.e.\
+$S$ consists of all vectors consisting of $+1$ followed by $-1$ or
+vice versa. In this problem set, you will study $\conv(S)$. 
+\begin{enumerate}
+\item
+Consider any vector $a\in\{-1,0,1\}^n$ such that (i) $\sum_{i=1}^n
+a_i=1$ and (ii) for all $j=1,\ldots,n-1$, we have $0\leq \sum_{i=1}^j
+a_i\leq 1$. (For example, for $n=5$, the vector $(1,0,-1,1,0)$
+satisfies these conditions.)
+Show that $\sum_{i=1}^n a_ix_i\leq 1$ and $\sum_{i=1}^n
+a_ix_i\geq -1$ are valid inequalities for $\conv(S)$.
+\item
+How many such inequalities are there?
+\item
+Show that any such inequality defines a facet of $\conv(S)$. 
+
+(This can be done in several ways. Here is one approach, but you are
+welcome to use any other one as well. First show that either $e_k$ or
+$-e_k$ satisfies this inequality at equality, for any $k$. Then show that the
+resulting set of vectors on the hyperplane are affinely independent (or uniquely identifies it).)
+\item
+Show that the above inequalities define the entire convex hull of $S$. 
+
+(Again this can be done in several ways. One possibility is to
+consider the 3rd technique described above.)
+\end{enumerate}
+
+\end{exercises}
+
+
+     
+\section{Total unimodularity} \label{total}
+
+\begin{definition}
+A matrix $A$ is totally unimodular (TU) if every square submatrix of $A$
+has determinant $-1, 0$ or $+1$.
+\end{definition}
+
+The importance of total unimodularity stems from the following
+theorem. This theorem gives a subclass of integer programs which are
+easily solved. A polyhedron $P$ is said to be {\it integral}
+if all its vertices or extreme points are integral (belong to $\Z^n$).
+\begin{theorem} \label{tum}
+Let $A$ be a totally unimodular matrix. Then, for any {\it integral}
+right-hand-side $b$, the polyhedron $$P=\{x: Ax\leq b, x\geq 0\}$$ is
+integral.
+\end{theorem}
+
+Before we prove this result, two remarks can be made. First, the proof
+below will in fact show that the same result holds for the polyhedrons
+$\{x: Ax\geq b, x\geq 0\}$ or $\{x: Ax=b, x\geq 0\}$.  In the latter
+case, though, a slightly weaker condition than totally unimodularity is
+sufficient to prove the result. Secondly, in the above theorem, one
+can prove the converse as well: If $P=\{x: Ax\leq b, x\geq 0\}$ is
+integral for all integral $b$ then $A$ must be totally unimodular
+(this is not true though, if we consider for example $\{x: Ax=b, x\geq 0\}$).
+
+\begin{proof}
+Adding slacks, we get the polyhedron $Q=\{(x,s): Ax+ Is=b, x\geq 0,
+s\geq 0\}$. One can easily show (see exercise below) that $P$ is
+integral iff $Q$ is integral. 
+
+Consider now any bfs of $Q$. The basis
+$B$ consists of some columns of $A$ as well as some columns of the
+identity matrix $I$. Since the columns of $I$ have only one nonzero
+entry per column, namely a one, we can expand the determinant of $A_B$
+along these entries and derive that, in absolute values, the
+determinant of $A_B$ is equal to the determinant of some square
+submatrix of $A$. By definition of totally unimodularity, this implies
+that the determinant of $A_B$ must belong to $\{-1,0,1\}$. By definition
+of a basis, it cannot be equal to 0. Hence, it must be equal to $\pm
+1$. 
+
+We now prove that the bfs must be integral. The non-basic variables,
+by definition, must have value zero. The vector of basic variables, on
+the other hand, is equal to $A_B^{-1} b$. From linear algebra, $A_B^{-1}$
+can be expressed as $$\frac{1}{\det A_B} A_B^{adj}$$ where $A_B^{adj}$ is
+the adjoint (or adjugate) matrix of $A_B$ and consists of subdeterminants of $A_B$.
+Hence, both $b$ and $A_B^{adj}$ are integral  which implies that
+$A_B^{-1}b$ is integral since $|\det A_B|=1$. This proves the integrality
+of the bfs. 
+\end{proof}
+
+\begin{exercises}
+\item
+Let $P=\{x: Ax\leq b, x\geq 0\}$ 
+and let $Q=\{(x,s): Ax+ Is=b, x\geq 0, s\geq 0\}$. Show that $x$ is an
+extreme point of $P$ iff $(x,b-Ax)$ is an extreme point of $Q$.
+Conclude that whenever $A$ and $b$ have only integral entries, $P$ is
+integral iff $Q$ is integral.
+\end{exercises}
+
+In the case of the bipartite matching problem, the constraint matrix
+$A$ has a very special structure and we show below that it is totally
+unimodular.  This together with Theorem \ref{tum} proves Theorem 1.6
+from the notes on the bipartite matching problem. First, let us
+restate the setting. Suppose that the
+bipartition of our bipartite graph is $(U,V)$ (to avoid any confusion
+with the matrix $A$ or the basis $B$). Consider 
+\lps
+ &     P   & =  &\{x:  &   \sum_j x_{ij} =1 & i\in U \\
+  &        &   &  &   \sum_i x_{ij} =1 & j\in V \\
+  &        &   &  &  x_{ij}\geq 0 & i\in U, j\in V\} \\
+ & & = & \{x: & Ax=b, x\geq 0\}.
+\elps
+\begin{theorem}
+The matrix $A$ is totally unimodular.
+\end{theorem}
+
+The way we defined the matrix $A$ corresponds to a {\it complete}
+bipartite graph. If we were to consider any bipartite graph then we
+would simply consider a submatrix of $A$, which is also totally
+unimodular by definition.  
+
+\begin{proof}
+Consider any square submatrix $T$ of $A$. We consider three cases.
+First, if $T$ has a column or a row with all
+entries equal to zero then the determinant is zero. Secondly, if there exists a
+column or a row of $T$ with only one $+1$ then by expanding the
+determinant along that $+1$, we can consider a smaller sized matrix
+$T$. The last case is when $T$ has at least two nonzero entries per
+column (and per row). Given the special structure of $A$, there must
+in fact be {\it exactly} two nonzero entries per column. By adding up
+the rows of $T$ corresponding to the vertices of $U$ and adding up the
+rows of $T$ corresponding to the vertices of $V$, one therefore
+obtains the same vector which proves that the rows of $T$ are linearly
+dependent, implying that its determinant is zero. This proves the
+total unimodularity of $A$.
+\end{proof}
+
+%We conclude with a technical remark. One should first remove one of the rows of $A$ before applying Theorem \ref{tum} since, as such, it does not have full row rank and this fact was implicitly used in the definition of a bfs. However, deleting a row of $A$ still preservesits totally unimodularity.
+
+\begin{exercises}
+\item
+If $A$ is totally unimodular then
+$A^T$ is totally unimodular. 
+\item
+Use total unimodularity to prove
+K\"onig's theorem.
+\end{exercises}
+
+The following theorem gives a necessary and sufficient condition for a
+matrix to be totally unimodular. 
+
+\begin{theorem}
+Let $A$ be a $m\times n$ matrix with entries in $\{-1,0,1\}$. Then $A$
+is TU if and only if for all subsets $R\subseteq \{1,2,\cdots,n\}$ of
+rows, there exists a partition of $R$ into $R_1$ and $R_2$ such that
+for all $j\in\{1,2,\cdots,m\}$: 
+$$\sum_{i\in R_1} a_{ij} - \sum_{i\in R_2} a_{ij} \in\{0,1,-1\}.$$
+\end{theorem}
+
+We will prove only the {\it if} direction (but that is the most important as this allows to prove that a matrix is totally unimodular). 
+
+\begin{proof}
+Assume that, for every $R$, the desired partition exists. We need to prove
+that the determinant of any $k\times k$ submatrix of $A$ is in
+$\{-1,0,1\}$, and this must be true for any $k$. Let us prove it by
+induction on $k$. It is trivially true for $k=1$. Assume it is true
+for $k-1$ and we will prove it for $k$.
+
+Let $B$ be a $k\times k$ submatrix of $A$, and we can assume that $B$
+is invertible (otherwise the determinant is 0 and there is nothing to
+prove). The inverse $B^{-1}$ can be written as $\frac{1}{\det(B)}
+B^*$, where all entries of $B^*$ correspond to $(k-1)\times (k-1)$
+submatrices of $A$. By our inductive hypothesis, all entries of $B^*$
+are in $\{-1,0,1\}$. Let $b^*_1$ be the first row of $B*$ and $e_1$ be
+the $k$-dimensional row vector $[1\; 0\; 0\cdots 0]$, thus $b^*_1=e_1
+B^*$. By the relationship between $B$ and $B^*$, we have that 
+\begin{equation} \label{eqbb}
+b^*_1
+B = e_1 B^* B = \det(B) e_1 B^{-1} B = \det(B) e_1.
+\end{equation}
+
+Let $R=\{i: b^*_{1i}\in \{-1,1\}\}$. By assumption, we know that there
+exists a partition of $R$ into $R_1$ and $R_2$ such that for all $j$:
+\begin{equation}
+\label{eqbb2}
+\sum_{i\in R_1} b_{ij} - \sum_{i\in R_2} b_{ij} \in\{-1,0,1\}.
+\end{equation}
+From (\ref{eqbb}), we have that  
+\begin{equation}
+\label{eqbb3}
+\sum_{i\in R} b^*_{1i} b_{ij} =\left\{ \begin{array}{ll} \det(B) &
+  j=1 \\ 0 & j\neq 1 \end{array} \right.
+\end{equation}
+Since $\sum_{i\in R_1} b_{ij} - \sum_{i\in R_2} b_{ij}$ and
+$\sum_{i\in R} b^*_{1i} b_{ij}$ differ by a multiple of 2 for each $j$ (since
+$b^*_{1i}\in\{-1,1\}$), this implies that  
+\begin{equation}
+\label{eqbb4}
+\sum_{i\in R_1} b_{ij} - \sum_{i\in R_2} b_{ij} =0 \;\;\; j \neq 1.
+\end{equation}
+For $j=1$, we cannot get 0 since otherwise $B$ would be singular (we would get exactly the 0 vector by
+adding and subtracting rows of $B$). Thus,
+$$\sum_{i\in R_1} b_{i1} - \sum_{i\in R_2} b_{i1} \in\{-1,1\}.$$
+If we define $y\in \R^k$ by 
+$$y_i=\left\{\begin{array}{ll} 1 & i\in R_1 \\ -1 & i\in R_2 \\ 0 &
+otherwise \end{array} \right.$$
+we get that $yB=\pm e_1$. Thus $$y=\pm e_1 B^{-1} = \pm \frac{1}{\det
+  B} e_1 B^*= \pm \frac{1}{\det B} b^*_1,$$ which implies that $\det
+B$ must be either 1 or -1.
+\end{proof} 
+
+\begin{exercises}
+\item Suppose we have $n$ activities to choose from. Activity $i$
+  starts at time $t_i$ and ends at time $u_i$ (or more precisely just
+  before $u_i$); if chosen, activity $i$ gives us a profit of $p_i$
+  units. Our goal is to choose a subset of the activities which do not
+  overlap (nevertheless, we can choose an activity that ends at $t$
+  and one that starts at the same time $t$) and such that the total
+  profit (i.e. sum of profits) of the selected activities is maximum.
+
+\begin{enumerate}
+\item
+Defining $x_i$ as a variable that represents whether activity $i$ is
+selected ($x_i=1$) or not ($x_i=0$), write an integer program of the
+form $\max\{ p^T x: Ax \leq b, x\in\{0,1\}^n\}$ that
+would solve this problem.  
+\item
+Show that the matrix $A$ is totally unimodular, implying that one can
+solve this problem by solving the linear program 
+  $\max\{ p^T x: Ax \leq b, 0\leq x_i\leq 1$ for every $i\}$.
+\end{enumerate}
+
+\item %% Not in notes posted on website in 2009 
+Given a bipartite graph $G$ and given an integer $k$, let $S_k$ be the
+set of all incidence vectors of  matchings with at most $k$ edges. We
+are interested in finding a description of $P_k=\conv(S_k)$ as a system of
+linear inequalities. More precisely, you'll show that $\conv(S_k)$ is
+given by:
+$$\begin{array}{lll} 
+P_k=\{x: & \sum_{j} x_{ij} \leq 1 & \forall i\in A \\
+  & \sum_{i} x_{ij} \leq 1 & \forall j\in B \\
+& \sum_{i} \sum_j x_{ij} \leq k \\
+& x_{ij} \geq 0 & i\in A, j\in B \}.
+\end{array}
+$$
+Without the last constraint, we have shown that the
+resulting matrix is totally unimodular.
+\begin{enumerate}
+\item
+With the additional constraint, is the resulting matrix totally
+unimodular? Either prove it or disprove it. 
+\item
+Show that $P_k$ indeed equals $\conv(S_k)$. 
+
+\item
+Suppose now that instead of a cardinality constraint on all the edges,
+our edges are partitioned into $E_1$ and $E_2$ and we only impose that
+our matching has at most $k$ edges from $E_1$ (and as many as we'd
+like from $E_2$). Is it still true that the convex hull of all such
+matchings is given by simply replacing $\sum_i \sum_j x_{ij} \leq k$
+by 
+$$\sum_i \sum_{j: (i,j)\in E_1} x_{ij} \leq k ?$$ 
+\end{enumerate}
+\end{exercises}
+
+\section{Matching polytope}
+In this section, we provide an illustration of the power of the third technique to prove a complete description of a combinatorial polytope. Consider the matching polytope, the convex hull of all incidence vectors of matchings in a graph $G=(V,E)$. If the graph is bipartite, we have seen that the degree constraints are sufficient to provide a complete description of the polytope, but this is not the case for non-bipartite graphs. We also need the blossom constraints, which for any set $S\subseteq V$ with $|S|$ odd says that
+$$\sum_{e\in E(S)} x_e \leq \frac{|S|-1}{2},$$ where $E(S)$ denotes the edges of $E$ with both endpoints within $S$. These inequalities are clearly valid inequalities for all matchings as any matching can use at most $(|S|-1)/2$ edges from $E(S)$. 
+But there are also sufficient:
+
+\begin{theorem}[Edmonds] \label{thm:ed}
+Let $X$ be the set of incidence vectors of matchings in $G=(V,E)$. Then $conv(X)=P$ where
+\lps
+&     P   & =  &\{x:  &   \sum_{e\in \delta(v)} x_e \leq 1 & v\in V \\
+&        &   &  &   \sum_{e\in E(S)} x_e \leq \frac{|S|-1}{2}  & S\subseteq V, |S| \mbox{ odd} \\
+&        &   &  &  x_{e}\geq 0 & e\in E\},
+\elps
+where $\delta(v)$ denotes the edges incident to $v$ and $E(S)$ denotes the edges with both endpoints in $S$.
+\end{theorem}
+  
+  Here is a proof based on the third technique, showing that we are not missing any facets. 
+\begin{proof}
+First, it is clear that $conv(X)\subseteq P$. Also $dim(conv(X))=|E|$ since we can easily find $|E|+1$ affinely independent points in $X$ (and thus in $conv(X)$): just take the matchings consisting of a single edge and the empty matching. 
+Therefore we are not missing any equality in our description. 
+
+Now consider any valid inequality $\alpha^T x\leq \beta$ which is valid for all matchings: for any matching $M$, we have $\sum_{e\in M} \alpha_e \leq \beta$. We need to show that the face $F$ induced by this inequality is contained in the face defined by one of the inequalities in our proposed description $P$. This would mean that we have in our description $P$ an inequality for each facet of $conv(X)$. Consider the {\it extremal} matchings defined by the valid inequality $\alpha^T x\leq \beta$:
+$$R=\{x\in X: \alpha^T x=\beta\}.$$ If $R$ is empty that the face is the trivial face and there is nothing to prove. So, we assume that $R\neq \emptyset$. 
+
+Consider the following three cases. 
+\begin{enumerate}
+	\item[Case 1.] If there exists $e$ with $\alpha_e<0$ then for all $x\in R$, we must have $x_e=0$. Thus 
+	$$\{x\in X: \alpha^T x=\beta\} \subseteq \{x\in \conv(X): \alpha^Tx=\beta\}\subseteq \{x\in P: x_e=0\},$$ and therefore this face $F$ is included in the face defined by the inequality $x_e\geq 0$ in our description $P$. Thus, in what remains, we can assume that $\alpha_e\geq 0$ for all $e\in E$. 
+	\item[Case 2.] If there exists $v\in V$ such that $\forall x\in R: \sum_{e\in \delta(v)} x_e=1$ then this face $F$ is included in the face induced by $ \sum_{e\in \delta(v)} x_e \leq 1$ which is part of $P$. Thus, in what remains, we can assume that for every $v\in V$, there exists an extremal matching $M_v$ not covering $v$.
+	\item[Case 3.] Let $E_+=\{e\in E: \alpha_e>0\}$. Thus (after case 1), we have $\alpha_e=0$ for all $e\in E\setminus E_+$. Let $V_+=V(E_+)$ be the vertex set of $E_+$, and consider any connected component $(V_1,E_1)$ of $V_+,E_+)$. We will show that the face $F$ is a subset of the face induced by the blossom constraint for $V_1$. 
+	
+	We first claim that there are no extremal matchings missing (i.e. not covering) two vertices $u,v\in V_1$. Let us assume otherwise.  Among all extremal matchings missing at least 2 vertices $u$, $v$ of $V_1$, let  $M$ and $u, v$ be such that the distance between $u$ and $v$ within $(V_1,E_1)$ is minimized. If this distance is 1 then $(u,v)\in E_1$ and $M\cup \{(u,v)\}$  would violate the inequality since $\alpha_{uv}>0$. Thus, the distance is at least 2. Let $w\notin\{u,v\}$ be on a shortest path from $u$ to $v$; thus, the distances between $w$ and both $u$ and $v$ is smaller than the distance between $u$ and $v$. Now, following case 2, we know that there exists an extremal matching $M_w$ missing $w$. Consider $M_w\triangle M$. Since this is the symmetric difference of two matchings, this contains alternating paths and cycles, and since $w$ has degree 1 in this subgraph, $M_w\triangle M$ must contain a path $Q$ with $w$ as an endpoint. Let $M_1=M\triangle Q$ and $M_2=M_w\triangle Q$. $M_1$ and $M_2$ are two matchings and therefore $\sum_{e\in M_1} \alpha_e\leq \beta$ and $\sum_{e\in M_2} \alpha_e \leq \beta$. But we also have $$
+	\sum_{e\in M_1} \alpha_e + \sum_{e\in M_2} \alpha_e = \sum_{e\in M} \alpha_e + \sum_{e\in M_w} \alpha_e = 2\beta,$$ and therefore both $M_1$ and $M_2$ are also extremal. $M_1$ doesn't cover $w$, and also does not cover either $u$ or $v$ (as $Q$ only has two endpoints, one of which is $w$). This is a contradiction with our choice of $M$, $u$ and $v$ to minimize the distance between $u$ and $v$. 
+	
+	By the claim, no extremal matching misses more than one vertex of $V_1$. Moreover, any extremal matching that misses one vertex of $V_1$ (and these exist) cannot use any edge of $\delta(V_1)$ since these edges have $\alpha_e=0$ and thus the removal of such an $e$ would give another extremal matching which would then miss more than one vertex of $V_1$, a contradiction. Thus the existence of  an extremal matching like $M_v$ that misses $v\in V_1$ implies that $|V_1|-1$ is even. We claim that every extremal matching $M$ has precisely $(|V_1|-1)/2$ edges from $E_1$. If this was not the case, removing the edges from $M\setminus E_+$ would give another extremal matching that misses more than one vertex in $V_1$, a contradiction. Thus we have shown that every extremal matching $M$ satisfies $|M\cap E_1|=(|V_1|-1)/2$ and therefore all extremal matchings belong to the face induced by
+\[
+\sum_{e\in E(V_1)} x_e \leq \frac{|V_1|-1}{2}.
+\]
+	
+ \end{enumerate}
+\end{proof}
+
+Since the vertices of a face of a polyhedron are vertices of the original polyhedron, we can deduce from Theorem \ref{thm:ed} that a complete description of the {\it perfect matching} polytope is obtained by simply replacing the degree inequalities $\sum_{e\in \delta(v)} x_e \leq 1$ by equalities: $\sum_{e\in \delta(v)} x_e = 1$. 
+
+\end{document}
+

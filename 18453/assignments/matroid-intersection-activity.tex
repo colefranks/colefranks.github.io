@@ -1,0 +1,55 @@
+\documentclass[12pt]{article} \input{../newmac}
+\usepackage{graphicx,../lp,amsmath} 
+
+
+\begin{document}
+
+
+
+\handout{Matroid intersection activity}{April 29, 2021}
+
+\medskip
+Collaborate on these with your breakout room in explain.mit.edu (or using whatever method you find convenient).
+
+\begin{enumerate}
+\item Let $G$ be a bipartite graph with bipartition $A, B$.
+%Exercise 5-4 of the notes on matroids. 
+\begin{enumerate}
+\item Given an example showing that the set of matchings does not form the independent sets of a matroid.
+\item Show that the set of matchings is the intersection of two matroids. \textbf{ Hint: }\footnote{It is the intersection of two partition matroids. }
+\end{enumerate}
+\newpage
+
+\item Recall a problem from Pset 4: given an undirected graph $G$ and an assignment $p$ of numbers to the vertices, we'd like to direct the edges in $G$ so that every vertex has at most $p(v)$ incoming edges. 
+\begin{enumerate}
+\item Describe a pair of matroids whose largest common independent set has size $|E|$ if and only if $G$ has a direction satisfying the above condition. \textbf{Hint: }\footnote{Again, two partition matroids will suffice.}
+\end{enumerate}
+\newpage
+
+\item Suppose $G$ is an undirected graph and the edge set $E$ of $G$ has been ``colored,"
+ %i.e. partitioned into disjoint sets $E_1, \dots, E_t$. 
+ Show that the set of \emph{colorful spanning trees} (spanning trees whose edges are all different colors) is the set of common bases of two matroids. \textbf{ Hint: }\footnote{This time you can use a graphic matroid and a partition matroid.}
+\newpage
+
+%Exercise 5-5 of the notes on matroids. 
+\item For a directed graph $D$ and a ``root'' vertex $r \in V(D)$ such that $r$ has no incoming edges, define an \emph{arborescence} to be a spanning tree of $D$ directed away from $r$.\footnote{Here spanning tree just means that it's a spanning tree in the underlying undirected graph $G$.} 
+
+\begin{enumerate}
+\item  Let $G$ be the underlying undirected graph of $D$ obtained by forgetting the directions of the edges.\footnote{$G$ may have multi-edges if both directions $(u,v)$ and $(v,u)$ of an edge were present in $E(D)$.} Show that any subgraph of $D$ which corresponds to a spanning tree in $G$ and has at most one edge entering each vertex is an arborescence.
+\item Show that the set of arborescences of $D, r$ is the set of common bases of two matroids. \textbf{Hint: } \footnote{Again you can use the intersection of a graphic matroid and a partition matroid.}
+\end{enumerate}
+\newpage
+\item Consider an undirected graph $G$. We'd like to decide if $G$ is the union of two edge-disjoint spanning trees. Given a matroid $M = (E, I)$, define its \emph{dual matroid} $M^* $ to be $(E, I^*)$ where $I^*$ is the set of subsets of $E$ whose complements contain a base of $M$. 
+\begin{enumerate}
+\item Describe a pair of matroids whose largest common independent set has size $|V|-1$ if and only if $G$ has two edge-disjoint spanning trees. You may use that the dual matroid is indeed a matroid.
+\item \textbf{Bonus: } prove that the dual matroid is a matroid.
+\end{enumerate}
+%Exercise 5-8 of the notes on matroids. 
+\item 
+
+
+
+\end{enumerate}
+
+
+\end{document}

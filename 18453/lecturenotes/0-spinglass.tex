@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\input{../newmac}
+\usepackage{graphicx}
+\begin{document}
+
+
+
+\handout{Spin Glass}{\today}
+
+Consider the
+$7\times 7$ grid drawn below, where each edge has been made thick (solid) or thin (dashed). Given an assigment of
+signs (+ or -) to the vertices of this grid, a thick edge is {\it violated} if the endpoints have two different signs. A thin edge is violated if the endpoints have identical signs. The goal is to find an assignment of signs which minimize
+the total number of violations in the grid. 
+%\begin{figure}[htbp]
+
+\begin{center}
+\includegraphics{../figures/maxcut6}
+%\mbox{\psfig{figure=maxcut6.eps}}
+\end{center}
+%\caption{The instance}
+%\label{maxcut}
+%\end{figure}
+
+As you'll probably realize, although finding a ``good'' assignment of
+signs might not be that difficult, providing a proof  that your
+solution is optimal is in fact much more challenging (and a short proof exists for any instance). 
+
+
+%\mbox{\psfig{figure=mc6.eps,height=2.5in}
+%\hspace*{0.5in}\psfig{figure=mc6.eps,height=2.5in}}
+
+
+
+
+\end{document}

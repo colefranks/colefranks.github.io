@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+\usepackage{../lp,graphicx,amsmath}
+\usepackage{tkz-berge}
+\input{../newmac}
+\setlength{\topmargin}{-1in}
+\setlength{\textheight}{9.7in}
+%\usepackage{epsfig}
+
+\begin{document}
+
+%\handout{QUIZ 1}{April 11th, 2017}
+
+\noindent {\Large 18.453 Quiz} \\
+~\\
+
+\paragraph{Instructions.} This is a {\bf timed} quiz. This is meant to be done in \textbf{2} hours with access to notes and course material, but no access to collaborators. For best practice I suggest trying to complete it under these conditions. Afterwards please tell me if 2 hours felt like enough. 
+%Please write the solutions as neatly as possible and show your steps. Your grade will be the average of these two grades. 
+
+
+\begin{enumerate}
+\item Consider a bipartite graph $G=(V,E)$ in which every vertex has degree
+$k$ (a so-called $k$-regular bipartite graph). Prove that such a graph
+always has a perfect matching in two different ways:
+\begin{enumerate}
+\item
+by using K\"onig's theorem:\\
+
+\noindent\textbf{Solution: } Let the bipartition be $A,B$. First note that $|A| = |B|$, because the by counting the number of edges in two different ways we obtain that the number of edges is $k |A|$ and also $k|B|$. Thus a perfect matching could, in principle, exist.\footnote{Strictly speaking, we don't need this step, but I find it comforting.} K\"onig's theorem says that the number of edges in a maximum matching is the number of vertices in a minimum vertex cover. Thus, it is enough to show that a minimum vertex cover has size exactly $|A|$. The set $A$ is indeed a vertex cover because $G$ is bipartite. On the other hand, the number of edges covered by any set $S$ is at most $k |S|$. As the number of edges is $k|A|$, we must have $|S| \geq |A|$. The size of the minimum vertex cover is $|A|$, concluding the proof.
+\item
+by using the LP formulation of the min-weight perfect matching problem:\\
+
+\noindent \textbf{Solution: } 
+The LP formulation of the min-weight perfect matching problem on a complete graph is as follows: 
+\lps & & & \mbox{Min} & \sum_{i,j} c_{ij}
+x_{ij} \\ & \lefteqn{\mbox{subject to:}} \\ (P) & & & & \sum_j x_{ij}
+=1 & i\in A \\ & & & & \sum_i x_{ij} =1 & j\in B \\ & & & & x_{ij}\geq
+0 & i\in A, j\in B.  \elps
+By Theorem 1.6 in the perfect matching notes, there is an integral minimizer $x$ to the above LP, i.e. an actual perfect matching with the same value.
+
+We can formulate the maximum matching on our graph $G$ (which is not necessarily a complete graph) in various ways. One way is by setting $c_{ij}  = -1$ for $(i,j) \in E$ and $c_{ij} = 0$ else; for our matching we just keep the edges $M = \{(i,j) \in E: x_{ij} =1\}$. Thus the size of the maximum matching is 
+\lps & & & \mbox{Max} & \sum_{(i,j) \in E} x_{ij} \\ 
+& \lefteqn{\mbox{subject to:}} \\ (P) & & & & \sum_j x_{ij}
+=1 & i\in A \\ & & & & \sum_i x_{ij} =1 & j\in B \\ & & & & x_{ij}\geq
+0 & i\in A, j\in B.  \elps
+As the size of the maximum matching the value of the above LP, if we can show the value of the above LP is at least $|A|$, then we will be done. The following assignment will accomplish this:
+$$x_{ij} = \left\{ \begin{array}{cc} \frac{1}{k} &\text{ if } (i,j) \in E \\
+0 &\text{else}.\end{array} \right.$$
+Because $G$ is $k$-regular, $x$ is feasible. The value of this solution is $\frac{1}{k} |E| = |A|$, which completes the proof.
+\end{enumerate}
+%
+
+\item Suppose $G = (V,E)$ is a $2$-edge-connected graph (that is, $G$ remains connected if you delete any single edge) with at least one perfect matching, and suppose that $G$ has a special edge $e$ such that the graph obtained by removing $e$ from $G$ has no perfect matching. Show that there is necessarily a nonempty set $S \subseteq V$ with the following properties:
+\begin{itemize}
+\item the number of odd components of $G\setminus S$ is exactly $|S|$,
+
+\item $G\setminus S$ has at least one even component.
+\end{itemize}
+
+\textbf{Solution: }\\ 
+ Let $G'$ be the graph obtained by removing $e$. Let $S$ be a minimizer in the Tutte-Berge formula for the maximum matching in $G'$. Note that $S$ is nonempty because $G'$ is connected and has an even number of vertices (because $G$ has a perfect matching). As $G'$ has a matching of size $|V|/2 - 1$ (obtained by removing $e$ from any perfect matching in $G$), the number of odd components in $G' \setminus S$ is exactly $|S| + 2$. Moreover, we must have that the number of odd components in $G\setminus S$ is at least $|S|$ because $G$ has a perfect matching. Thus, the edge $e$ must be between two of the odd components of $G' \setminus S$. These two odd components become an even component of $G\setminus S$, which now has exactly $|S|$ odd components.
+
+%Let $S$ be a minimizer in the Tutte-Berge formula for the maximum matching in $G$. Because $G$ has a perfect matching, the number of odd components of $G \setminus S$ is exactly $|S|$. Let $G'$ be the graph obtained by removing $e$. As $G'$ has a matching of size $|V|/2 - 1$, the number of odd components in $G' \setminus S$ is at most $|S| + 1$. Thus the edge $e$ must be between two of the odd components of $G \setminus S$. 
+
+
+\item Show that for any point $x_0$ in an unbounded polyhedron $P \subset \mathbb{R}^n$, $P$ contains a \emph{ray} from $x_0$, a set of the form $\{x_0 + \alpha y: \alpha \geq 0\}$ for some $y \in \mathbb{R}^n$. A suggested approach:
+\begin{itemize}
+\item Show it is enough to prove this when $x_0$ is $0$.
+\item As $P$ unbounded, there is some $c$ such that $\max\{c^T x: x \in P\} = \infty$. Apply linear programming duality for the linear program $\max\{c^T x: x \in P\}$ to show something about the feasibility/infeasibility of the dual.
+\item Apply Farkas' lemma to the infeasibility/feasibility of the dual in order to obtain the direction of the ray.
+\end{itemize}
+
+\textbf{ Solution: } Proving the claim for the point $x_0 = 0$ in the polytope $P - x_0$ proves the original claim for $x_0$ in $P$, as we can simply translate the ray from $0$ by $x_0$ to obtain the desired ray. 
+
+Thus we assume $x_0 = 0 \in P$. Let $P = \{x \in \mathbb{R}^n: Ax \leq b\}$. Note that $b \geq 0$ because $0 \in P$. Let $c \in \mathbb{R}^n$ be such that $\max\{c^T x: x \in P\} = \infty$. By linear programming duality, the dual of this program $\min\{b^T y: A^T y = c, y \geq 0\}$ is infeasible. By Farkas lemma, there is a solution $x$ to $Ax \geq 0$ with $c^T x < 0$. As $A (-x) \leq 0$, we have $A \alpha(- x) \leq 0 \leq b$ for all $\alpha > 0$. Thus $P$ contains the ray $\{- \alpha x : \alpha > 0\}$.
+%What is important is that $
+
+ \paragraph{An extra problem: }
+This one shouldn't count as part of your 2 hours, but a problem like it could appear on the exam.
+
+\item Let $G$ be a bipartite graph with bipartition $A, B$ and edge set $E$. A \emph{fractional vertex cover} is a pair of assignments of numbers $(x_a \in \mathbb{R}: a \in A)$ and $(y_b \in \mathbb{R}: b \in B)$ to the vertices such that 
+\begin{align*}
+x_a + y_b & \geq 1 \quad\forall ab \in E\\
+x_a& \geq 0 \quad \forall a \in A\\
+y_a & \geq 0 \quad \forall b \in B
+\end{align*}
+The \emph{fractional vertex cover number} is 
+$$\tau(G) := \min\left\{\sum_{a \in A} x_a + \sum_{a \in B} y_a: (x,y) \text{ is a fractional vertex cover of } G\right\}.$$
+Show that the fractional vertex cover number is the same as the vertex cover number, i.e. the size of a minimum vertex cover. \textbf{ Hint: }\footnote{Use total modularity, and that $M^T$ is totally unimodular if and only if $M^T$ is.}
+
+\textbf{Solution: } Suppose $|A| = n_1$ and $|B| = n_2$ and $|E| = m$. Consider the matrix $A$ and the vector $b$ such that the set of fractional covers $(x,y) \in \mathbb{R}^{n_1} \times \mathbb{R}^{n_2}$ is equal to the set $\{(x,y): A (x,y) \leq b, (x,y) \geq 0\}$. The number of columns of $A$ is $n_1 + n_2$ and the number of rows is $m$. $A$ is precisely the incidence matrix of the bipartite graph $G$. We recognize $A^T$ as the matrix that appears in the linear programming formulation of the minimum weight perfect matching problem. In class we stated that $A^T$ totally submodular. (Actually, $A^T$ is a \emph{submatrix} of the matrix from the minimum weight perfect matching problem, but it is still totally unimodular). 
+\end{enumerate}
+
+
+
+
+
+\end{document}

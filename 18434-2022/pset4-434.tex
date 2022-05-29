@@ -1,0 +1,69 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+							
+								
+\usepackage{amssymb, amsthm}
+\newcommand{\RR}{\mathbb R}
+\theoremstyle{definition}
+\newtheorem*{rem}{Remark}
+\newtheorem*{thm}{Theorem}
+
+
+\title{18.434 Pset 4 Due Mon 04/18/2022}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose at least two problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+\begin{enumerate}
+\item \textbf{Positive-definiteness:}
+ For symmetric $n\times n$ matrices $A$ and $B$, write that $A \succeq B$ if and only if $A - B$ is positive semidefinite, where we recall that a symmetric matrix $C$ is positive-semidefinite if $x^T C x \geq 0$ for all $x$. We will show a few properties of this now (not necessarily in any particular order). Let $A$ and $B$ be positive-semidefinite matrices.
+ 
+ \emph{Note: for this course, positive-semidefinite matrices are symmetric by definition. This is just a matter of convention (but it makes sense; matrices can be written as a sum of symmetric and antisymmetric parts and definiteness only depends on the symmetric part. Moreover, complex matrices can only satisfy the definiteness condition if they are antisymmetric.)}
+\begin{enumerate}
+\item Let $\lambda_1\geq  \dots\geq  \lambda_n$ be eigenvalues of a symmetric matrix $A$. Then $\lambda_1 I_n \succeq A \succeq \lambda_n I_n$. \textbf{Hint: } Courant Fischer.
+\item Let $A$ be positive-semidefinite. Show that there is a matrix, denoted $\sqrt{A}$, such that $\sqrt{A}\sqrt{A} = A$. \textbf{Hint:} use the spectral theorem.
+\item Suppose $C$ is invertible and $A, B$ symmetric. Then $C A C^T \succeq C B C^T$ if and only if $A \succeq B$.
+\item Suppose $A$ and $B$ are positive-\emph{definite}. Then $A \succeq B$ if and only if $B^{-1} \succeq A^{-1}$. \textbf{Hint:} Choose a clever choice of $C$ (possibly involving item b) and apply item c together with the fact that for any square matrices $S$ and $T$, the spectrum of $ST$ and $TS$ are the same.
+\end{enumerate}
+\item \textbf{Expanders:}
+We say a $d$-regular graph $G$ is an $\varepsilon$-expander if every eigenvalue of the adjacency matrix $A(G)$ except $\lambda_1$ is at most $\varepsilon d$ in absolute value. Recall that $G$ $\varepsilon$-approximates $H$ if and only if the Laplacians satisfy
+$$ (1 + \varepsilon) L(H) \succeq L(G) \succeq (1 - \varepsilon) L(H).$$
+\begin{enumerate}
+\item 
+Show that a $d$-regular graph $G$ is an $\varepsilon$-expander if and only if $G$ $\varepsilon$-approximates $(d/n) K_n$, the complete graph with edges of weight $d/n$. \textbf{Hint: } Courant Fischer.
+\end{enumerate}
+\item \textbf{Harmonic functions:} A function $x:V(G) \to \RR$ on the vertices of a graph $G$ is said to be harmonic on $S \subset V(G)$ if for all $v \in S$ the function value at $v$ is the average of the function values of at the neighbors of $v$. 
+\begin{enumerate}
+\item Show that if $G$ is connected then every function that is harmonic on $S = V$ is constant. 
+\item The vertices in $V(G) \setminus S$ are called \emph{boundary} vertices and the values $x$ takes here the boundary values. Finding a function that is harmonic on $S$ with given boundary values is called the \emph{Dirichlet problem}. How is this related to the spring problem from Aruzhan's talk and the voltage and random walk problems from Max, Lay, Alina and Sherri's talks? Conclude that the Dirichlet problem has a unique solution if $G$ is connected.
+\item Why is the Dirichlet problem not substantially different if we allow $x:V \to \RR^n$ for some $n >1$? 
+\end{enumerate}
+\item \textbf{Energy: } Consider a directed graph with two distinguished vertices $s,t$ (source and sink), a.k.a. a flow network. We define a flow $j_{xy}$ as any assignment of real numbers to a directed graph that satisfies Kirchoff's law at every point other than $s,t$, namely that the flow into and out of any internal vertex is zero. A unit flow has net flow out of the source equal to $1$. Given an assignment of resistances $R_{xy}$ to the edges, define the energy dissipation of a flow to be $\sum_{xy} R_{xy} j_{xy}^2.$ 
+\begin{itemize}
+\item Show that the unit electrical current, namely a unit flow $i_{xy}$ which satisfies Ohm's law for some voltage $v$ applied at source and $0$ applied at sink, minimizes the energy dissipation. This is known as Thomson's principle. \textbf{Hint: } to build intuition you may want to begin with the case that all $R_{xy} = 1$. If you like physics, it might also help to interpret the resistances as spring constants.
+\item Using that a unit current has energy dissipation $R_{\textrm{eff}}$ (this makes sense from the formula $I^2 R$ for energy dissipation across a resistor), conclude Rayleigh's monotonicity law for effective resistance.
+\end{itemize}
+
+
+\item \textbf{Springs:}
+This is exercise 1.2.5 in Doyle and Snell. Recall that a spring network for a graph $G$ is an assignment $x:V(G) \to \RR$ of the vertices to real numbers and each vertex feels a force $ -(x(v) - x(w))$ for every $w$ adjacent to $v$. We say a spring network with a subset $F \subset V$ of fixed vertices is at equilibrium if the total force on each non-fixed vertex is zero. 
+
+The \emph{method of relaxations} method to approximating the equilibrium of a spring network is the following iterative scheme: start with an initial guess for $x$, and fix an ordering on $V \setminus F$. One at a time, replace $v$ by the average $x(v)$ by $d(v)^{-1} \sum_{w \sim v} x(w)$ for $v \in V \setminus F$. Repeat the replacement step until you are satisfied.
+\begin{enumerate}
+\item Suppose the initial guess satisfies $x(v)\leq d(v)^{-1} \sum_{w \sim v} x(w)$. Show that for each $v$, $x(v)$ is monotone increasing throughout the process and has a limit $\tilde{x}(v)$. Show that $\tilde x$ solves the spring network problem.
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}  

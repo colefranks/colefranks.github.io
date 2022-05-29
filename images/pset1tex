@@ -1,0 +1,50 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+							
+								
+\usepackage{amssymb}
+\newcommand{\RR}{\mathbb R}
+
+
+\title{18.434 Pset 1 Due 02/21/2020}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose 3 problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+\begin{enumerate}
+\item On 2/06 (Lecture 2) we calculated the spectrum of the path $P_n$, but we did not calculate the \emph{Laplace spectrum} of the path. That is, the spectrum of $L(P_n)$, the Laplacian of the path. That's the purpose of this exercise. Feel free to try with or without the below plan, which is an expanded version of the argument in BH 1.4.4 and also in Spielman's lecture on paths, rings, and Cayley graphs.
+
+\textbf{Hint: }
+The idea here will be very similar to embedding $L(P_n)$ into a large matrix, except instead of a submatrix we will be expressing $L(P_n)$ as $\pi M \pi^T$ where $\pi$ is a partial isometry (a matrix $\pi$ such that $\pi \pi^T = I_n$). The matrices $\pi M \pi^T$ generalize the submatrices of $M$ because, for instance, the matrix $P_r: \RR^n \to \RR^r$ sending a vector to its first $r$ coordinates is a partial isometry and $P_r M P_r^T$ is the $r \times r$ submatrix in the top left corner of $M$.
+ \begin{enumerate}
+\item  Suppose $\pi: \RR^n \to \RR^r$ is a partial isometry and that $\pi^T v \in \RR^n$ is an eigenvector of $M$ for some $v\in \RR^r$. Show that $v$ is an eigenvector of the $r\times r$ matrix $\pi M \pi^T$ with the same eigenvalue.
+\item Show that $L(P_n)$ is $\pi_n L(C_{2n})\pi_n^T$ where $\pi_n:\RR^{2n} \to \RR^n$ is the partial isometry 
+$$\pi_n:=\frac{1}{\sqrt{2}}\left[\begin{array}{c|c} I_n & H_n\end{array}\right],$$
+whee $H_n$ is an identity matrix rotated 90 degrees. e.g. 
+$$ \pi_3 = \left[\begin{array}{cccccc} 
+1 & 0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 0 
+\end{array}\right].$$
+\item What vectors $w \in \RR^{2n}$ are of the form $\pi_n^T v$ for some $v \in \RR^n$? Find $n$ eigenvectors of $L(C_{2n})$ with this property.
+\item Find an orthogonal eigenbasis for $L(P_n)$ and find its spectrum.
+\end{enumerate}
+
+\item Show the formula 
+$$ x^T L(G) x = \sum_{i,j \in E} (x_i - x_j)^2.$$
+An object from Collin's talk might help.
+\item Show that if $v$ is in the positive eigenspace of a symmetric matrix $A$, i.e. the sum of the eigenspaces corresponding to positive eigenvalues, then $x^T A x > 0$. 
+\item Show that the average degree $\bar{d}$ of $G$ is a lower bound for the largest eigenvalue $\lambda_1$ of $A(G)$. \textbf{Hint:} use Courant-Fischer with an intelligently chosen test vector.
+\item Say a nonnegative matrix $T$ is \emph{primitive} if $T^k > 0$ for some integer $k \geq 0$. Show that all the other eigenvalues are strictly smaller in absolute value than the absolute value of the largest positive one.\end{enumerate}
+
+\end{document}  

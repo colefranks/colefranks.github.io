@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Definition of a Matroid}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Circuits}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Matroid Optimization}{}% 3
+\BOOKMARK [1][-]{section.3}{Rank Function of a Matroid}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Span}{section.3}% 5
+\BOOKMARK [1][-]{section.4}{Matroid Polytope}{}% 6
+\BOOKMARK [2][-]{subsection.4.1}{Algorithmic Proof}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.2}{Vertex Proof}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.3}{Facet Proof}{section.4}% 9
+\BOOKMARK [1][-]{section.5}{Facets?}{}% 10

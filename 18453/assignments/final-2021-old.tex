@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage{../lp,graphicx,amsmath}
+\usepackage{tkz-berge}
+\input{../newmac}
+\newcommand{\rank}{\operatorname{rank}}
+
+\setlength{\topmargin}{-1in}
+\setlength{\textheight}{9.7in}
+%\usepackage{epsfig}
+\begin{document}
+
+%\handout{QUIZ 1}{April 11th, 2017}
+
+\noindent {\Large 18.453 Final, Spring 2021} \\
+~\\
+
+\paragraph{Instructions.} This is a {\bf timed} final. Turn in this final by submitting a pdf or image to gradescope at most \textbf{3} hours after opening it. You may use notes and course material, but collaboration is not allowed. You may quote anything stated in the course material or lecture notes without justification, including exercises (except exercises that appear on the final itself). Questions are worth 4 points unless otherwise mentioned.
+
+\textbf{Failure to adhere to these rules may result in a grade of zero for the assignment, and referral to the Committee on Discipline.}
+%For best practice I suggest trying to complete it under these conditions. Afterwards please tell me if 2 hours felt like enough. 
+%Please write the solutions as neatly as possible and show your steps. Your grade will be the average of these two grades. 
+
+
+\begin{enumerate}
+\item Answer true or false. If true, provide a concise reason (no rigor necessary) and if false, exhibit a counterexample. 
+\begin{enumerate}
+\item For every graph $G$, the \emph{undirected} incidence matrix $A_G$ of $G$ is totally unimodular. For instance, the path of length two $(\{1,2,3\}, \{(1,2), (2,3)\})$ has the undirected incidence matrix
+$$ \begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1
+\end{bmatrix}. $$
+\item Given two matroids $M_1 = (E, I_1)$, $M_2 = (E_, I_2),$ the pair $(E, I_1 \cup I_2)$ is a matroid.
+%\item Given two matroids $M_1 = (E, I_1)$, $M_2 = (E_, I_2),$ the pair $$(E, \{X \cup Y: X \in I_1, Y\in I_2\})$$ is a matroid.
+%\item Suppose $A \in \R^{m\times n}, b \in \R^m$ and that $Ax \leq b$. Suppose there is a vector $y \in \R^m$ such that $y_i > 0 \implies (Ax)_i = 0$ for all $i \in [m]$ and for all $j \in [n]$,  $x_i > 0 \implies (A^T y)_i .$ 
+\item Given two matroids $M_1 = (E, I_1)$, $M_2 = (E_, I_2),$ the pair $(E, I_1 \cap I_2)$ is a matroid.
+%\item Given a graph $G = (V, E)$, the function $f:2^V \to \R$ where $f(S)$ is defined as the largest stable set of the graph $(V,S)$ is a submodular function. (Recall that a subset of the vertices is stable if there are no edges contained in it.)
+\item Given a graph $G = (V, E)$, let $f:2^E \to \R$ be defined by setting $f(S)$ to be the maximum number of edges of a forest contained in the subgraph $(V, S)$. The function $f$ is submodular.
+\item Given a membership oracle for a convex set $P\subset [0,1]^n$ containing an \emph{unknown} cube of side-length $0.01$, one can find an element of $P$ in polynomial time. \end{enumerate}
+\newpage
+Blank page
+\newpage
+\item Let $M$ be a matching in a (not necessarily bipartite) graph $G = (V, E)$. Suppose there are nonnegative functions
+$y:\{S\subset V:|S| \text{ is odd}\} \to \R$ and $z: V \to \R$ such that 
+\begin{enumerate}
+\item for all $(v,w) \in E$, 
+$$ z(v) + z(w) + \sum_{S: \{v,w\} \subset S, |S| \text{ odd} } y(S) \geq 1$$ and equality holds whenever $(v,w) \in M$. 
+\item $y(S) = 0$ for every odd set $S$ containing strictly less than $|S|-1/2$ edges of $M$ and $z(v) = 0$ for every vertex $v \in V$ not covered by $M$.
+\end{enumerate}
+Show that $M$ is of maximum size.
+\newpage
+Blank page
+\newpage
+
+\item Let $B \in \{0,1\}^{m\times n}$ be a $0$-$1$ matrix and let $r \in \R^m$ and $c \in \R^n$ be nonnegative vectors such that $\sum_{i = 1}^m r_i = \sum_{j = 1}^m c_i$. We are interested in deciding if there is a nonnegative matrix $A \in \R^{m \times n}$ with row sums $r$ and column sums $c$ with the additional property that $A_{ij} = 0$ whenever $B_{ij} = 0$. 
+\begin{enumerate}
+\item Find a flow network that has value $\sum_{i = 1}^m r_i$ if and only if there exists such a matrix $A$. 
+\item Show that there exists such a matrix $A$ if and only if for every $I \subset [m], J \subset [n]$ such that $B_{ij} = 0$ for $i \in I, j \in J$, (i.,e. $I\times J$ is an all-zero submatrix of $B$) we have
+$$\sum_{j \in J} c_j  \leq \sum_{i \not \in I} r_i.$$
+\item If $r$ and $c$ are integral and there exists such a matrix $A$, must there also exist an \emph{integral} matrix $A$? Justify your answer with one or two sentences.
+\end{enumerate}
+\newpage
+Blank page 
+\newpage 
+
+\item Prove K\"onig's theorem using the min-max characterization of the largest common independent set for two matroids. 
+\newpage 
+Blank page
+
+\newpage
+\item Given a bipartite graph $G = (A \cup B, E)$ with bipartition $A, B$, and a set of nonnegative edge costs $c: E \to \R$, we'd like to compute the maximum cost of a subgraph of degree at most two. 
+
+\begin{enumerate}
+\item Show that the maximum cost subgraph of degree two is equal to the value of the linear program $\max\{c^T x: x \in P\}$ where $$ \begin{array}{ll@{\hspace{0.5in}}l}
+P=\{ x\in \R^{|E|}: & \displaystyle \sum_{j\in B: (i,j)\in E} x_{ij}
+\leq 2 & i \in A \\
+& \displaystyle \sum_{i\in A: (i,j)\in E} x_{ij}
+\leq 2 & j \in B \\
+ & 0 \leq x_{ij}\leq 1 & (i,j)\in E \} \end{array}$$
+\item Explain how to use the ellipsoid algorithm to find a maximum cost subgraph of degree two, and explain why your algorithm runs in polynomial time. You do not need to describe the individual steps of the ellipsoid algorithm. You may quote any result we have proven about the ellipsoid algorithm or binary search.\footnote{Please describe ellipsoid even if you can think of a better  algorithm :)} %You may not simply say ``linear programming can be done in polynomial time using the ellipsoid method."\footnote{There are actually much faster ways to do this than ellipsoid.}
+
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+\end{document}

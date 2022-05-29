@@ -1,0 +1,109 @@
+% Cross-references for handout numbers.
+\usepackage{amsfonts}
+%\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{amssymb}
+%\usepackage[capitalize]{cleveref}
+\usepackage{xcolor}
+
+%\input{handouts}
+
+\newcounter{chapnum}
+
+\newtheorem{definition}{Definition}[chapnum]
+\newtheorem{remark}{Remark}[chapnum]
+\newtheorem{theorem}{Theorem}[chapnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}{Observation}[chapnum]
+
+\renewcommand{\thesection}{\arabic{chapnum}.\arabic{section}}
+\renewcommand{\thefigure}{\arabic{chapnum}.\arabic{figure}}
+
+
+\newenvironment{proof}{\noindent{\bf Proof:} \hspace*{1em}}{
+        \hspace*{\fill} $\triangle$ }
+\newenvironment{proof_of}[1]{\noindent {\bf Proof of #1:}
+        \hspace*{1em} }{\hspace*{\fill} $\triangle$ }
+\newenvironment{proof_claim}{\begin{quotation} \noindent}{
+        \hspace*{\fill} $\diamond$ \end{quotation}}
+\newenvironment{solution}{\noindent{\bf Solution:} \hspace*{1em}}{
+        \hspace*{\fill} $\triangle$ }
+
+
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\lin}{\operatorname{lin}}
+\newcommand{\aff}{\operatorname{aff}}
+\newcommand{\cone}{\operatorname{cone}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\poly}{\operatorname{poly}}
+
+
+
+
+\newcommand{\CF}[1]{{\color{purple}[CF: #1]}}
+
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\newcommand{\htitle}[2]{\noindent\vspace*{-\toppush}\newline\parbox{6.5in}
+{Massachusetts Institute of Technology \hfill 18.453: Combinatorial Optimization 
+\newline
+\textbf{Instructor:} Cole Franks \quad \textbf{Notes: }Michel Goemans and Zeb Brady \hfill#2\newline
+\mbox{}\hrulefill\mbox{}}\vspace*{1ex}\mbox{}\newline
+\begin{center}{\Large\bf #1}\end{center}}
+
+\newcommand{\handout}[2]{\thispagestyle{empty}
+ \markboth{ #1 \hfil #2}{ #1 \hfil #2}
+ \pagestyle{myheadings}\htitle{#1}{#2}}
+
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+
+\newcounter{exercisenum}
+\newcounter{exercisetot}
+\setcounter{exercisetot}{0}
+
+
+
+\newenvironment{exercises}{
+	\begin{list}{{\bf Exercise \arabic{chapnum}-\arabic{exercisenum}. \hspace*{0.5em}}}
+	{\setlength{\leftmargin}{0em}
+	 \setlength{\rightmargin}{0em}
+	 \setlength{\labelwidth}{0em}
+	 \setlength{\labelsep}{0em}
+	\usecounter{exercisenum}
+      \setcounter{exercisenum}{\theexercisetot}}}{\setcounter{exercisetot}{\theexercisenum}\end{list}}
+
+
+\newenvironment{pseudocode}{
+    \begin{list}{}{
+        \renewcommand{\makelabel}{$\triangleright$}
+        \setlength{\topsep}{0pt}
+        \setlength{\leftmargin}{32pt}
+        \setlength{\labelwidth}{14pt}
+        \setlength{\labelsep}{0mm}
+        \setlength{\itemindent}{0mm}
+        \setlength{\itemsep}{-3pt}
+        \setlength{\itemsep}{0mm}
+        \setlength{\parsep}{0pt}%
+        \setlength{\listparindent}{0pt}
+    }
+}
+{
+    \end{list}
+}

@@ -1,0 +1,87 @@
+\def\numb#1{\global\@eqnswtrue \label{#1}}
+
+\def\lps{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqcnt\z@    \let\\=\@qncjwr
+$$\halign to \displaywidth\bgroup  \global\@eqnswfalse
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 200pt
+  &\global\@eqcnt\@ne   \hskip 2\arraycolsep 
+        \hfil$\displaystyle{##}$      \tabskip\z@
+  &\global\@eqcnt\tw@   \hskip 2\arraycolsep 
+        \hfil$\displaystyle{##}$\hfil 
+  &\global\@eqcnt\thr@@ \hskip 2\arraycolsep 
+        \hfil$\displaystyle{##}$\hfil
+  &\global\@eqcnt=4     \hskip 2\arraycolsep  
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 400pt     
+  &\global\@eqcnt=5     \hskip 2\arraycolsep  
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 600pt
+  &\llap{##}    \tabskip\z@\cr}
+
+\def\elps{\@@qncjwr\egroup 
+      \global\advance\c@equation\m@ne$$\global\@ignoretrue
+\let\\=\@normalcr}
+
+\def\lpn{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqcnt\z@    \let\\=\@qncjwlr
+$$\halign to \displaywidth\bgroup  \global\@eqnswfalse
+             $\displaystyle{##}$\hfil \tabskip\z@
+  &\global\@eqcnt\@ne   \hskip 2\arraycolsep 
+             $\displaystyle{##}$\hfil \tabskip\z@
+  &\global\@eqcnt\tw@   \hskip 2\arraycolsep 
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 400pt
+  &\global\@eqcnt\thr@@ \hskip 2\arraycolsep 
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 600pt
+    &\llap{##}    \tabskip\z@\cr}
+
+\def\elpn{\@@qncjwlr\egroup 
+      \global\advance\c@equation\m@ne$$\global\@ignoretrue
+\let\\=\@normalcr}
+
+
+
+\def\@qncjwr{{\ifnum0=`}\fi\@ifstar{\global\@eqpen\@M
+    \@yqncjwr}{\global\@eqpen\interdisplaylinepenalty \@yqncjwr}}
+
+\def\@yqncjwr{\@ifnextchar [{\@xqncjwr}{\@xqncjwr[\z@]}}
+
+\def\@xqncjwr[#1]{\ifnum0=`{\fi}\@@qncjwr
+   \noalign{\penalty\@eqpen\vskip\jot\vskip #1\relax}}
+
+\def\@@qncjwr{\let\@tempa\relax 
+    \ifcase\@eqcnt \def\@tempa{& & & & & &}\or \def\@tempa{& & & & &}
+\or \def\@tempa{& & & &}\or \def\@tempa{& & &}\or \def\@tempa{& &} 
+      \else \def\@tempa{&}\fi 
+     \@tempa \if@eqnsw\@eqnnum\stepcounter{equation}\fi
+     \global\@eqnswtrue\global\@eqcnt\z@\cr}
+
+
+\def\lpl{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqcnt\z@    \let\\=\@qncjwlr
+$$\halign to \displaywidth\bgroup  \global\@eqnswfalse
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 200pt
+  &\global\@eqcnt\@ne   \hskip 2\arraycolsep 
+        \hfil$\displaystyle{##}$\hfil \tabskip\z@
+  &\global\@eqcnt\tw@   \hskip 2\arraycolsep 
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 400pt
+  &\global\@eqcnt\thr@@ \hskip 2\arraycolsep 
+             $\displaystyle{##}$\hfil \tabskip= 0pt plus 600pt
+    &\llap{##}    \tabskip\z@\cr}
+
+\def\elpl{\@@qncjwlr\egroup 
+      \global\advance\c@equation\m@ne$$\global\@ignoretrue
+\let\\=\@normalcr}
+
+\def\@qncjwlr{{\ifnum0=`}\fi\@ifstar{\global\@eqpen\@M
+    \@yqncjwlr}{\global\@eqpen\interdisplaylinepenalty \@yqncjwlr}}
+
+\def\@yqncjwlr{\@ifnextchar [{\@xqncjwlr}{\@xqncjwlr[\z@]}}
+
+\def\@xqncjwlr[#1]{\ifnum0=`{\fi}\@@qncjwlr
+   \noalign{\penalty\@eqpen\vskip\jot\vskip #1\relax}}
+
+\def\@@qncjwlr{\let\@tempa\relax 
+    \ifcase\@eqcnt \def\@tempa{& & & &}\or \def\@tempa{& & &}\or
+\def\@tempa{& &} 
+      \else \def\@tempa{&}\fi 
+     \@tempa \if@eqnsw\@eqnnum\stepcounter{equation}\fi
+     \global\@eqnswtrue\global\@eqcnt\z@\cr}
+

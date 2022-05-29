@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <a href="images/sheet2">Sheet 2 Sept 08 </a>, <a href="images/rec2examples.pdf">Examples Sept 08 </a>,
+
+ <a href="images/sheet3">Sheet 3 Sept 10 </a>, <a href="images/rec3examples">Examples Sept 10 </a>,
+
+ <a href="images/sheet4">Sheet 4 Sept 15 </a>, <a href="images/rec4examples">Examples Sept 15 </a>
+
+ <a href="images/sheet5">Sheet 5 Sept 17 </a>,<a href="images/rec5examples">Examples Sept 17 </a>
+
+  <a href="images/sheet6">Sheet 6 Sept 22 </a>,
+
+    <a href="images/sheet7">Sheet 7 Sept 24 </a>,
+
+
+   <a href="images/sheet8">Sheet 8 Sept 29 </a>,
+
+       <a href="images/rec9bonus">Bonus Sept 29 </a>,
+
+    <a href="images/sheet9">Sheet 9 Oct 1 </a>,
+    <a href="images/sheet10">Sheet 10 Oct 6 </a>,
+<a href="images/sheet11">Sheet 11 Oct 8 </a>,
+
+<a href="images/sheet12">Sheet 12 Oct 15 </a>,
+
+<a href="images/sheet13">Sheet 13 Oct 20 </a>,
+
+<a href="images/sheet14">Sheet 14 Oct 22 </a>,
+
+<a href="images/sheet15">Sheet 15 Oct 27 </a>,
+<a href="images/sheet16">Sheet 16 Oct 29 </a>,
+<a href="images/sheet17">Sheet 17 Nov 5 </a>,
+<a href="images/sheet18">Sheet 18 Nov 10 </a>,
+<a href="images/sheet19">Sheet 19 Nov 12 </a>,
+<a href="images/sheet20">Sheet 20 Nov 17 </a>,
+<a href="images/sheet21">Sheet 21 Nov 19 </a>,
+<a href="images/sheet22">Sheet 22 Dec 1 </a>,
+<a href="images/sheet23">Sheet 23 Dec 3 </a>,
+<a href="images/sheet24">Sheet 24 Dec 8 </a>
+
+
+<p>Select your breakout room:
+<select id="mySelect" onchange="myFunction()">
+  <option value="0">Default</option>
+  <option value="1">Breakout Room 1</option>
+  <option value="2">Breakout Room 2</option>
+  <option value="3">Breakout Room 3</option>
+  <option value="4">Breakout Room 4</option>
+  <option value="5">Breakout Room 5</option>
+  <option value="6">Breakout Room 6</option>
+</select></p>
+
+<p id="demo"></p>
+<script>
+var urls = ["#",
+"https://app.conceptboard.com/board/76eg-eq50-sif5-hs44-m937#",
+"https://app.conceptboard.com/board/6zie-uu7b-5izt-egnb-urq1#",
+"https://app.conceptboard.com/board/0926-nh1z-ra8a-0b4q-bs45#",
+"https://app.conceptboard.com/board/71zf-e65x-a1uk-ib6n-kp6k#",
+"https://app.conceptboard.com/board/ithm-305x-opio-5u8a-qozx#",
+"https://app.conceptboard.com/board/in2s-1hzr-oead-1pxp-z0qu#"]
+
+function myFunction() {
+  var x = document.getElementById("mySelect").value;
+  document.getElementById("demo").innerHTML = '<embed type="text/html" src='+urls[x]+' width=100% height="1000px">';
+}
+</script>
+
+<p> An explain everything board, just in case: <a href="https://expl.ai/PJPFZZNB"> Explain everything </a>; code PJPFZZNB</p>
+</body>
+</html>

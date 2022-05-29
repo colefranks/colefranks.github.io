@@ -1,0 +1,279 @@
+\documentclass[12pt]{article}
+\input{../newmac}
+\usepackage{graphicx,../lp,amsmath}
+\newcommand{\I}{\mathcal I}
+\begin{document}
+
+
+\handout{Solutions to Problem Set 2 (do not distribute)}{2021 Spring}
+
+% 2009
+% ps1
+
+%2013
+% ps1: 1-2, 1-3, 1-4, 1-5 and 1-12. Grad: 1-8.
+% ps2: 2-1, 2-2 and 2-3. 3-1, 3-2. Grad: 2-7.
+% ps3: 3-9, 3-12 and 3-17. 4-2, 4-7 and 4-8.
+
+%2015
+% ps1: 1-9
+
+
+%2021
+%ps1:
+%ps2:
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%
+
+%%%%%
+%\item[2-3] % revised by Cuenca
+
+%\begin{quote}
+%Let $U$ be any minimizer in the Tutte-Berge formula. Let $K_1,\cdots,K_k$ be the connected components of $G \setminus U$. Show that, for \emph{any} maximum matching $M$, we must have that
+%\begin{enumerate}
+%\item $M$ contains exactly $\lfloor\frac{|K_i|}{2}\rfloor$ edges from $G[K_i]$ (the subgraph of $G$ induced by the vertices in $K_i$), i.e., $G[K_i]$ is perfectly matched for the even components $K_i$ and near-perfectly matched for the odd components.
+%\item Each vertex $u \in U$ is matched to a vertex $v$ in an odd component $K_i$ of $G \setminus U$.
+%\item The only unmatched vertices must be in odd components $K_i$ of $G \setminus U$.
+%\end{enumerate}
+%\end{quote}
+
+%Let $U$ be a minimizer set and $M$ be a maximum
+%matching. Note that each edge in $M$ is either an edge of some
+%$G[K_i]$ or it is adjacent to some vertex in $U$. Also note that the
+%number of edges in $M$ adjacent to $U$ is at most $|U|$ and the number
+%of edges in $M$ from $G[K_i]$ is at most
+%$\left\lfloor\frac{|K_i|}{2}\right\rfloor$. It follows that:
+%\begin{align*}
+%|M| &= \left|\left[M \cap \{e \in E: e \text{ adjacent to some $v \in U$}\}\right]\right| +  \sum_{i=1}^k |M \cap E(G[K_k])|\\
+%&\leq |U| + \sum_{i=1}^k \left\lfloor\frac{|K_i|}{2}\right\rfloor = \frac{1}{2}(|V| + |U| - o(G\setminus U)) = |M|,
+%\end{align*}
+%where the last equality holds because $M$ is maximum and $U$ is
+%minimizer to the Tutte-Berge formula.
+
+%The previous formula implies that all the inequalities are equalities
+%(if some of them is strict, we would have a contradiction). In
+%particular we have that:
+%\begin{align*}
+%\left|\left[M \cap \{e \in E: e \text{ adjacent to some $v \in
+%U$}\}\right]\right| &= |U|, \\ \text{ and for every $i$, } |M \cap
+%E(G[K_k])| &= \left\lfloor\frac{|K_i|}{2}\right\rfloor .
+%\end{align*}
+
+%\begin{enumerate}
+%\item So $M$ has exactly $|U|$ edges adjacent to some vertex in
+%$U$, and for every~$i$, $M$ contains exactly
+%$\left\lfloor\frac{|K_i|}{2}\right\rfloor$ edges from $G[K_i]$. In
+%particular, $G[K_i]$ is perfectly matched for even components $K_i$
+%and near-perfect matched for odd components.
+
+%\item From the previous analysis, every vertex $u$ in $U$ is
+%matched to some vertex in $G \backslash U$. Since all the vertices of the even
+%components are already matched, $u$ must be matched to some vertex in
+%an odd component $K_i$ of $G\setminus U$.
+
+%\item Finally, since all the vertices in $U$ are matched to some vertex
+%outside $U$, and all the vertices in each even component are perfectly
+%matched, we obtain that the only unmatched vertices must be in odd
+%components of $G\setminus U$.
+%\end{enumerate}
+%%%%%
+
+\item[2-2]
+\begin{quote}
+Let $G=(V,E)$ be any graph. Given a set
+$S\subseteq V$, suppose that there exists a matching $M$ covering $S$
+(i.e. $S$ is a subset of the matched vertices in $M$). Prove that
+there exists a {\it maximum} matching $M^*$ covering $S$ as well.
+\end{quote}
+Suppose for contradiction that $M'$ has maximum size among matchings that cover $S$, but that $M'$ is not a maximum matching. Then $M'$ has an augmenting path $P$. Then $M'\Delta P$ is a larger matching, so to finish the contradiction we just need to show that it covers $S$. Vertices of $S$ which are not on the path $P$ will still be covered by $M'\Delta P$ since they are covered by edges of $M'$ which are also in $M'\Delta P$. Vertices of $S$ which are on the path $P$ must necessarily be in the interior of the path $P$ (since the endpoints of $P$ are exposed by the definition of an augmenting path), and each vertex in the interior of $P$ is contained in one edge of $M$ and one edge of $P$ which is not contined of $M$, so vertices in the interior of the path $P$ will be covered by $M'\Delta P$ as well.
+
+%%%%%
+\item[2-6]
+
+\begin{quote}
+Show that any 3-regular 2-edge-connected graph $G = (V,E)$ (not necessarily bipartite) has a perfect matching. (A 2-edge-connected graph has at least 2 edges in every cutset; a cutset being the edges between $S$ and $V\setminus S$ for some vertex set $S$.)
+\end{quote}
+We will use the Tutte-Berge formula. Let $U \subseteq V$, and
+let $W$ be any connected component of odd size of $G \setminus U$.
+Because $G$ is 3-regular, there is an odd number of edges between
+$W$ and $U$ (this follows by just counting the edges incident to a
+vertex of $W$, and observing that the edges inside $W$ will be counted
+twice). Moreover, those edges are a cutset. Thus, that cutset
+has at least 3 edges. Because this holds for every connected
+component of odd size, the 3-regularity of $G$ implies that
+$|U| \geq o(G \setminus U)$. In other words, by the
+Tutte-Berge formula, $\max_M |M| = |V|/2$.
+
+%%%%%
+
+%%%%%
+\item[2-7] %Chiheon Kim
+
+\begin{quote}
+A graph $G = (V, E)$ is said to be factor-critical if, for all $v \in V$, we have that $G \setminus \{v\}$ contains a perfect matching. In parts (a) and (b) below, $G$ is a factor-critical
+graph.
+\begin{itemize}
+\item[1.] Let $U$ be any minimizer in the Tutte-Berge formula for $G$. Prove that $U = \emptyset$. %(Hint: see Exercise 2-3.)
+\item[2.] Deduce that when Edmonds algorithm terminates the final graph (obtained from $G$ by shrinking blossoms) must be a single vertex.
+\item[3.] Given a graph $H = (V, E)$, an ear is a path $v_0 - v_1 - v_2 - \cdots - v_k$ whose endpoints ($v_0$ and $v_k$) are in $V$ and whose internal vertices ($v_i$ for $1 \leq i \leq k - 1$) are not in $V$. We allow that $v_0$ be equal to $v_k$, in which case the path would reduce to a cycle. Adding the ear to $H$ creates a new graph on $V \cup \{v_1,\cdots, v_{k-1}\}$. The trivial case when $k = 1$ (a ’trivial’ ear) simply means adding an edge to $H$. An ear is called odd if $k$ is odd, and
+even otherwise; for example, a trivial ear is odd.
+\begin{itemize}
+\item[(a)] Let $G$ be a graph that can be constructed by starting from an odd cycle and repeatedly adding odd ears. Prove that $G$ is factor-critical.
+\item[(b)] Prove the converse that any factor-critical graph can be built by starting from an odd cycle and repeatedly adding odd ears.
+\end{itemize}
+\end{itemize}
+\end{quote}
+
+\begin{itemize}
+\item[1.] Let $U$ be a minimizer for Tutte-Berge formula. We know that $|U| = o(G\setminus U) - 1$ since the size of maximum matching is $\frac{|V|-1}{2}$. Let $v \in V(G)$ and let $M_v$ be a near-perfect matching which exposes $v$. Each odd component $O$ of $G\setminus U$ has a vertex that is unmatched inside $O$ but might be matched with a vertex from $U$. Since $|U| < o(G\setminus U)$, there is an odd component $O$ with an exposed vertex. The only exposed vertex is $v$, so $v$ must lie in one of the odd connected components.
+    %Then by Exercise 2-3, $v$ must lie in one of the odd connected components.
+    This is true for all $v$, so $U = \emptyset$.
+
+\item[2.]
+Recall the proof for the correctness of Edmonds algorithm in the note. We showed that when Edmonds algorithm terminates, then in current graph $U = \textsc{Odd}$ is the minimizer of Tutte-Berge formula. If the current graph is factor-critical, then $U$ must be empty and this is only possible when the current graph is a single vertex. Hence, for factor-critical graph which is not a single vertex, Edmonds algorithm will always find a flower.
+
+We claim that for a factor-critical graph $G$, if $B$ is a blossom with respect to the nearly-perfect matching $M$, %found by Edmonds algorithm,
+then $G/B$ is again factor-critical. It implies that the final graph must be a single vertex.
+
+Let $b$ be the vertex of $G/B$ for shrunken cycle $B$. Let $v$ be the missing vertex of $M$. We may assume that $v \in B$, since we can take $M' = M \triangle P$ where $P$ is the stem of the flower. Note that $|M \cap E(B)| = \frac{|B|-1}{2}$, i.e., every vertex in $B$ are matched inside $B$ except $v$.
+
+Let $u \in V(G/B)$. We want to show that there is a nearly-perfect matching of $G/B$ missing $u$. If $u = b$, then $M/B$ is a nearly-perfect matching of $G/B$ missing $u$. If $u \neq b$, then there is a nearly-perfect matching $M_u$ of $G$ missing $u$. So we can find an even $M_v$-alternating path connecting $u$ and $v$ by taking $M_u \triangle M_v$. Let $s$ be the first vertex in $B$ from $u$. Let $P$ be the subpath connecting $u$ and $s$. This subpath is still even, since every vertex in $B \setminus \{v\}$ is matched inside $B$. Hence, $(M/B) \triangle P$ is a nearly-perfect matching of $G/B$ missing $u$.
+
+\item[3.]
+
+\begin{itemize}
+\item[(a)] Use induction on the number of ears. If $G$ is just an odd cycle, then $G$ is factor-critical. Assume that $G = (V, E)$ is factor-critical, and $G' = (V', E')$ be a graph obtained by adding an odd ear $v_0-v_1-\dotsc-v_k$ to $G$.
+
+Let $v \in V'$. If $v \in V$, then there is a matching $M$ of $G$ which covers $V \setminus \{v\}$. So $M \cup \{v_1v_2, v_3v_4, \dotsc, v_{k-2}v_{k-1}\}$ covers $V' \setminus \{v\}$. Otherwise, $v = v_i$ for some $i$ with $1\leq i \leq k-1$. If $i$ is even, then let $M$ be a matching of $G$ which covers $V \setminus \{v_0\}$ and let $M' = M \cup \{v_0v_1, \dotsc, v_{i-2}v_{i-1}, v_{i+1}v_{i+2}, \dotsc, v_{k-2}v_{k-1}\}$. If $i$ is odd, then let $M$ be a matching of $G$ which covers $V \setminus \{v_k\}$ and let $M' = M \cup \{v_1v_2,\dotsc,v_{i-2}v_{i-1},v_{i+1}v_{i+2}, \dotsc, v_{k-1}v_{k}\}$. In either cases, $M'$ covers $V' \setminus \{v\}$. So $G'$ is factor-critical.
+
+\item[(b)] Suppose that $G$ is factor-critical. For any $v$, fix a near-perfect matching $M_v$ misses $v$. Note that if $uv$ is an edge, then $M_u \triangle M_v$ contains an even alternating path from $u$ to $v$. Together with $uv$ we obtain an odd cycle. This establishes the existence of an initial odd cycle.
+
+Fix a vertex $v$ and $M_v$. We proceed by induction. Let $H$ be the subgraph of $G$ defined by the odd ear decomposition we found so far. We will add an odd ear to $H$ until $H = G$, while maintaining that $v \in H$ and that no edge in $M_v$ crosses $V(H)$ (connects $V(H)$ and $V(G) \setminus V(H)$).
+
+If $V(H) = V(G)$, then we can add remaining edges to $H$ since each edge is a trivial odd ear. Otherwise, there is an edge $ab$ such that $a \in H$, $b \not\in H$ and $ab \not\in M_v$ since $G$ is connected. Consider $M_b \triangle M_v$. It contains an even alternating path from $b$ to $v$. Let $xy$ be the first edge on the path from $b$ such that $x \not \in H$ but $y \in H$. By induction hypothesis, $xy$ is not in $M_v$. Hence, the subpath $P$ from $b$ to $y$ must be of even length. So $P \cup \{ab\}$ is an odd ear connecting $a$ and $y$.
+
+
+\end{itemize}
+
+\end{itemize}
+
+%%%%%
+\item[P4]
+
+\begin{quote}
+Consider $S = \{(1,0,1),(0,1,1),(1,1,2),(0,2,2)\} \subseteq \R^3$. Describe $\mathrm{lin}(S)$, $\mathrm{aff}(S)$, $\mathrm{cone}(S)$ and $\mathrm{conv}(S)$ (as a polyhedron, in terms of the linear equalities/inequalities).
+\end{quote}
+
+\begin{itemize}
+\item[(1)] $\mathrm{lin}(S) = \{(x,y,z)\in\R^3: z = x+y\}$.
+\item[(2)] $\mathrm{aff}(S) = \{(x,y,z)\in\R^3: z = x+y\}$.
+\item[(3)] $\mathrm{cone}(S) = \{(x,y,z)\in\R^3: z = x+y, x \ge 0, y \ge 0\}$.
+\item[(4)] $\mathrm{conv}(S) = \{(x,y,z)\in\R^3: z = x+y, 0 \le x \le 1, 1 \le z \le 2\}$.
+\end{itemize}
+
+%%%%%
+
+
+%%%%%
+%\item[P4]
+%\begin{quote}
+%Let $G = (V, E)$ be a bipartite graph having a perfect matching. Consider the set $M \subseteq \R^E$ of the incidence vectors of all perfect matchings of $G$. We have seen a description of $\mathrm{conv}(M)$ as a system of linear inequalities/equalities. Give a description (and a
+%proof) of the conic hull, $\mathrm{cone}(M)$, as the solution set of system of linear inequalities and equalities.
+%\end{quote}
+
+%Note that
+%$$
+%\begin{aligned}
+%\mathrm{conv}(M) = \{x \in \R^E: & \sum_{e \in \delta(i)} x_e = 1 &\quad i\in A \\
+%& \sum_{e \in \delta(j)} x_e = 1 &\quad j \in B \\
+%& x_e \geq 0 &\quad e \in E \}
+%\end{aligned}
+%$$
+%where $\delta(v) = \{e \in E: \text{$v$ is an endpoint of $e$}\}$. The conic hull of $\mathrm{conv}(M)$ can be written as
+%$$
+%\mathrm{cone}(M) = \{x \in \R^E: x = ty \text{ for some } y \in \mathrm{conv}(M) \text{ and } t \geq 0\}.
+%$$
+%Let $i_0$ be any vertex of $G$. We claim that the polytope
+%$$
+%\begin{aligned}
+%P := \{x \in \R^E: & \sum_{e \in \delta(i_0)} x_e = \sum_{e \in \delta(i)} x_e & i \in V \setminus \{i_0\} \\
+%& x_e \geq 0 & e \in E\}.
+%\end{aligned}
+%$$
+%is equal to $\mathrm{cone}(M)$. It is clear that $P$ contains $M$, so $P \supseteq \mathrm{cone}(M)$. To prove the converse, let $x\in P$. Let $t = \sum_{e \in \delta(i_0)} x_e$. Since $x_e \geq 0$ for any $e$, we have that $t \geq 0$. If $t = 0$, then $x = 0$ so $x$ is a trivial conic combination of incident vectors of perfect matchings. If $t > 0$, then let $y = x/t$. Clearly $y \geq 0$ and
+%$$
+%\sum_{e \in \delta(i)} y_e = 1
+%$$
+%for any $i \in V$. Hence, $y \in \mathrm{conv}(M)$ and $y$ can be written as a convex combination
+%$$
+%y = c_1 y_1 + \cdots + c_k y_k
+%$$
+%where $y_1,\cdots,y_k \in M$ and $c_1,\cdots,c_k \geq 0$ with $\sum_{i=1}^k c_i = 1$. So,
+%$$
+%x = (tc_1) y_1 + \cdots + (tc_k) y_k.
+%$$
+%Since $tc_1,\cdots,tc_k$ are nonnegative, $x$ is a conic combination of vectors in $M$.
+%%%%%
+
+\item[P5]
+\begin{quote}
+Suppose you are given a description of a polyhedron $P$ as the solution set to a system of linear inequalities/equalities. Describe a procedure for finding a description of the conic hull, cone$(P)$, as the solution set of a system of linear inequalities and equalities. (Hint: Introduce a new variable and use Fourier-Motzkin elimination to get rid of it.)
+\end{quote}
+
+Any conic combination of points in $P$ can be written as a nonnegative overall scale factor times a convex combination of points in $P$. Since $P$ is closed under convex combinations, a point $x$ is in the conic hull of $P$ if and only if there is a scale factor $\lambda \ge 0$ such that $x \in \lambda P$, where $\lambda P = \{\lambda z \mid z \in P\}$. If $\lambda > 0$, this is equivalent to $\lambda^{-1}x \in P$. If $P$ is described in the form $P = \{x \mid Ax \le b\}$, then $\lambda^{-1}x \in P$ if and only if we have
+\[
+A(\lambda^{-1}x) \le b,
+\]
+and from $\lambda > 0$, this occurs if and only if
+\[
+Ax \le \lambda b.
+\]
+If $P$ is nonempty, then we see that $x \in \text{cone}(P)$ if and only if either $x = 0$ or there exists $\lambda > 0$ such that $Ax \le \lambda b$ (if $P$ is a polytope, this can be simplified to $x \in \text{cone}(P) \iff \exists \lambda \ge 0\ Ax \le \lambda b$, but the example $P = \{(a,b) \in \mathbb{R}^2 \mid a \ge 0, b = 1\}$ shows that if $P$ is a polyhedron, the strict inequality can be necessary). Since the system
+\begin{align*}
+\lambda &> 0\\
+Ax &\le \lambda b
+\end{align*}
+is linear in the coordinates of $x$ and in $\lambda$, we can eliminate $\lambda$ from this system using Fourier-Motzkin elimination to get a system of linear inequalities in $x$. Explicitly, if the $i$th row of the matrix $A$ is $a_i^T$ and the $i$th coordinate of $b$ is $b_i$, then we divide the set of indices $I$ into three sets:
+\begin{align*}
+I_= &= \{i \mid b_i = 0\},\\
+I_< &= \{i \mid b_i < 0\},\\
+I_> &= \{i \mid b_i > 0\}.
+\end{align*}
+After elimination (remembering to also use the inequality $\lambda > 0$), the inequalities describing the nonzero points in $\text{cone}(P)$ are
+\begin{align*}
+a_i^T x &\le 0 \;\;\;\;\;\;\;\;\; \forall i \in I_=,\\
+b_j a_i^Tx &\le b_i a_j^T x \;\;\; \forall i \in I_<, j \in I_>,\\
+a_i^T x &< 0 \;\;\;\;\;\;\;\;\; \forall i \in I_<.
+\end{align*}
+Note that all of these inequalities are ``scale-free''.
+
+
+
+\item[2-5]
+\begin{quote}
+Given a graph $G=(V,E)$, an {\it inessential} vertex is a vertex $v$
+such that there exists a {\it maximum} matching of $G$ not covering
+$v$. Let $B$ be the set of all inessential vertices in $G$ (e.g., if
+$G$ has a perfect matching then $B=\emptyset$). Let $C$ denote the set
+of vertices not in $B$ but adjacent to at least one vertex in $B$
+(thus, if $B=\emptyset$ then $C=\emptyset$). Let $D=V\setminus (B\cup
+C)$. The triple $\{B, C, D\}$ is called the Edmonds-Gallai partition
+of $G$. Show that $U=C$ is a minimizer in the Tutte-Berge formula. (In
+particular, this means that in the Tutte-Berge formula we can assume
+that $U$ is such that the union of the odd connected components of
+$G\setminus U$ is precisely the set of inessential vertices.)
+\end{quote}
+
+Let $M$ be a maximum matching of $G$, and let $G_0$ be the result of iteratively shrinking blossoms until no blossoms remain. Let $X$ be the set of exposed vertices in $G$, let $\mbox{Even}$ be the set of vertices which can be reached from an exposed vertex by an alternating path of even length, let $\mbox{Odd}$ be the set of vertices which can be reached from an exposed vertex by an alternating path but which are not in $\mbox{Even}$, and let $\mbox{Free}$ be the remaining vertices. We will show that $B = \mbox{Even}, C = \mbox{Odd},$ and $D = \mbox{Free}$, and that the partition remains the same if we compute it in $G_0$ instead of in $G$; we will see that every blossom is contained in \mbox{Even}, and that blossom contractions respect the partition. In class, we showed that the set of odd vertices of $G_0$ could be taken as the minimizer $U$ in the Tutte-Berge formula, so this will complete the proof.
+
+To see that $B = \mbox{Even}$, note that for any vertex $v \in \mbox{Even}$ we can flip the even alternating path from $X$ to $v$ to get a maximum matching that doesn't cover $v$, and conversely if there is a maximum matching $M'$ not covering $v$, then in $M\Delta M'$ (which is a union of alternating paths and alternating cycles) $v$ must be an endpoint of an even length alternating path to an exposed vertex. To see that $C = \mbox{Odd}$, we just have to prove that every neighbor $u$ of a vertex $v$ in $\mbox{Even}$ has an alternating path to $X$: if $u$ is on the even alternating path from $X$ to $v$ then this is obvious, and otherwise we can make an alternating path from $X$ to $u$ by extending the even alternating path from $X$ to $v$ by the edge from $v$ to $u$ (which is necessarily not in the matching, since the last edge of the even alternating path to $v$ is in $M$).
+
+Finally, we just need to show that the partition into $\mbox{Even}, \mbox{Odd},$ and $\mbox{Free}$ doesn't change when we contract a blossom $B$. Note first that every vertex in a blossom $B$ is necessarily in $\mbox{Even}$ (by the definition of a blossom), and that the contracted blossom will also be in $\mbox{Even}$. If there is an alternating path in $G_0$ passing through the shrunk blossom, then we can build a corresponding alternating path in $G$ of the same parity, since the alternating path in $G_0$ will either end at the blossom vertex or pass through the edge of the matching connecting the stem to the blossom. If there is an alternating path $P$ from $X$ to $v$ in $G$ which intersects the blossom, then we can consider the portion of $P$ from the last time $P$ intersects the corresponding flower until it reaches $v$, and replace the prefix by part of the flower to make a path $P'$ which is still alternating and has the same parity as $P$.
+
+
+
+%%%%%%%%%%%%%%%%%
+\end{enumerate}
+\end{document}
+

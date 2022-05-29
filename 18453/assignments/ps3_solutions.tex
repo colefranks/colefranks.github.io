@@ -1,0 +1,285 @@
+\documentclass[12pt]{article}
+\input{../newmac}
+\usepackage{graphicx,../lp,amsmath}
+\newcommand{\I}{\mathcal I}
+\newcommand{\conv}{\operatorname{conv}}
+\begin{document}
+
+
+\handout{Solutions to Problem Set 3}{2017 Spring}
+
+% 2009
+% ps1
+
+%2013
+% ps1: 1-2, 1-3, 1-4, 1-5 and 1-12. Grad: 1-8.
+% ps2: 2-1, 2-2 and 2-3. 3-1, 3-2. Grad: 2-7.
+% ps3: 3-9, 3-12 and 3-17. 4-2, 4-7 and 4-8.
+
+%2015
+% ps1: 1-9
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%
+\item[Problem 1] We will prove strong linear programming duality in a more geometric manner.  Consider the linear program of maximizing $c^T x$ over the polyhedron $P = \{x:Ax \leq b\}$ where $A$ has rows $(a_i^T: i =1,...,m)$. Assume that the linear program is bounded. We want to show that there is some $y \geq 0$ such that $A^T y = c$ satisfying $b^T y = \max \{c^T x: x \in P\}$.
+\begin{enumerate}
+\item Let $v_0$ be a vertex maximizing $c^Tx$. Let $I$ be the set $\{i: a_i^T v_0 = b_i\}$ of constraints that are tight for $v_0$. Using that $0$ is a maximizer, show that there is no vector $x$ such that $a_i^T x \leq 0$ for all $i \in I$ and $c^T x > 0$.
+\item Conclude that there is some vector $y \geq 0$ such that $y_j = 0$ for $j \not\in I$ and and $A^T y = c.$ \textbf{Hint: }\footnote{Apply Farkas' lemma.}
+\item Show that this $y$ satisfies $b^T y = c^T v_0$, completing the proof.
+\end{enumerate}
+
+\textbf{Solution: }
+
+\begin{enumerate}
+\item Suppose there is $x$ such that $c^T x > 0$ and $a_i^T x \leq 0$ for all $i \in I$. Then for $\varepsilon >0$ sufficiently small, one has $a_i^T (v_0 +\varepsilon x) \le b_i$, but $c^T(v_0 +\varepsilon x) > c^T v_0$, which contradicts the choice of $v_0$.
+    
+\item Let us write $A_I$ for the submatrix of $A$ whose rows are $a_i^T, i \in I$. Recall the Farkas lemma: out of two systems
+\[
+\begin{cases}
+  A_I x \le 0\\
+  c^T x > 0
+\end{cases} \quad \text{and} \quad 
+\begin{cases}
+  A_I^T y_I = c\\
+  y_I \ge 0
+\end{cases}
+\]
+exactly one has a solution. The former doesn't hence there is a vector $y_I = (y_i)_{i \in I} \ge 0$ such that $A_I^T y_I = c$. Extend it to a vector $y = (y_j)_{1\le j \le m}$ by setting $y_j = 0$ for $j \notin I$.
+
+\item We have
+\[
+b^T y = \sum_{i\in I} b_i y_i = v_0^T A_I^T y_I = v_0^T c = c^T v_0.
+\]
+\end{enumerate}
+
+%%%%%
+%\item[3-8]
+%We know that every extreme point of a polytope is
+%  the unique solution for a system of equations obtained by selecting
+%  some of the inequalities defining the polytope and setting them as
+%  equalities. In particular, if $x^*$ is a vertex of $Q$, then there
+%  exists a subset $I$ of $\{1,\dots,m\}$, where $m$ is the number of
+%  rows of $A$, such that $x^*$ is the unique solution of the system
+%\begin{align*}
+%(Ax)_i &= b_i, \text{ for all $i \in I$}\\
+%Cx &= d.
+%\end{align*}
+%But this implies that $x^*$ is the unique solution for a system of
+%equations obtained by selecting some of the inequalities that define
+%$P$ and setting them as equalities. Since $x^* \in P$, it follows that
+%$x^*$ is an extreme point of $P$. Therefore, all the vertices of $Q$
+%are vertices of $P$.
+
+%%%%%
+\iffalse
+\item[3-9]
+\begin{quote}
+Given two extreme points $a$ and $b$ of a polyhedron $P$, we say that they are
+{\it adjacent} if the line segment between them forms an edge (i.e. a face
+of dimension 1) of the polyhedron $P$. This can be rephrased by saying
+that $a$ and $b$ are adjacent on $P$ if and only if there exists a
+cost function $c$ such that $a$ and $b$ are the only two extreme
+points of $P$ minimizing $c^Tx$ over $P$.
+
+Consider the polyhedron (polytope) $P$ defined as the convex hull of
+all perfect matchings in a (not necessarily bipartite) graph $G$. Give
+a necessary and sufficient condition for two matchings $M_1$ and $M_2$
+to be adjacent on this polyhedron (hint: think about $M_1
+\bigtriangleup M_2=(M_1\setminus M_2) \cup (M_2\setminus M_1)$) and
+prove that your condition is necessary and sufficient.)
+\end{quote}
+
+First consider the situation in which $M_1$ and $M_2$ are such that
+$M_1\Delta M_2$ have more than one connected component. Consider one
+of these connected components, say $S\subseteq V$, and partition $M_1$
+and $M_2$ into $M_1=M_{1s}\cup M_{1t}$ and $M_2=M_{2s}\cup M_{2t}$
+where $M_{1s}$ and $M_{2s}$ correspond to the edges within $S$. By
+definition $M_{1s}\cup M_{2s}\neq \emptyset$. Now define two other
+matchings by $M_3=M_{1s}\cup M_{2t}$ and $M_4=M_{2s}\cup
+M_{1t}$. Observe that
+$$\chi(M_1) + \chi(M_2) = \chi(M_3)+\chi(M_4)$$
+which implies that any face that contains $M_1$ and $M_2$ will also
+contain $M_3$ and $M_4$, and thus cannot be an edge.
+
+
+Conversely, suppose that $M_1\Delta M_2$ has only one connected
+component, and say that this component has $k_1$ edges from $M_1$ and
+$k_2$ edges from $M_2$. We must have that $|k_1-k_2|\leq 1$. Now
+consider the following cost function:
+$$c_e=\left\{ \begin{array}{ll} 1 & e\in M_1\cap M_2 \\ -1 & e\notin
+  (M_1\cup M_2) \\ k_2 & e\in M_1\setminus M_2 \\ k_1 & e\in
+  M_2\setminus M_1.\end{array}\right.$$  Notice that $c(M_1)=c(M_2)=b$
+where $b:=|M_1\cap M_2| + 2 k_1k_2$ and for any other matching $M$ we
+have that $c(M)<b$. Thus the valid inequality $c^Tx \leq b$ induces a
+face with only the incidence vectors of $M_1$ and $M_2$ has
+  vertices. Thus the line segment between $M_1$ and $M_2$ defines an
+  edge.
+  \fi
+
+%%%%%
+\item[3-10]
+\begin{quote}
+Show that two vertices $u$ and $v$ of a polytope $P$ are adjacent if and only there is a unique way to express their midpoint ($\frac{1}{2}(u+v)$) as a convex combination of vertices of $P$.
+\end{quote}
+
+\textbf{Solution: }First suppose $u,v$ are adjacent, and assume for contradiction that there exist vertices $w_1, ..., w_n$ (at least one of which is not $u$ or $v$) and weights $\lambda_1, ..., \lambda_n > 0$, $\sum \lambda_i = 1$, such that
+\[
+\frac{u+v}{2} = \lambda_1 w_1 + \cdots + \lambda_n w_n.
+\]
+Since $u,v$ are adjacent, there is a cost vector $c$ such that the line segment connecting $u$, $v$ is exactly the set of points $x$ of $P$ which maximize $c^Tx$. But then
+\[
+c^Tu = \frac{c^Tu+c^Tv}{2} = \lambda_1 c^Tw_1 + \cdots + \lambda_n c^Tw_n < \lambda_1 c^Tu + \cdots + \lambda_n c^Tu = c^Tu,
+\]
+a contradiction.
+
+Now suppose that $u,v$ are \emph{not} adjacent, and let $F$ be the minimal face of $P$ containing $u$ and $v$ ($F$ is defined by the set of all inequalities of $P$ that have equality at both $u$ and $v$). Since $F$ is a polytope, $F$ is the convex hull of its vertices, so $F$ must have at least one vertex $w$ which is not $u$ or $v$. Let $L$ be the intersection of the line connecting $w$ to $\frac{u+v}{2}$ with $F$ (note $w \ne \frac{u+v}{2}$ since $w$ is a vertex). Since $L$ is a polytope defined by some system of equations describing a line together with the inequalities describing the facets of $F$, the vertices of $L$ come from setting some inequalities corresponding to facets of $F$ to equalities. Suppose $p$ is the second vertex of $L$ (the first is $w$), and suppose the corresponding facet of $F$ comes from the inequality $a^Tx \le b$, with equality $a^Tp = b$ at $p$. By the minimality of $F$, at least one of $a^Tu, a^Tv$ is strictly less than $b$, so $p \ne \frac{u+v}{2}$. Thus $\frac{u+v}{2}$ can be written as a convex combination of $w$ and $p$ with a nonzero weight on $w$. Since $p$ can be written as a convex combination of vertices of $P$, we see that $\frac{u+v}{2}$ can be written as a convex combination of vertices of $P$ with a nonzero weight on $w$.
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%\item[3-11]
+%Consider the family of permutations
+%  $\{\sigma_1,\ldots,\sigma_n\}$ given by:
+%$$\sigma_i: \begin{cases}\sigma_i(1) = i,\\ \sigma_i(i)=1,\\ \sigma_i(j) = j, &j \notin \{1,i\}.\end{cases}$$
+%In other words, $\sigma_1$ is the identity permutation and $\sigma_i$
+%is the permutation that transpose $1$ and $i$. Let us prove that these
+%$n$ permutations are affinely independent. For that suppose that
+%$\lambda_1,\ldots, \lambda_n$ are real numbers such that:
+%$$\sum_{i=1}^n \lambda_i\sigma_i = 0, \quad \sum_{i=1}^n \lambda_i = 0.$$
+%Then for every $j\neq 1$:
+%\begin{align*}
+% 0 = \sum_{i=1}^n \lambda_i \sigma_i(j) &= \left(\sum_{i\neq j}\lambda_i \cdot j\right) + \lambda_j \cdot 1\\
+% &= \left(\sum_{i=1}^n \lambda_i \cdot j \right) - \lambda_j \cdot j + \lambda_j \cdot 1\\
+% &= \biggl(\underbrace{\sum_{i=1}^n \lambda_i}_{=0}\biggr) \cdot j  +\lambda_j \cdot (1-j).
+%\end{align*}
+%Hence, for every $j\neq 1$,\, $\lambda_j (1-j) = 0$, which implies
+%that $\lambda_j = 0$. Using that $\sum_{i=1}^n \lambda_i = 0$ we
+%deduce that $\lambda_1$ is also 0. Therefore, the family
+%$\{\sigma_1,\ldots,\sigma_n\}$ is a set of $n$ affinely independent
+%permutations.
+
+
+%%%%
+\item[3-12]
+\begin{quote}
+A {\it stable set} $S$ (sometimes, it is called also an independent
+set) in a graph $G=(V,E)$ is a set of vertices such that there are no
+edges between any two vertices in $S$. If we let $P$ denote the convex
+hull of all (incidence vectors of) stable sets of $G=(V,E)$, it is clear
+that $x_i + x_j \leq 1$ for any edge $(i,j)\in E$ is a valid
+inequality for $P$.
+
+\begin{enumerate}
+\item
+Give a graph $G$ for which $P$ is {\it not} equal to
+\begin{eqnarray*}
+\{x\in \R^{|V|}: &  x_i + x_j \leq 1 & \mbox{ for all } (i,j)\in E \\
+ &  x_i \geq 0 & \mbox{ for all } i \in V\}
+\end{eqnarray*}
+
+\item
+Show that if the graph $G$ is bipartite and has no isolated vertices then $P$ equals
+\begin{eqnarray*}
+\{x\in \R^{|V|}: &  x_i + x_j \leq 1 & \mbox{ for all } (i,j)\in E \\
+ &  x_i \geq 0 & \mbox{ for all } i \in V\}.
+\end{eqnarray*}
+\end{enumerate}
+\end{quote}
+
+\textbf{Solution: }
+
+\begin{enumerate}
+\item
+Take $G$ to be the triangle, with vertex set $V = \{1,2,3\}$ and edge set $E = \{\{1,2\}, \{2,3\}, \{1,3\}\}$. The vector $(\frac{1}{2}, \frac{1}{2}, \frac{1}{2})^T$ satisfies the given inequalities, but the sum of its coordinates is $\frac{3}{2}$, which is larger than the sum of the coordinates of any vertex of $P$, since every stable subset of the triangle has size at most $1$.
+
+\item
+%Note: strictly speaking, the problem statement is incorrect (considering the case where $G$ has just one vertex) - to fix it, we must assume that $G$ has no isolated vertices. So from here on we make this assumption.
+
+The easy direction is checking that each indicator vector $x$ of a stable set $S$ satisfies the given inequalities, which follows immediately from the definition of a stable set. For the other direction - showing that each vector satisfying our system of inequalities is contained in the convex hull $P$ - we give two different proofs.
+
+{\bf Vertex Proof.} Let $A \in \R^{E\times V}$ be the matrix given by
+\[
+A_{ev} = \begin{cases}1 & v \in e,\\ 0 & v\not\in e,\end{cases}
+\]
+and let $b \in \R^E$ be the vector of all $1$s, so our system of inequalities can be written in the form
+\begin{eqnarray*}
+\{x\in \R^{V}: &  Ax \le b \\
+ &  x \geq 0\}.
+\end{eqnarray*}
+Note that $A^T$ is the matrix coming from the bipartite matching polytope, which we have already shown is totally unimodular. Since the transpose of a T.U. matrix is T.U., every vertex of the polyhedron defined by the system $\{Ax \le b, x \ge 0\}$ is integral, and since this polyhedron is bounded (each $x_v$ is bounded below by $0$ and above by $1$ as long as $v$ is incident to at least one edge) it is the convex hull of its vertices. Let $x$ be a vertex of the polyhedron, we will show it is the indicator vector of a stable set. Since $x$ is integral and each coordinate of $x$ is bounded between $0$ and $1$, $x$ is certainly the indicator vector of \emph{some} set $S$ - explicitly, $S = \{v \in V \mid x_v = 1\}$. If there was any edge $e$ between two vertices $v,w$ of $S$, we would have $x_v + x_w = 2$, contradicting the inequality $x_v + x_w \le 1$ corresponding to the edge $e$, so in fact $S$ must be a stable set.
+
+{\bf Facet Proof.} First we check that we are not missing any equalities, by showing that $\dim(P) = |V|$. To see this, note that every set $S$ with $|S| \le 1$ is stable, so $P$ contains the $|V|+1$ affinely independent points $(0,0,...0)^T, (1,0,...,0)^T, (0,1,...,0)^T$, $..., (0,0,...,1)^T$.
+
+Now suppose that $F$ is a facet of $P$, defined by maximizing some cost $c^Tx$ over vetices of $P$. We will show that the set $\{x \in P \mid c^Tx\text{ is maximal}\}$ is contained in some facet of the polyhedron defined by the given system of inequalities. There are two cases.
+
+First case: for some $v \in V$, we have $c_v < 0$. In this case, every $x$ corresponding to a stable set $S$ which maximizes $c^Tx$ must have $x_v = 0$, since otherwise the set $S\setminus\{v\}$ is also stable, and if $x'$ is the corresponding vector, then $c^Tx' = c^Tx - c_v > c^Tx$. Thus the face of $P$ corresponding to the cost vector $c$ must be contained in the facet corresponding to the inequality $x_v \ge 0$.
+
+Second case: for some $v \in V$ we have $c_v > 0$. Suppose for contradiction that for each edge $e = \{v,w\}$ containing $v$, there is some stable set $S_w$ which doesn't contain $v$ or $w$, but such that if $x_w$ is the corresponding indicator vector, then $c^Tx_w$ maximizes $c^Tx$ over $x$ in $P$. Let $W$ be any subset of the set of neighbors of $v$, we will show by induction on $|W|$ that there is a stable set $S_W$ which doesn't contain $v$ or any vertex from $W$, but such that the corresponding indicator vector $x_W$ maximizes $c^Tx_W$. Taking $W$ to be the set $N(v)$ of all neighbors of $v$, we will get a stable set $S_{N(v)}$ not containing $v$ or any neighbor of $v$ and maximizing our cost function, but then adding $v$ to this stable set gives us a stable set with a strictly larger cost, giving us our contradiction.
+
+For the inductive step, suppose $W = X \cup Y$, and that we have already constructed stable sets $S_X, S_Y$ maximizing our cost function, not containing $v$, and s.t. $S_X \cap X = S_Y\cap Y = \emptyset$. Let $H$ be the induced subgraph of $G$ with vertex set $S_X \cup S_Y$, and let $C$ be the set of vertices of $H$ which are connected to some element of $X$ in $H$. Let $A,B \subseteq V$ be the two parts of $G$, and suppose $v \in A$. Then by induction on the length of the shortest path (in $H$) connecting a vertex $c$ in $C$ to $X$, we see that $c \in B \iff c \in S_Y$ and $c \in A \iff c \in S_X$. In particular, no vertex of $C$ is in $Y$. Additionally, we see that both $S_X\Delta C$ and $S_Y\Delta C$ are stable sets, and the sum of their costs is equal to the sum of the costs of $S_X$ and $S_Y$, so they both maximize our cost function as well. Thus we can take $S_W = S_Y\Delta C$, which has no elements of $X$ (since neither $S_Y \cap X = C \cap X$ by the definition of $C$) and no elements of $Y$ (since $S_Y \cap Y = \emptyset$ and $C \cap Y = \emptyset$). This completes the inductive step, which as we saw above gives us the required contradiction.
+
+By the above argument, there must be some edge $e = \{v,w\}$ containing $v$ such that every stable set maximizing our cost function contains at least one of the vertices $v,w$. Thus, the face of $P$ corresponding to the cost vector $c$ is contained in the facet corresponding to the inequality $x_v + x_w \le 1$.
+\end{enumerate}
+
+%%%%%%%
+\item[3-13] %Chiheon Kim
+\begin{quote}
+Let $e_k\in \R^n$ ($k=0,\ldots,n-1$) be a vector with the first $k$
+entries being $1$, and the following $n-k$ entries being  $-1$. Let
+$S=\{e_0, e_1, \ldots, e_{n-1}, -e_0, -e_1,\ldots, -e_{n-1}\}$, i.e.\
+$S$ consists of all vectors consisting of $+1$ followed by $-1$ or
+vice versa. In this problem set, you will study $\conv(S)$.
+\begin{enumerate}
+\item
+Consider any vector $a\in\{-1,0,1\}^n$ such that (i) $\sum_{i=1}^n
+a_i=1$ and (ii) for all $j=1,\ldots,n-1$, we have $0\leq \sum_{i=1}^j
+a_i\leq 1$. (For example, for $n=5$, the vector $(1,0,-1,1,0)$
+satisfies these conditions.)
+Show that $\sum_{i=1}^n a_ix_i\leq 1$ and $\sum_{i=1}^n
+a_ix_i\geq -1$ are valid inequalities for $\conv(S)$.
+\item
+How many such inequalities are there?
+\item
+Show that any such inequality defines a facet of $\conv(S)$.
+
+(This can be done in several ways. Here is one approach, but you are
+welcome to use any other one as well. First show that either $e_k$ or
+$-e_k$ satisfies this inequality at equality, for any $k$. Then show that the
+resulting set of vectors on the hyperplane are affinely independent (or uniquely identifies it).)
+\item
+Show that the above inequalities define the entire convex hull of $S$.
+
+%(Again this can be done in several ways. One possibility is to
+%consider the 3rd technique described above.)
+\end{enumerate}
+\end{quote}
+
+\textbf{Solution: }
+
+\begin{enumerate}
+\item Fix $a \in \{-1, 0, 1\}^n$ satisfying $\sum_{i=1}^n a_i = 1$ and $0 \leq \sum_{i=1}^j a_i \leq 1$ for each $j=1,\dotsc,n-1$. It is enough to show that
+$$
+-1 \leq \sum_{i=1}^n a_i (e_k)_i \leq 1
+$$
+for each $k=0,\dotsc,n-1$ (it is symmetric for $-e_k$'s).
+
+Note that $(e_k)_i = 1$ if $i \leq k$ and $(e_k)_i=-1$ if $i > k$. We have
+$$
+\sum_{i=1}^n a_i (e_k)_i = \sum_{i=1}^k a_i - \sum_{i=k+1}^n a_i = 2\sum_{i=1}^k a_i - 1.
+$$
+Since $\sum_{i=1}^k a_i$ is $0$ or $1$, it is between $-1$ and $1$.
+
+\item Fix $a \in \{-1, 0, 1\}^n$ as in the previous part. Let $b_j = \sum_{i=1}^j a_i$ for $j=1,\dotsc,n$. Then, $b_j \in \{0, 1\}$ for any $j=1,\dotsc,n-1$ and $b_n = 1$ by definition of $a$. On the other hand, if we are given $b \in \{0, 1\}^n$ with $b_n = 1$, we can find the corresponding $a \in \{-1, 0, 1\}^n$ by letting $a_1 = b_1$ and $a_i = b_{i}-b_{i-1}$ for $i=2,\dotsc,n$. This is a bijection between $a$'s and $b$'s. Hence, there are $2^{n-1}$ such $a$'s and $2^n$ inequalities.
+
+\item First note that $a^T e_k$ is either $-1$ or $1$, since $a^T e_k = 2\sum_{i=1}^k a_i -1$. Let $b$ as defined in (b). Then, $a^T e_k = 1$ if and only if $b_k = 1$ (we say $b_0 = 0$). Thus,
+\begin{eqnarray*}
+\{x \in S \mid a^T x = 1\} &=& \{e_k \mid b_k = 1\} \cup \{-e_k \mid b_k = 0\} \\
+\{x \in S \mid a^T x = -1\} &=& \{e_k \mid b_k = 0\} \cup \{-e_k \mid b_k = 1\}.
+\end{eqnarray*}
+So each inequality defines distinct hyperplanes, because they contain different set of extreme points. Moreover, if we choose exactly one vector from each $\{e_k, -e_k\}$, then they are affinely independent. For, note that it is enough to show that $\{e_0, \dotsc, e_{n-1}\}$ are linearly independent, and they are indeed linearly independent since $\{\frac12(e_1 - e_0), \frac12(e_2-e_1), \dotsc, \frac12(e_{n-1}-e_{n-2}), -\frac12(e_{n-1}+e_0)\}$ is the standard basis of $\mathbb{R}^n$.
+
+\item Note that $0$ is in the interior of $\mathrm{conv}(S)$. Hence, no facet can contain $\{e_k, -e_k\}$ for any $k=0,\dotsc,n-1$ (otherwise it will contain $0$). Since $\mathrm{conv}(S)$ is full-dimensional, any facet should contain at least $n$ extreme points, i.e., it contains exactly one from each $\{e_k, -e_k\}$. So there are at most $2^n$ facets of $\mathrm{conv}(S)$. On the other hand, we showed in (c) that each of $2^n$ inequalities defines distinct facet. Hence they define $\mathrm{conv}(S)$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%
+\end{enumerate}
+\end{document}

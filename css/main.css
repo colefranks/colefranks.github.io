@@ -1,0 +1,40 @@
+h1 {
+	/*font-size: 30px;*/
+	margin-top: 50px;
+	margin-bottom: 15px;
+}
+
+h4 {
+	margin-top: 25px;
+	margin-bottom:15px;
+}
+
+ul {
+	margin-left: 25px; padding: 0;
+}
+
+ol {
+  padding-left: 2em;
+}
+
+li {
+	margin-top: 0.5em;
+}
+
+table { 
+    border-spacing: 20px;
+    border-collapse: separate;
+}
+
+mark.black {
+  background-color: black;
+  color: white;
+}
+
+mark.pink {
+  background-color: pink;
+}
+
+mark.lime {
+  background-color: lime;
+}

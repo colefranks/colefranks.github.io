@@ -1,0 +1,158 @@
+\documentclass[12pt]{article}
+
+\usepackage{../lp,amsmath}
+\input{../newmac}
+\usepackage{graphicx}
+\setlength{\topmargin}{-1.0in}
+\setlength{\textheight}{9.5in}
+\begin{document}
+
+% \handout{Final}{May 18th, 2015}
+
+\noindent {\Large 18.453 Practice Final} \\
+~\\
+
+\paragraph{Instructions.} This is practice for a {\bf timed} final. This is meant to be done in \textbf{3} hours with access to notes and course material, but no access to collaborators. For best practice I suggest trying to complete it under these conditions. Afterwards please tell me if 3 hours felt like enough.
+ \vspace*{0.1in}
+
+%\vspace*{0.1in}
+
+%{\Large {\bf Your Name:}}
+
+
+
+\begin{enumerate}
+
+\item
+Answer true or false. For items \textbf{not} marked with *, if true, provide a concise reason (no rigor necessary) and if false, exhibit a counterexample.
+\begin{enumerate}
+\item Every matching that is not maximum in a graph $G$ has an augmenting path.*
+\item If $A, b$ are integral, then the linear program $\max\{c^T x: Ax \leq b\}$ has an integral maximizer.
+\item The set of matchings in a bipartite graph forms a matroid.
+\item Given a bipartite graph, the set of subgraphs of degree at most two is the intersection of two matroids.
+\item Given a separation oracle for a polyhedron $P\subset [0,1]^n$, it is always possible to test feasibility of $P$ with polynomially many calls to the separation oracle.
+\end{enumerate}
+
+\textbf{Answers.}
+
+\begin{enumerate}
+\item Yes.
+\item No. For the following program the only maximizer is fractional:
+\[
+\max \left\{ x_1 ~\middle\vert~
+\begin{pmatrix}
+  1 & 1 \\
+  1 & -1
+\end{pmatrix}
+\begin{pmatrix}
+  x_1 \\
+  x_2 
+\end{pmatrix}\le
+\begin{pmatrix}
+  1 \\
+  0
+\end{pmatrix}
+\right\}.
+\]  
+
+\item No. For the complete graph with parts $\{a_1, a_2\}, \{b_1, b_2\}$ the exchange axiom is violated for the independent sets $X = \{\{a_1, b_1\}\}$, $Y = \{\{a_1, b_2\}, \{a_2, b_1\}\}$.
+    
+\item Yes. For a graph $G = (V,E)$ with bipartition $V = A \sqcup B$, the set of subgraphs of degree at most two is the intersection of two partition matroids $(E, \mathcal{I}_A)$ and $(E, \mathcal{I}_B)$ defined as follows. Let $E = \bigsqcup_{a\in A} E_a$ be the partition of edges according to their left endpoint; then $\mathcal{I}_A = \{E' \subset E ~\vert~ |E' \cap E_a| \le 2 ~\forall a \in A\}$. Similarly one defines $\mathcal{I}_B$.
+
+\item No. It is impossible to tell a single point from the empty set, because the separation oracle might output the same.
+\end{enumerate}
+
+\newpage
+\item
+% optimal permutation with restrictions
+
+For $k \le n$ an integer, define a $k$-\emph{bounded permutation} on $\{1, ..., n\}$ to be a permutation $\sigma$ such that $|\sigma(i) - i| \le k$ for all $i \in \{1, ..., n\}$.
+
+Suppose we are given an integer $k \le n$ and costs $c(i)$ for $i\in\{1,...,n\}$, and our goal is to find a $k$-bounded permutation $\sigma$ on $\{1, ..., n\}$ minimizing $\sum_{i=1}^n c(i) \sigma(i)$. Give a polynomial-time algorithm for this problem (there is no need to give the most efficient algorithm, but the algorithm should be polynomial in $n$ and $k$). (You can refer to any algorithm we have seen in class.)\\
+
+\textbf{Solution: } This can be cast as an instance of the minimum cost perfect matching problem. A permutation $\sigma$ is none other than a matching in the complete bipartite graph with bipartition $A \cup B$ equal to two disjoint copies of $[n]$, where there is an edge between $i$ and $\sigma(i)$. The restriction that the permutation is $k$-bounded requires that the permutaiton correspond to a matching in the subgraph $G = (A \cup B, E)$ where $E = \{(i,j): i \in A, j \in B, |i - j| \leq k\}$. If we set the cost of the edge $(i,j)$ to be $c_{i,j} = c(i) j$, then the minimum cost perfect matching in $G$ yields the minimum cost $k$-bounded permutation. This can be solved in (strongly) polynomial time using the Hungarian algorithm.
+
+
+
+\newpage
+
+%\newpage
+%~
+%%%%%%%%%%%%%%%%
+%\newpage
+\item
+\begin{enumerate}
+	\item
+Consider a directed graph $G=(V,E)$ with nonnegative (upper) capacities $u: E \rightarrow {\mathbb R}$ (and no lower capacities). For any two vertices $s, t\in V$, define $\lambda_{st}\in {\mathbb R}$ to be the maximum flow value from $s$ to $t$. Given any 3 vertices $s, t, u\in V$, show that $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$.
+
+%\newpage
+\item If the graph is undirected, the previous result still holds: $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$ for all $s, t, u$. Furthermore, $\lambda_{st}=\lambda_{ts}$. Now, consider the complete graph $K_V$ on the vertex set $V$ with weight $\lambda_{uv}$ on edge $\{u,v\}$ for all $u,v$. Let $T$ be a {\it maximum weight} spanning tree on $K_V$ with respect to these weights $\lambda_{uv}$. Argue that for every $\{s,t\}\notin T$, we have $$\lambda_{st}=\min_{\{u,v\}\in P_{st}} \lambda_{uv}$$ where $P_{st}$ denotes (the edges of $K_V$ of) the unique path in $T$ between $s$ and $t$. (This implies the somewhat surprising result that, over all pairs $(s,t)$, $\lambda_{st}$ can take at most $|V|-1$ values (those along the edges of $T$).)
+\end{enumerate}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+	\item
+Consider a minimal cut separating $s$ and $u$, that is, a partition $V = S \sqcup U$ such that $s \in S$, $u \in U$, $\lambda_{su} = \sum\limits_{e \in \delta^+(S)} u(e)$. If $t \in S$, then the same cut separates $t$ and $u$, and so $\lambda_{su} \ge \lambda_{tu}$. Otherwise $t \in U$, the cut separates $s$ and $t$, and $\lambda_{su} \ge \lambda_{st}$. In either case, $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$.
+
+\item Using the previous part, one shows by induction that $\lambda_{st} \ge \min\limits_{\{u,v\}\in P_{st}} \lambda_{uv}$. Let $\{u,v\}$ be a specific edge delivering the minimum in the right-hand side. We'd like to argue that $\lambda_{st} \le \lambda_{uv}$. Indeed, if not, then $\lambda_{st} > \lambda_{uv}$, and one can replace the edge $\{u,v\}$ in the tree $T$ by the edge $\{s,t\}$. The resulting subgraph is still a spanning tree, whereas its weight gets increased, which contradicts the choice of $T$. Therefore, $\lambda_{st} = \lambda_{uv}$.
+\end{enumerate}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\item
+
+% matching matroid
+
+Consider a bipartite graph $G = (A,B,E)$ with parts $A,B$ and edges $E \subseteq A\times B$. Suppose we have a matroid $M_A = (A,\mathcal{I}_A)$ on $A$ with rank function $r_A$. Define a family of sets $\mathcal{I}_B$ to be the collection of sets $T \subseteq B$ such that there exists a matching $M$ of $G$ with vertex set $V(M) = S\cup T$, such that $S \subseteq A$ and $S \in \mathcal{I}_A$.
+
+ Prove that $M_B = (B,\mathcal{I}_B)$ is a matroid. (For {\bf half credit}, you can do this in the special case where every vertex of $A$ has degree $1$, so that $G$ is the graph of a function from $A$ to $B$.)\\
+ 
+ \textbf{Solution: } We need to show that $\mathcal{I}_B$ is downward-closed and satisfies the exchange property. Downward closure follows because if $T$ is matched to independent set $S \in \mathcal{I}_A$, then $T' \subset T$ is matched to a subset of $S' \subset S$ which is also independent.
+ 
+ For the exchange property, we must show that given $T', T \in \mathcal{I}_B$ with $|T'| > |T|$, there is some element $t \in T'\setminus T$ such that $T + t \in \mathcal{I}_B$. That is, $t \in T'\setminus T$ such that $T + t$ can be matched to an independent set in $\mathcal{I}_A$. Let $M$ be a matching between $T, S$ for $S\in \mathcal{I}_A,$ and let $M'$ be a matching between $T', S'$ for $S'\in \mathcal{I}_A.$ We'll use alternating paths in $M \cup M'$ to gradually modify $M$ until we get the matching we want.
+ %As $|M'| > |M|$, there is an augmenting path for $M$ in $M' \cup M$. The matching obtained by augmenting $M$ along this path will cover a new element $t \in T'$, but might not match the set $T + t$ to an independent set in $A$. 
+ 
+As $|S'| > |S|$, the basis exchange property for $I_A$ says there is an element $a$ in $S' \setminus S$ such that $S +a$ is independent. The element $a$ is covered by $M'$ but not $M$, so has degree $1$ in $M' \cup M$. As $M' \cup M$ has maximum degree two, the connected component containing $a$ is a path $P$. Moreover, it must be alternating in $M$. If this path ends in $B$, then we may augment $M$ along $P$ to cover an element $t$ of $T' \setminus T$, and we are done. If instead the path ends at some element $a' \in A$, then $a \in S \setminus S'$. The symmetric difference of $M\Delta P$ matches $T$ to the independent set $S + a - a'$. Replace $S \leftarrow S + a - a'$ and $M$ by $M \Delta P$. The size of the intersection $S \cap S'$ has increased by one. Continue this process until we are done (we have covered an element of $T' \setminus T$) or $S \subset S'$. Once $S \subset S'$, we can take $t$ to be any element of $T'\setminus T$.\\ \textbf{Note: } In retrospect this problem was too hard. It's still good practice, but don't let it scare you.
+
+
+% network flows
+
+
+\newpage
+
+%%%%%%%%%%%%%%%
+%\newpage
+\item Let $x \in [0,1]^n$ be an unknown vector, and we suppose have access to a separation oracle for the set $S = [x_1, x_1 + 0.1] \times  \dots \times [x_n, x_n + 0.1] \subset \R^n$. Can we find a point in $S$ in time polynomial in $n$, and if so, how? (You can refer to any algorithm we have seen in class).
+    
+\textbf{Solution.} 
+
+We exploit the ellipsoid method. The starting ellipsoid $E_0$ is the ball of radius $\sqrt{n}/2$ centered at $(1/2, \ldots, 1/2)$. Recall Claim~7.2 from the notes: the volumes of successive ellipsoids $E_k$ in the method decay exponentially,
+\[
+\mbox{Vol}(E_k) \le \mbox{Vol}(E_0) \exp \left( -\frac{k}{2(n+1)}\right).
+\]
+If by $k\textsuperscript{th}$ step a point in $S$ is not found, then $S \subset E_k$, and
+\[
+0.1^n = \mbox{Vol}(S) < \mbox{Vol}(E_k) \le \mbox{Vol}(E_0) \exp \left( -\frac{k}{2(n+1)}\right).
+\]
+It follows that $k < 2 n(n+1) \log 10$. Hence, after $2 n(n+1) \log 10$ iterations of the ellipsoid method a point in $S$ will be found.
+% matching matroid
+
+
+%%%%%%%%%%%%%%%%
+
+
+% Commoner's criterion
+
+
+
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

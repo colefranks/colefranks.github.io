@@ -1,0 +1,42 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+							
+								
+\usepackage{amssymb, amsthm}
+\newcommand{\RR}{\mathbb R}
+\theoremstyle{definition}
+\newtheorem*{rem}{Remark}
+\newtheorem*{thm}{Theorem}
+
+
+\title{18.434 Pset 3 Due Wed 03/30/2020}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose at least two problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+
+\begin{enumerate}
+\item Let $G$ be a $d$-regular graph. Prove that for every vertex $v$ in $G$, the number of walks in $G$ from $v$ to $v$ of length $k$ is at least the number of closed walks of length $k$ from the root to itself in the infinite $d$-regular tree.
+\item Suppose $G$ is a $d$-regular graph and let $\lambda = \max\{|\lambda_2|, |\lambda_n|\}$. Let $S$ and $T$ be disjoint subsets of the vertices of $G$. Show that the total number $W(S,T)$ of walks from $S$ to $T$ of length $k$ (the number of $k$-step walks starting at some vertex in $S$ and ending at some vertex in $T$) satisfies 
+
+$$\left|W(S, T) - \frac{d^k}{n} |S| |T|  \right| \leq \lambda^k \sqrt{|S||T|}.$$
+\textbf{Hint: } Express $W(S, T) = \chi_S^T A^k \chi_T$ and proceed as in the proof of the expander mixing lemma. 
+\item Let $A$ be a matrix with eigenvalues $\lambda_1 = 1, \lambda_2, \dots, \lambda_n$ and suppose that $P$ is an invertible matrix such that $P A P^{-1}$ is a symmetric matrix. Let $\lambda:=\max_{i \neq 1} |\lambda_i|$ and $v_1$ be an eigenvector of $A$ with eigenvalue $1$. Show that if $\lambda < 1$ then for all $v \in \RR^n$ the sequence $A^k v$ converges to  
+$$ \left(\frac{\langle Pv_1, P v \rangle }{\|Pv_1\|^2}\right) v_1 .$$
+Discuss the relevance of this to a lazy random walk on an undirected graph.
+\end{enumerate}
+
+
+
+
+\end{document}  

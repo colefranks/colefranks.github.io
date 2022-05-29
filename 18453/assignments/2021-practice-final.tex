@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+
+\usepackage{../lp,amsmath}
+\input{../newmac}
+\usepackage{graphicx}
+\setlength{\topmargin}{-1.0in}
+\setlength{\textheight}{9.5in}
+\begin{document}
+
+% \handout{Final}{May 18th, 2015}
+
+\noindent {\Large 18.453 Practice Final} \\
+~\\
+
+\paragraph{Instructions.} This is practice for a {\bf timed} final. This is meant to be done in \textbf{3} hours with access to notes and course material, but no access to collaborators. For best practice I suggest trying to complete it under these conditions. Afterwards please tell me if 3 hours felt like enough.
+ \vspace*{0.1in}
+
+%\vspace*{0.1in}
+
+%{\Large {\bf Your Name:}}
+
+
+
+\begin{enumerate}
+
+\item
+Answer true or false. For items \textbf{not} marked with *, if true, provide a concise reason (no rigor necessary) and if false, exhibit a counterexample.
+\begin{enumerate}
+\item Every matching that is not maximum in a graph $G$ has an augmenting path.*
+\item If $A, b$ are integral, then the linear program $\max\{c^T x: Ax \leq b\}$ has an integral maximizer.
+\item The set of matchings in a bipartite graph forms a matroid.
+\item Given a bipartite graph, the set of subgraphs of degree at most two is the intersection of two matroids.
+\item Given a separation oracle for a polyhedron $P\subset [0,1]^n$, it is always possible to test feasibility of $P$ with polynomially many calls to the separation oracle.
+\end{enumerate}
+
+
+\newpage
+\item
+% optimal permutation with restrictions
+
+For $k \le n$ an integer, define a $k$-\emph{bounded permutation} on $\{1, ..., n\}$ to be a permutation $\sigma$ such that $|\sigma(i) - i| \le k$ for all $i \in \{1, ..., n\}$.
+
+Suppose we are given an integer $k \le n$ and costs $c(i)$ for $i\in\{1,...,n\}$, and our goal is to find a $k$-bounded permutation $\sigma$ on $\{1, ..., n\}$ minimizing $\sum_{i=1}^n c(i) \sigma(i)$. Give a polynomial-time  algorithm for this problem (there is no need to give the most efficient algorithm, but the algorithm should be polynomial in $n$ and $k$). (You can refer to any algorithm we have seen in class.)
+
+
+
+\newpage
+
+%\newpage
+%~
+%%%%%%%%%%%%%%%%
+%\newpage
+\item
+\begin{enumerate}
+	\item
+Consider a directed graph $G=(V,E)$ with nonnegative (upper) capacities $u: E \rightarrow {\mathbb R}$ (and no lower capacities). For any two vertices $s, t\in V$, define $\lambda_{st}\in {\mathbb R}$ to be the maximum flow value from $s$ to $t$. Given any 3 vertices $s, t, u\in V$, show that $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$.
+
+%\newpage
+\item If the graph is undirected, the previous result still holds: $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$ for all $s, t, u$. Furthermore, $\lambda_{st}=\lambda_{ts}$. Now, consider the complete graph $K_V$ on the vertex set $V$ with weight $\lambda_{uv}$ on edge $(u,v)$ for all $u,v$. Let $T$ be a {\it maximum weight} spanning tree on $K_V$ with respect to these weights $\lambda_{uv}$. Argue that for every $(s,t)\notin T$, we have $$\lambda_{s,t}=\min_{(u,v)\in P_{st}} \lambda_{uv}$$ where $P_{st}$ denotes the (edges of $K_V$) of the unique path in $T$ between $s$ and $t$. (This implies the somewhat surprising result that, over all pairs $(s,t)$, $\lambda_{st}$ can take at most $|V|-1$ values (those along the edges of $T$).)
+\end{enumerate}
+
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\item
+
+% matching matroid
+
+Consider a bipartite graph $G = (A,B,E)$ with parts $A,B$ and edges $E \subseteq A\times B$. Suppose we have a matroid $M_A = (A,\mathcal{I}_A)$ on $A$ with rank function $r_A$. Define a family of sets $\mathcal{I}_B$ to be the collection of sets $T \subseteq B$ such that there exists a matching $M$ of $G$ with vertex set $V(M) = S\cup T$, such that $S \subseteq A$ and $S \in \mathcal{I}_A$.
+
+ Prove that $M_B = (B,\mathcal{I}_B)$ is a matroid. (For {\bf half credit}, you can do this in the special case where every vertex of $A$ has degree $1$, so that $G$ is the graph of a function from $A$ to $B$.)
+
+
+% network flows
+
+
+\newpage
+
+%%%%%%%%%%%%%%%
+%\newpage
+\item Let $x \in [0,1]^n$ be an unknown vector, and we suppose have access to a separation oracle for the set $S = [x_1, x_1 + 0.1] \times  \dots \times [x_n, x_n + 0.1] \subset \R^n$. Can we find a point in $S$ in time polynomial in $n$, and if so, how? (You can refer to any algorithm we have seen in class).
+
+% matching matroid
+
+
+%%%%%%%%%%%%%%%%
+
+
+% Commoner's criterion
+
+
+
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

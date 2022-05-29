@@ -1,0 +1,52 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+							
+								
+\usepackage{amssymb, amsthm}
+\newcommand{\RR}{\mathbb R}
+\theoremstyle{definition}
+\newtheorem*{rem}{Remark}
+\newtheorem*{thm}{Theorem}
+
+
+\title{18.434 Pset 2 Due 03/6/2020}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose $3$ problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+
+\begin{enumerate}
+\item Show that the algebraic connectivity of a graph is superadditive under disjoint unions, i.e. for $G, H$ edge-disjoint on the same vertex set we have $\mu_2(G + H) \geq \mu_2(G) + \mu_2(H)$ where $G + H$ is the graph whose edge set is the union of those of $G, H$.
+\begin{rem}Actually, Laplacians make sense for edge-weighted graphs, so if $G$ and $H$ are weighted graphs and I define $G + H$ to have each edge weighted by the sum of the weight on the edge in $G$ and the weight on the edge in $H$ (thinking of non-edges as zero weight edges) then the algebraic connectivity (defined spectrally) is still super-additive, even if $G$ and $H$ aren't disjoint.
+\end{rem}
+\item Using the fact that the spectra of principal submatrices interlace, prove the statement used by Max:
+\begin{thm}If $A$ is a symmetric $n\times n$ matrix and $x_1, \dots, x_m \in \RR^n$ are orthogonal, then the spectrum of the $m\times m$ matrix $C_{i,j}:=\frac{1}{\|x_i\|^2} x_i^T A x_j$ interlaces that of $A$.
+\end{thm}
+\textbf{Hint:} Make a change of basis and then apply the submatrix version of interlacing to show $B_{i,j}:=\frac{1}{\|x_i\|\|x_j\|} x_i^T A x_j$ interlaces. Then show $C, B$ are similar.
+\item Prove the upper inequality in Theorem 3.7.4 in the book, namely that the Lovasz $\theta$ number is at most the chromatic number of the complement.  \textbf{Hint:} The proof is in the book, but to successfully answer this question you should explain what's going on in that proof in your own words.\\
+
+For fun I also recommend reading the proof of Proposition 3.7.5.
+\item Define the inner product between two characters\footnote{I mean multiplicative character, as defined in Agustin's talk as a homomorphism from $G$ to the complex numbers with multiplication, not character in the sense of representation theory. For Abelian groups these two notions coincide, and the characters form an orthonormal basis for the vector space of complex functions on the group (and hence an orthonormal eigenbasis for the Cayley graph.)}  $\phi, \psi$ of a finite group $G$ as 
+$$ \langle \phi, \psi \rangle:= \frac{1}{|G|}\sum_{g \in G} \phi(g)\overline{\psi(g)},$$
+where if $z$ is a complex number then $\overline z$ denotes its complex conjugate. Show 
+\begin{itemize}
+\item the characters of a group (thought of as vectors indexed by group elements) are eigenvectors of any Cayley graph of $G$, and that
+\item the set of characters is orthonormal. 
+\end{itemize}
+
+\textbf{Hint for second part:} First show that the characters of a finite group take values in the unit circle in the complex plane. Then $\bar{\psi(g)} = \psi(g)^{-1}$. Use this to show that the inner product between two distinct characters is equal to itself times a number that isn't $1$, so it must be zero.
+
+
+\end{enumerate}
+
+\end{document}  

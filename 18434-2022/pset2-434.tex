@@ -1,0 +1,36 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+							
+								
+\usepackage{amssymb, amsthm, amsmath}
+\newcommand{\RR}{\mathbb R}
+\theoremstyle{definition}
+\newtheorem*{rem}{Remark}
+\newtheorem*{thm}{Theorem}
+
+
+\title{18.434 Pset 2 Due 03/4/2022}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose $3$ problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+
+\begin{enumerate}
+\item What is the equality case of $\bar{d} \leq \lambda_1$, where $\lambda_1$ is the maximum eigenvalue of $A(G)$? Prove it.
+\item The spectral layout of a graph $G = (V,E)$ is defined as the function $\rho:V \to \RR^d$ minimizing $E(\rho):=\sum_{(i,j) \in E} \|\rho(i) - \rho(j)\|^2$ subject to $\sum_{v \in V} \rho(v) = 0$ and $\sum_{v \in V} \rho(v)\rho(v)^T = I_{d}$. Show that $E(\rho)$'s minimum value is $\lambda_2 + \dots + \lambda_{d + 1}$ where $\lambda_1\leq \dots \leq \lambda_n$ are the Laplacian eigenvalues of $G$.
+\item Define the generalized hypercube graph as the Cayley graph of the $d$-dimensional Boolean hypercube $H_d$ with generators $g_1, \dots, g_k$. Show that if $g_1, \dots, g_k$ are selected uniformly at random from $H_d$ for $k = 10d$, then with probability tending to $1$ as $d \to \infty$, all nonzero \emph{Laplacian} eigenvalues of the generalized hypercube graph are in the range $k \pm k/\sqrt{5}. $ You may make use of the \textbf{Chernoff bound:} for $X_1,\dots,X_t$ i.i.d uniform $\pm 1$ random variables, $\Pr[|\sum X_i| > h] \leq 2e^{- h^2/2 t}$. This is interesting because the degree is only $O(\log n)$ where $n=2^d$ is the number of vertices, but spectrally it behaves like a complete graph.
+\item A column-stochastic matrix has all columns summing to $1$. Show that a column-stochastic nonnegative matrix $A$ has a nonnegative vector $u$ summing to 1 such that $Au=u$. When is $u$ unique?
+\item Under the assumptions of the previous problem, and the further assumption that $A$ is $n\times n$ and every entry of $A$ is at least $(1-\alpha)/n$, prove that for any nonnegative $u_0$ summing to $1$ we have $\|A^i u_0 - u\|_1 \leq \alpha^i \|u_0 - u\|_1$. In other words, the power method quickly finds $u$.
+\end{enumerate}
+
+\end{document}  

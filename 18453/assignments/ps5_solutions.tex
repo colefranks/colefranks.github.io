@@ -1,0 +1,363 @@
+\documentclass[12pt]{article}
+\input{../newmac}
+\usepackage{graphicx,../lp,amsmath}
+\newcommand{\I}{\mathcal I}
+\begin{document}
+
+
+\handout{Solutions to Problem Set 5}{2021 Fall}
+
+% 2009
+% ps1
+
+%2013
+% ps1: 1-2, 1-3, 1-4, 1-5 and 1-12. Grad: 1-8.
+% ps2: 2-1, 2-2 and 2-3. 3-1, 3-2. Grad: 2-7.
+% ps3: 3-9, 3-12 and 3-17. 4-2, 4-7 and 4-8.
+
+%2015
+% ps1: 1-9
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%
+
+%%%%%
+%\item[5-4]
+%\begin{itemize}
+%\item[1.] Any base of the matroid have size 2 since $\mathrm{rank}(A) = 2$. All subsets of $E$ of size 2 except $\{1, 2\}$ are bases of the matroid.
+%\item[2.] $\mathcal{C} = \{C \subseteq E: |C| = 3, \{1, 2\} \not\subseteq C\} \cup \{\{1,2\}\}$.
+%\item[3.] For example, let $B = \{1,3\}$ and $e = 2$. Then the unique circuit in $B+e$ is $\{1, 2\}$.
+%\end{itemize}
+
+\item[5-5]
+
+\begin{quote}
+Given a family $A_1, A_2, \cdots, A_n$ of sets (they are not
+necessarily disjoint), a {\it transversal} is a set $T$ such that
+$T=\{a_1, a_2, \cdots, a_n\}$, the $a_i$'s are distinct, and $a_i\in
+A_i$ for all $i$. A partial transversal is a transversal for $A_{i_1},
+A_{i_2}, \cdots, A_{i_k}$ for some subfamily of the $A_i$'s.
+
+Show that the family of all partial transversals forms a matroid (on
+the ground set $E=\cup A_i$). (Hint: Think of bipartite matchings.)
+\end{quote}
+
+\begin{itemize}
+\item[(I1)] It is easy to see that the first axiom ($I \in \mathcal{I}$ and $J \subseteq I$ then $J \in \mathcal{I}$) is satisfied, since subset of a partial transversal is again a partial transversal.
+
+\item[(I2)]
+We would like to prove the following:
+\begin{quote}
+If $X$ and $Y$ are partial transversals with $|X| < |Y|$, then there exists $y \in Y$ such that $X \cup \{y\}$ is a partial transversal.
+\end{quote}
+
+Let us construct a bipartite graph $G=(V, E)$ as following. Let $A = \cup A_i$ and $B = \{A_i: i \in [n]\}$. Here $V = A \cup B$ and $(A, B)$ forms a bipartition of $G$. A pair of vertices $a \in A$ and $A_i \in B$ forms an edge if $a \in A_i$. Note that $T \subseteq A$ is a partial transversal if and only if there exists a matching $M$ in $G$ which matches every vertex in $T$.
+
+Now let $X$ and $Y$ be two partial transversals with $|X| < |Y|$ and let $M$ and $N$ be matchings in $G$ which covers $X$ and $Y$ respectively. We may assume that $|M| = |X|$ and $|N| = |Y|$ by omitting excessive edges. Then there exists an augmenting path $P$ in $M \cup N$ since $|M| < |N|$. Note that $M' = M \triangle P$ is a matching in $G$ with $|M'| > |M|$, and covers $X \cup \{y\}$ where $y \in Y \setminus X$ is an end-point of $P$. Hence, $X \cup\{y\}$ is a partial transversal.
+\end{itemize}
+
+\item[5-7]
+
+\begin{quote}
+A family ${\cal F}$ of sets is said to be {\it laminar} if, for any
+two sets $A, B\in {\cal F}$, we have that either (i) $A\subseteq B$,
+or (ii) $B\subseteq A$ or (iii) $A\cap B=\emptyset$. Suppose that we
+have a laminar family ${\cal F}$ of subsets of $E$ and an integer $k(A)$ for
+every set $A\in {\cal F}$. Show that $(E, {\cal I})$ defines a matroid
+(a {\it laminar} matroid) where:
+$${\cal I} =\{X\subseteq E: |X\cap A|\leq k(A) \mbox{ for all } A \in
+{\cal F}\}.$$
+\end{quote}
+
+It is easy to see that $(E,\mathcal{I})$ satisfies the first axiom
+$(I_1)$ that if $X\subseteq Y$ and $Y \in \mathcal{I}$, then $X \in
+\mathcal{I}.$ For $(I_2),$ consider $X,Y \in \mathcal{I}$ and $|Y|>|X|$, in
+order to show the second axiom $(I_2)$, we need to show that there
+exists $e \in Y\setminus X$ such that $X \cup \{e\} \in \mathcal{I}.$ Let us call
+a set $S \in \mathcal{F}$ maximal in $T \subseteq E$, $T\neq S$, if
+$S\subset T$ and $S$ is not contained in any other element of
+$\mathcal{F}$ that is properly contained in $T.$ Suppose that
+$A_1,\ldots, A_n $ are the maximal sets in $E.$ Set $A^{*}=E
+\backslash(A_1\cup \cdots A_n).$ Since $|Y|>|X|$, we must have
+$|Y\cap A^{*}|>|X\cap A^{*}|,$ or $|Y\cap A_i|>|X\cap A_i|$ for some
+$i.$ In case $|Y\cap A^{*}|>|X\cap A^{*}|$, there is an element $e
+\in (Y\cap A^{*})\in (X\cap A^{*}),$ and $X \cup \{e\} \in \mathcal{I}.$
+So we only need to study the case that $|Y\cap A_i|>|X\cap A_i|$ for
+some $i.$ Without lost of generality we may assume $|Y\cap
+A_1|>|X\cap A_1|.$
+
+Let $B_1,\ldots,B_m$ be the maximal sets in $A_1$ and let
+$B^{*}=A_1\backslash(B_1\cup \ldots B_m)$. Since $|Y\cap
+A_1|>|X\cap A_1|$, we have $|Y\cap B^{*}|>|X\cap B^{*}|$ or $|Y\cap
+B_i|>|X\cap B_i|$ for some $i$. Again if $|Y\cap B^{*}|>|X\cap
+B^{*}|$, there is an element $e \in (Y\cap A^{*})\in (X\cap A^{*}),$
+and $X \cup \{e\}\in \mathcal{I}.$ Otherwise we can repeat this process
+for $B_i$ satisfying $|Y\cap B_i|>|X\cap B_i|$. Since the ground set
+$E$ is finite, we can find the required $e$ in a finite number of
+steps, and we are done.
+
+
+\item[5-8]
+
+\begin{quote}
+We are given $n$ jobs that each take one unit of
+processing time. All jobs are available at time 0, and job $j$ has a
+profit of $c_j$ and a deadline $d_j$. The profit for job $j$ will only
+be earned if the job completes by time $d_j$. The problem is to find
+an ordering of the jobs that maximizes the total profit. First, prove
+that if a subset of the jobs can be completed on time, then they can
+also be completed on time if they are scheduled in the order of their
+deadlines. Now, let $E(M)=\{1,2,\cdots,n\}$ and let ${\cal
+I}(M)=\{J\subseteq E(M): J$ can be completed on time$\}$. Prove that
+$M$ is a matroid and describe how to find an optimal ordering for the
+jobs.
+\end{quote}
+
+{\bf First solution.}
+Let $(j_1, j_2, ..., j_k)$ be a sequence of jobs ordered in increasing order on their deadlines, i.e., $d_{j_1}\leq d_{j_2}\leq \ldots\leq d_{j_k}$. If they could not be completed in time, there must exist some $i$ for which $d_{j_i} < i$ (because $j_1$ will finish at time 1, $j_2$ will finish at time 2, etc.) However, this would imply that $d_{j_1}, d_{j_2}, ... d_{j_i} < i$.
+	In other words, there are $i$ jobs with deadline less than $i$; therefore at least $i$ jobs need to be completed by the time $i-1$. This implies that the sequence of jobs is infeasible. Thus the contrapositive of what we just proved is that if a sequence of jobs can be completed in some order, then they can be completed in order of their deadlines.
+
+Now we prove $M$ is a matroid by checking the two axioms.
+		
+{\bf I1} If $Y \in \I$ and $X \subset Y$, then $X \in I$.
+	
+This is obvious: if a set of jobs can be completed in time, then a subset of the jobs can also be completed in time.
+	
+{\bf I2} If $X \in I, Y \in I$ and $|Y| > |X|$ then $\exists e \in Y\setminus X : X \cup \{e\} \in I$.
+	
+Suppose both sets of jobs are ordered by deadline. Let $y  = |Y|, x = |X|$ and $e$ be one of the jobs with latest deadline in $Y \setminus X$. Suppose $e$ is in position $y-k$ of $Y$. Let $K = \{ j_{i_1}, j_{i_2}, ..., j_{i_k}\}$ be the set of jobs ordered by deadline ($d_{i_1} \leq d_{i_2} \leq ... \leq d_{i_k}$) that appear after $e$ in $Y$.
+	
+Since $e$ is in position $y-k$ in $Y$, we have $d_e \geq y-k$. Also $d_{i_t} \geq y - k + t$ because $j_{i_t}$ is in position $y - k + t$. In order to prove $X+e\in\I$, we need to prove there is no $q$ for which the job in position $q$ in $X$ has deadline $q$ for $q \geq d_e$ (This is the only way for $X+e$ to be infeasible.) For the sake of contradiction, assume such $q$ exists and job is $x_q$. Suppose there are $n$ elements from $K$ to the right of $x_q$.
+	
+If $n = k$, then $x_q$ has at least $k$ elements to its right. This means that it is in position at most $x-k$. However, $x-k < y-k \leq q$. This is a contradiction since $x_q$ is in position $q$ in $X$.
+	
+If $n < k$, then $x_q$ is to the right of $j_{i_{k-n}}$, which has deadline $d_{i_{k-n}} \geq y - k + (k-n) = y-n$. Therefore the deadline of $x_q$, which is $q$, satisfies $q \geq y-n > x-n$. However, since there are at least $n$ elements to the right of the $q$ element of $X$, we have $q \leq x-n$. Again a contradiction.
+	
+The contradiction proves that $X + e\in\I$, as desired.
+	
+Finally, to find an optimal scheduling, consider the value of each job $j_i$ being its reward $c_i$.
+The greedy algorithm in matroid $M$ then finds the optimal configuration.
+
+{\bf Second solution.} Here is a shorter way to prove that $M$ is a matroid. In fact, $M$ consists of partial transversals (see Exercise~5.5) for the following family of sets:
+\[
+X_D = \{1 \le j \le n ~\vert~ d_j \ge D\}, \quad D = 1, 2, \ldots.
+\]
+Indeed, a partial transversal for a subfamily $X_{D_1}, X_{D_2}, \ldots$ with $1 \le D_1 < D_2 < \ldots$ is a collection of jobs $j_{D_1} \in X_{D_1}, j_{D_2} \in X_{D_2}$, and it is easy to see that this collection of jobs can be done in time. For the other direction, if certain jobs $j_1, j_2, ..., j_k$ can be done in time (the indexing is in increasing order on deadlines) then $j_1 \in X_1, j_2 \in X_2, \ldots, j_k \in X_k$, and this is a partial transversal.
+
+
+{\bf Third solution.} Yet another way to show $M$ is matroid is to use Exercise~5.7. To each set 
+\[
+A_D = \{1 \le j \le n ~\vert~ d_j \le D\}, \quad D = 1, 2, \ldots,
+\]
+assign an integer
+\[
+k(A_D) = D.
+\]
+Notice that the family $\mathcal F = \{A_1, A_2, \ldots\}$ is laminar (in fact, nested), and the matroid in question is the corresponding laminar matroid (at most $D$ jobs can be done by the time $D$).
+
+
+\item[P4]
+
+\begin{quote}
+Show the derivation of Theorem 6.3 from Theorem 6.1, from the notes on matroid intersection.
+\end{quote}
+
+Given a graph $G = (V,E)$ and an edge coloring described by a partition $E = E_1 \cup \cdots \cup E_k$, we can associate two matroids with underlying set $E$: the graphical matroid attached to $G$, which we will call $M_1$, and the partition matroid associated to the partition (allowing at most one element per part in an independent set), which we will call $M_2$. A colorful spanning tree is then exactly a set $S \in \mathcal{I}_1 \cap \mathcal{I}_2$ with $|S| = |V|-1$. So there exists a colorful spanning tree if and only if we have
+\[
+\max_{S \in \mathcal{I}_1 \cap \mathcal{I}_2} |S| \ge |V|-1.
+\]
+By the Matroid Intersection Theorem (Theorem 6.1), this happens if and only if we have
+\[
+\min_{U \subseteq E}\ [r_1(U) + r_2(E\setminus U)] \ge |V|-1.
+\]
+From the discussion immediately after Theorem 6.1, we see that we just need to check that
+\[
+r_1(U) + r_2(E\setminus U) \ge |V|-1
+\]
+for every set $U$ such that $E\setminus U$ is closed for $M_2$.
+
+A set is closed for $M_2$ if and only if it can be written as a union of color classes, so we can suppose that $E\setminus U = E_{i_1} \cup \cdots \cup E_{i_c}$ for some number $c$. Then $r_2(E\setminus U) = c$, and $U$ is the set of edges that remain after we delete the edges of the $c$ colors $i_1, ..., i_c$. Then
+\[
+r_1(U) + r_2(E\setminus U) = (|V| - \kappa(V,U)) + c,
+\]
+so there exists a colorful spanning tree if and only if we have
+\[
+|V| - \kappa(V,U) + c \ge |V|-1
+\]
+for every subset $U\subseteq E$ obtained by deleting $c$ color classes (for all $c$). Rearranging, we see this inequality is equivalent to
+\[
+\kappa(V,U) \le c+1
+\]
+for each such $U$.
+
+\item[5-12]
+
+\begin{quote}
+({\bf Extra Credit}) Let $M=(E, {\cal I})$ be a matroid and let $P$ be the corresponding
+matroid  polytope, i.e. the convex hull of characteristic vectors of
+independent sets. Show that two independent sets $I_1$ and $I_2$ are
+adjacent on $P$ if and only if either (i) $I_1\subseteq I_2$ and
+$|I_1|+1=|I_2|$, or (ii) $I_2\subseteq I_1$ and $|I_2|+1=|I_1|$, or
+(iii)
+$|I_1\setminus I_2|=|I_2\setminus I_1|=1$ and $I_1\cup I_2\notin
+{\cal I}$.
+\end{quote}
+
+First, let us prove that the conditions are sufficient.
+
+Consider two independent set $I_1$ and $I_2$ such that (i) holds. Let $f$ be the only element in $I_2\setminus I_1$, and consider the weight function $c: E \to \R$ given by:
+$$c(e)= \begin{cases}
+1, &\text{if $e \in I_1$,}\\
+0, &\text{if $e=f$,}\\
+-1, &\text{if $e \notin I_2$.}
+\end{cases}$$
+For this cost, the only maximum weight independent sets are exactly $I_1$ and $I_2$. Therefore $I_1$ and $I_2$ are adjacent. The case where (ii) holds is analogous.
+
+Now, assume that $I_1$ and $I_2$ satisfy (iii). For this case let $f$ be the only element in $I_2\setminus I_1$ and $g$ be the only element in $I_1\setminus I_2$. Consider the weight function $c: E \to \R$ given by:
+$$c(e)= \begin{cases}
+2, &\text{if $e \in I_1 \cap I_2$,}\\
+1, &\text{if $e=f$, or $e=g$}\\
+-1, &\text{if $e \notin I_1\cup I_2$.}
+\end{cases}$$
+For this cost, the only maximum weight independent sets are exactly $I_1$ and $I_2$, and so they are adjacent in the matroid polytope.
+
+Now let us prove that the conditions are necessary.
+
+  Assume that $I_1$ and $I_2$ are a pair of adjacent independent sets and let $c: E \to \R$ be a cost function  that is maximized only by $I_1$ and $I_2$. In particular note that $c(e) \geq 0$ for every element in $I_1 \cup I_2$. Assume w.l.o.g. that $|I_1| \leq |I_2|$.
+
+\textbf{Case 1:}$|I_2| > |I_1|$. By the exchange axiom $(I3)$, there exists an element $f \in I_2\setminus I_1$ such that $I_1 + f$ is an independent set and, by a previous observation, it has weight greater or equal than the weight of $I_1$. Since $I_1$ is optimum it follows that so is $I_1 + f$. Since $I_2$ and $I_1$ are the only optima, it follows that $I_2 = I_1 + f$. Therefore, (i) holds.
+
+\textbf{Case 2:} $|I_2| = |I_1|$. Let $f$ be the element in $I_1\Delta I_2 = I_1\setminus I_2 \cup I_2 \setminus I_1$ with minimum cost. Assume w.l.o.g. that $f \in I_1$. Clearly, $I_1 - f$ is an independent set and $|I_1 - f| < |I_2|$. It follows that there exists an element $g \in I_2 \setminus I_1$ such that $I_1 - f + g$ is an independent set. By  choice of $f$, $c(I_1 -f + g) = c(I_1) - c(f) + c(g) \geq c(I_1)$. But then $I_1 - f + g$ is also a maximum weight independent set. Since $I_2$ and $I_1$ were the only optima, it follows that $I_2 = I_1 - f + g$, which implies that $|I_2 \setminus I_1| = |I_2 \setminus I_2| = 1$.
+
+To conclude that (iii) holds, we only need to show that $I_1 \cup I_2 \not\in \mathcal{I}$. But this is easy to see since, in other case, using that $c(e) \geq 0$ for every $e \in I_1 \cup I_2$, we would have that $c(I_1 \cup I_2) \geq c(I_1)$. This implies that $I_1 \cup I_2$ is another optimum (different from $I_1$ and $I_2$), which contradicts the adjacency condition of $I_1$ and $I_2$.
+
+
+\item[P6]
+
+\begin{quote}
+({\bf Extra Credit}) Use Theorem 6.8 from the notes on matroid intersection to show that if $G = (V,E)$ is a graph with $|E| \ge 2|V|-2$, such that for every nontrivial subset $S \subset V$ the number of edges of $G$ with both endpoints in $S$ is at most $2|S|-2$, then $G$ has two edge-disjoint spanning trees.
+\end{quote}
+
+Let $V = V_1 \cup \cdots \cup V_p$ be a partition of the vertex set $V$ into $p$ parts, we must show that
+\[
+\delta(V_1, ..., V_p) \ge 2(p-1).
+\]
+Note that an edge is counted in $\delta(V_1, ..., V_p)$ if and only if it is not completely contained in some part $V_i$, so we have
+\[
+\delta(V_1, ..., V_p) = |E| - \sum_{i=1}^p |E(V_i)|,
+\]
+where $E(V_i)$ is the set of edges completely contained in the part $V_i$. By our assumptions, we have
+\[
+|E| - \sum_{i=1}^p |E(V_i)| \ge 2|V|-2 - \sum_{i=1}^p (2|V_i| - 2) = 2p-2,
+\]
+so the condition of Theorem 6.8 is satisfied, and we are done.
+
+%\item[P4]
+
+%\begin{itemize}
+%\item[(a)]
+%Let $B_i$ be the base at iteration $i$. We first prove that there exists $e \not\in B_i$ and $f \in B_i$ with $w(e) > w(f)$ such that $B_i + e - f$ is a base of $M$, if $B_i$ is not optimum.
+
+%For, let $B^*$ be the optimum base, i.e., $w(B^*) > w(B)$ for any base $B$ of $M$. If $B_i = B^*$, we are done. Suppose not. Let $\mathcal{G}_M(B_i)$ be the exchange graph of $B_i$. By Lemma 6.4 in the lecture note, there exists a perfect matching $M$ between $B_i \setminus B^*$ and $B^* \setminus B_i$ in $\mathcal{G}_M(B_i)$. Since $w(B^*) > w(B_i)$, we have
+%$$
+%\sum_{e \in B^* \setminus B_i} w(e) - \sum_{f \in B_i \setminus B^*} w(f) > 0.
+%$$
+%It implies that there exists an edge $(e, f) \in M$ with $w(e) > w(f)$. Moreover, $B_i + e - f$ is a base of $M$ by definition of $\mathcal{G}_M(B_i)$.
+
+%\item[(b)]
+%Consider the same setting as in (a). Then,
+%$$
+%\sum_{(e \in B^*\setminus B_i, f \in B_i\setminus B^*) \in M} (w(e)-w(f)) = w(B^*) - w(B_i) > 0
+%$$
+%as we seen in (a). It implies that
+%$$
+%\max_{(e,f)\in M} (w(e)-w(f)) > \frac{w(B^*)-w(B_i)}{|B_i \setminus B^*|} \geq \frac{w(B^*)-w(B_i)}{r}.
+%$$
+%Hence,
+%\begin{eqnarray*}
+%w(B_{i+1})-w(B_i) &=& \max_{\substack{e \not\in B_i, f \in B_i: \\ B_i+e-f \in \mathcal{I}}} w(e)-w(f) \\
+%&\geq& \frac{1}{r}\left(w(B^*) - w(B_i)\right).
+%\end{eqnarray*}
+%\end{itemize}
+
+
+%\item[6-1] Our goal is to prove Konig's theorem using the matroid intersection theorem.
+%Recall that Konig's theorem states that if $G = (A\cup B, E)$ is a bipartite graph,
+%then the size of its maximum matching equals the size of its minimum vertex cover.
+
+%Consider $M_A = (E, \I_A)$ to be the matroid on the set of edges with
+%$\I_A = \{I \subset E : |\delta(v) \cap I| \leq 1 \textrm{ for all } v\in A\}$.
+%Define $M_B = (E, \I_B)$ similarly with $B$ replacing $A$.
+%The correspondence between an independent set in both matroids, i.e., an element
+%$I \in \I_A\cap\I_B$, and a matching of $M$.
+%Thus $\max_{S \in I_1\cap I_2} |S|$ is the size of the maximum matching in $G$.
+%We use the matroid intersection theorem with the matroids $M_A, M_B$, thus obtaining
+
+%$$
+%\max_{S \in \I_A\cap \I_B} |S| =
+%\min_{U\subset E} [r_A(U) + r_B(E\setminus U)]
+%$$
+
+%We only need to show that the right hand side of the above expression equals the size of the minimum vertex cover in $G$.
+%Observe that both $M_A, M_B$ are partition matroids, for which we know the rank function.
+%In this case, for any $U\subset E$, $r_A(U)$ is the number of vertices of $A$ adjacent to some edge of $U$.
+%Let $A(U) \subset A$ be this set of vertices adjacent to some $e\in U$.
+%Likewise, $r_B(E\setminus U)$ is the number of vertices of $B$ NOT adjacent to any edge of $U$
+%and let $B(U) \subset B$ to this set of vertices. It is clear that $A(U) \cup B(U)$
+%is a vertex cover of $G$ of size $r_A(U) + r_B(E\setminus U)$.
+%This shows that the right hand side of the equation is at least the size of the minimum vertex cover.
+%Thus, we have proven that the size of the maximum matching is at least the size of the minimum vertex cover.
+%The other inequality is obvious (and indeed holds for any non-necessarily bipartite graph), so Konig's theorem follows.
+
+%\item[P6]
+%Given an undirected graph $G = (V, E)$, Let $D = (V, A)$ be the directed graph in which every edge $e=\{u,v\}$ of $E$ is replaced by two arcs $(u,v)$ and $(v,u)$. As in the lecture note, let us define two partition matroids $M_1 = (A, \I_1)$ and $M_2 = (A, \I_2)$ as following:
+%\begin{eqnarray*}
+%\I_1 &=& \{F \subseteq A: |F \cap \{(u,v),(v,u)\}| \leq 1 \text{ for all $\{u,v\} \in E$}\}, \\
+%\I_2 &=& \{F \subseteq A: |F \cap \delta^-(v)| \leq k(v) \text{ for all $v \in V$}\}.
+%\end{eqnarray*}
+
+%We would like to prove that $|E| = \max_{F \in \I_1 \cap \I_2} |F|$ if and only if for any $P \subseteq V$ it holds that
+%$$
+%|E(P)| \leq \sum_{v \in P} k(v).
+%$$
+
+%By the matroid intersection theorem, we have
+%$$
+%\max_{F \in \I_1 \cap \I_2} |F| = \min_{U \subseteq A}\left[r_1(U) + r_2(A \setminus U)\right].
+%$$
+%Let $U^*$ be the minimizer of the right-hand side. Let $(u,v) \in A$. Suppose that $(u,v) \in U^*$ and $(v,u) \not\in U^*$. Then,
+%$r_1(U^*) = r_1(U^* \cup \{(v,u)\})$ so
+%$$
+%r_1(U^*) + r_2(A \setminus U^*) \geq r_1(U^* \cup \{(v,u)\}) + r_2(A \setminus (U^* \cup \{(v,u)\})).
+%$$
+%It implies that we may assume that $U^*$ contains either none or both of arcs $(u,v)$ and $(v,u)$.
+
+%Let $E_0$ be the set of undirected edges where corresponding arcs are contained in $U^*$ and let $E_1 = E \setminus E_0$. It is easy to see that $r_1(U^*) = |E_0|$. On the other hand,
+%\begin{eqnarray*}
+%r_2(A \setminus U^*) &=& \sum_{v \in V} \min\{k(v), |(A \setminus U^*) \cap \delta^{-}(v)|\} \\
+%&=& \sum_{v \in V} \min\{k(v), \deg_{E_1}(v)\},
+%\end{eqnarray*}
+%where $\deg_{E_1}(v)$ is the number of edges in $E_1$ incident to $v$. Let $\{u_1,u_2\} \in E_1$ and let $U = U^* \cup \{(u_1,u_2),(u_2,u_1)\}$. Then,
+%$$
+%r_1(U)+r_2(A\setminus U) = |E_0| + 1 + \sum_{v \in V} \min\{k(v), \deg_{E_1 \setminus \{u_1u_2\}} (v)\}.
+%$$
+%By minimality of $U^*$, we must have $r_1(U)+r_2(A\setminus U) \geq r_1(U^*)+r_2(A\setminus U^*)$ and it is only possible if either $\deg_{E_1}(u_1) > k(u_1)$ or $\deg_{E_1}(u_2) > k(u_2)$. Similarly, for any $\{u_1,u_2\} \in E_0$ we must have either $\deg_{E_1}(u_1) < k(u_1)$ or $\deg_{E_1}(u_2) < k(u_2)$.
+
+%Now let $P = \{v \in V: k(v) < \deg_{E_1}(v)\}$. Note that $E(P) \cap E_0 = \emptyset$ and $E(V\setminus P) \cap E_1 = \emptyset$. Since $E_1 = E \setminus E_0$, it implies that $E(P) \subseteq E_1$ and $E(V \setminus P) \subseteq E_0$. We have
+%\begin{eqnarray*}
+%r_1(U^*)+r_2(A\setminus U^*) &=& |E_0| + \sum_{v \in P} k(v) + \sum_{v \in V \setminus P} \deg_{E_1}(v) \\
+%&=& |E_0| + |E_1 \cap E(P, V\setminus P)| + \sum_{v \in P} k(v) \\
+%&=& |E_0| + |E_1| - |E(P)| + \sum_{v \in P} k(v).
+%\end{eqnarray*}
+%Hence, $r_1(U^*)+r_2(A\setminus U^*) \geq |E| = |E_0|+|E_1|$ if and only if
+%$$
+%\sum_{v \in P} k(v) \geq |E(P)|
+%$$
+%for any subset $P$ of the vertices.
+
+
+
+%%%%%%%%%%%%%%%%%
+\end{enumerate}
+\end{document}
+

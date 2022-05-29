@@ -1,0 +1,31 @@
+\documentclass[12pt]{article}
+\input{../newmac}
+\usepackage{graphicx}
+\begin{document}
+
+
+\handout{Spanning Tree Game}{\today}
+
+A spanning tree $T$ in a graph $G=(V,E)$ is a set of edges without any
+cycles that connect all vertices together. The spanning tree game is a
+2-player game. Each player in turn selects an edge. Player 1 starts by
+deleting an edge, and then player 2 fixes an edge (which has not been
+deleted yet); an edge fixed
+cannot be deleted later on by the other player. Player 2 wins if he
+succeeds in constructing a spanning tree of the graph; otherwise,
+player 1 wins. 
+
+Which graphs have a winning strategy for player 1? Which graphs have a
+winning strategy for player 2?
+
+For this graph with 16 vertices and 30 edges, which player has a
+winning strategy? 
+
+
+\begin{center}
+\includegraphics{../figures/mst-game}
+\end{center}
+
+
+
+\end{document}

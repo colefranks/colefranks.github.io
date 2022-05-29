@@ -1,0 +1,37 @@
+\documentclass[12pt]{article} \input{../newmac}
+\usepackage{graphicx,../lp,amsmath} 
+
+
+\begin{document}
+
+
+
+\handout{Problem set 3}{March 18, 2021}
+
+\medskip
+This problem set is due on Thursday, April 8, 2021. Instructions same as the first pset; some key points: collaboration is encouraged but you {\bf must} write up
+your answers in your own words. You are required to list and identify clearly all sources and collaborators except instructors, TA or lecture notes.  %Your grade will not count unless you submit this information.
+
+To submit your homework, upload it in PDF format using the Gradescope tool in Canvas before the deadline.
+
+\begin{enumerate}
+\item We will prove strong linear programming duality in a more geometric manner.\footnote{I consider it more geometric because it uses Farkas lemma straightforwardly, and Farkas lemma is essentially a separating hyperplane theorem (see the latexed notes on polyhedra).} Consider the linear program of maximizing $c^T x$ over the polyhedron $P = \{x:Ax \leq b\}$ where $A$ has rows $(a_i^T: i =1,...,m)$. Assume that the linear program is bounded. We want to show that there is some $y \geq 0$ such that $A^T y = c$ satisfying $b^T y = \max \{c^T x: x \in P\}$. 
+\begin{enumerate}
+\item Let $v_0$ be a vertex maximizing $c^Tx$. Let $I$ be the set $\{i: a_i^T v_0 = b_i\}$ of constraints that are tight for $v_0$. Show that there is no vector $x$ such that $a_i^T x \leq 0$ for all $i \in I$ and $c^T x > 0$. 
+\item Conclude that there is some vector $y \geq 0$ such that $y_j = 0$ for $j \not\in I$ and and $A^T y = c.$ \textbf{Hint: }\footnote{Apply Farkas' lemma.}
+\item Show that this $y$ satisfies $b^T y = c^T v_0$, completing the proof.
+\end{enumerate}
+\item
+%Exercise 3-9. 
+Exercise 3-10.
+\item
+%Exercise 3-11.
+Exercise 3-12.
+\item
+For graduate students, exercise 3-13.
+
+\end{enumerate}
+
+
+\end{document}
+

@@ -1,0 +1,100 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+					
+								
+\usepackage{amssymb, amsthm, amsmath, hyperref}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\maxcut}{\operatorname{maxcut}}
+
+
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{definition}
+\newtheorem*{rem}{Remark}
+\newtheorem*{thm}{Theorem}
+
+
+\title{18.434 Pset 5 Due Wed 05/8/2020}
+\author{Cole Franks}
+\date{\today}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+\textbf{Choose at least $2$ problems to write up.} I recommend solving even the ones you don't write up. The hints are there in case you want to follow them, but you may solve the problems however you like. As usual, you may collaborate, but the writeup should be in your own words and you should list collaborators and source material.
+
+\begin{enumerate}
+\item \textbf{ Diameter: } We'll use what Kristin proved about iterative methods to show a bound on the diameter of $G$ in terms of the condition number $\lambda_n/\lambda_2$ of its Laplacian. In particular we will prove the following bound, due to Chung, Faber, Manteuffel: If $G$ is connected then
+\begin{gather}\diam(G) \leq  \left(\frac{1}{2} \sqrt{\frac{\lambda_n}{\lambda_2}} + 1\right) \ln (2/\eps) + 1, \label{eq:diam}\end{gather}
+where $\lambda_2 \leq \dots \leq \lambda_n$ denote the eigenvalues of $L_G$.
+
+Let $\Pi$ denote the projection to $\mathbf{1}^\perp$. Recall that in Kristin's talk we found a polynomial $p$ such that $\|p(L)L - \Pi\| \leq \eps$ (in operator norm) and $p$ is of degree at most 
+$$t =  \left(\frac{1}{2} \sqrt{\frac{\lambda_n}{\lambda_2}} + 1\right) \ln (2n).$$
+In words, $p$ is of pretty low degree and $p(L)$ is a good approximation to the (pseudo) inverse of $L$. 
+\begin{enumerate}
+\item Show that if $\deg(p) = t$ and $a,b$ are at distance at least $t+2$ in the graph, then 
+$$\delta_a^T Lp(L) \delta_b = 0.$$
+Conclude that $\delta_a^T (Lp(L) - \Pi) \delta_b = - \frac{1}{n}.$
+\item Derive a contradiction to $\|p(L)L - \Pi\| \leq \eps$ if $\eps < 1/n$, thus showing an upper bound on $t$. Conclude the bound \ref{eq:diam}.
+\end{enumerate}
+
+
+
+
+\item \textbf{Sparsification: } \emph{Sparsification} refers to the approximation of a graph $G$ by a sparse graph. Recall that $H$ is said to $\eps$-approximate $G$ if 
+$$(1 - \eps) L_G \preceq L_H \preceq (1 + \eps) L_G.$$
+Recall from Ramya's talk that it is possible to $\eps$-approximate an undirected, weighted graph $G$ by a weighted graph $H$ with only $O(n/\eps^2)$ edges. This a famous result of Batson, Spielman, Srivastava and is discussed in Spielman 18. In this exercise, following Spielman 19, we'll get a hint for a slightly weaker bound of $O(n/\eps^2 \log n)$ edges. Here's a rough version of the algorithm:\\
+
+\noindent \textbf{Algorithm sketch:} Suppose $w_{a,b}$ is the weight on $(a,b)$ in $L$. Let $H$ have edge $(a,b)$, weighted by $w_{a,b}/{p_{a,b}}$, with probability $p_{a,b}:=w_{a,b}  R_{\textrm{eff}}(a,b) \eps^{-2} $; that is, sample $(a,b)$ with probability proportional to its effective resistance and weight. 
+
+
+\begin{enumerate}
+\item Show that $\EE[L_H] = L_G$. This part doesn't depend at all on the definition of $p_{a,b}$.
+
+\item \textbf{Critical fact 1: } The expected number of edges is $(n-1)/\eps^{-2}$. Prove this. \emph{Spielman modifies the selection probabilities a bit in order to use a Chernoff bound to conclude that the number of edges is at most $O( n \log n /\eps^2)$. }
+
+\textbf{Hint: } You will want to use that $R_{\textrm{eff}}(a,b)$ can be written $(\delta_a - \delta_b)^T L_{G}^+ (\delta_a - \delta_b)$, where $L_{G}^+$ is the \emph{Moore penrose pseudoinverse}, the rank $n-1$ p.s.d matrix defined by the identity $L_{G}^+ L_G = \Pi.$ Here $\delta_a$ denotes the vector with a $1$ in the $a$ coordinate and $0$'s elsewhere.
+
+\item Note that $L_H$ is the sum of independent random matrices, one for each pair of vertices $(a,b)$. In particular, the $i^{th}$ random matrix is 
+$$ X_{a,b} = \left\{\begin{array}{cc}w_{a,b}/p_{a,b} L_{(a,b)} & \textrm{ with probability } p_{a,b} \\ 0 & \textrm{ with probability } 1 - p_{a,b}\end{array}\right.$$
+
+ \textbf{Critical fact 2: } The individual $X_{a,b}$'s are bounded by a multiple of $L_G$. Namely, with probability $1$, $X_{a,b}  \preceq \eps^2 L_G$. Prove this.\\
+ 
+ \textbf{Hint: } Use the expression for $R_{\textrm{eff}}(a,b)$ from the previous part and that $L_{(a,b)} = (\delta_a - \delta_b) (\delta_a - \delta_b)^T$. See Spielman's notes for some hints about matrix tricks you might want to use here. Be careful because I've defined things slightly differently. 
+
+\end{enumerate}
+To finish the analysis, Spielman uses the first critical fact to conclude that the graph very likely has few edges. He uses the second fact to conclude that $L_H$ approximates $L_G$ with high probability. To do this, he uses something called \emph{matrix Chernoff bounds}, which say essentially that if a bunch of independent random matrices have sum equal to $L_G$ in expectation, and individually are not too much larger than $L_G$, then their sum is likely to approximate $L_G$. He does all this more carefully and with $p_{a,b}$ modified a bit.
+
+\item \textbf{Maxcut: } Remember that the maximum cut in a graph can be written 
+$$ \maxcut(G)= \max_{x \in \{\pm 1\}^n} \frac{1}{2} \sum_{\{i,j\} \in E} 1 - x_i  x_j.$$
+A vector relaxation of this quantity is
+$$\maxcut_m(G) =  \max_{x_1, \dots, x_n \in \RR^m, \|x_i\| = 1} \frac{1}{2} \sum_{\{i,j\} \in E} 1 - x_i \cdot x_j.$$
+
+\begin{enumerate}
+\item Prove that $\maxcut_s(G) \leq \maxcut_t(G)$ if $s\leq t$. Conclude that $\maxcut(G) \leq \maxcut_m(G)$ for all $m \geq 1$.
+\item Prove that for all $m$, $\maxcut_m(G) \leq \maxcut_n(G)$. That is, $\maxcut_m(G)$ stops increasing for $m \geq n$.\\
+ \textbf{Hint:} consider the $n\times n$ positive-semidefinite matrix $A_{ij} = x_i \cdot x_j$. Use that every psd matrix is the Gram matrix of a \emph{square} matrix $B$, i.e. there is a square matrix $B$ such that $B B^T = A$ (remind yourself why this is true using the spectral theorem).
+\end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}  

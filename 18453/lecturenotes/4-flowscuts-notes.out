@@ -1,0 +1,8 @@
+\BOOKMARK [1][-]{section.1}{Maximum Flows}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Special cases}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{s-t Cuts}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Interpretation of max flow min cut}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Efficiency of Maximum Flow Algorithm}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Finding the initial feasible flow}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Minimum cuts}{}% 7
+\BOOKMARK [1][-]{section.5}{Minimum T-odd cut problem}{}% 8

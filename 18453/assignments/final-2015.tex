@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+
+\usepackage{../lp,amsmath}
+\input{../newmac}
+\usepackage{graphicx}
+\setlength{\topmargin}{-1.0in}
+\setlength{\textheight}{9.7in}
+\begin{document}
+
+% \handout{Final}{May 18th, 2015}
+
+\paragraph{18.433 final.} This exam is closed book. You can have one double-sided handwritten
+sheet of paper with anything you want on it. Be neat!  {\bf In any problem, you can refer to results we have covered in class, but you need to state them precisely. } If you need more space for a question, you can continue on one of the extra pages at the end, but write a pointer to it. 
+ \vspace*{0.1in}
+
+\vspace*{0.1in}
+
+{\Large {\bf Your Name:}}
+
+
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%
+\iffalse
+\item
+Suppose that you are given an oracle (i.e.~a black-box algorithm) which given a polyhedron $P=\{x:
+Fx\leq g\}$ gives you a  feasible solution in $P$ or asserts that
+$P=\emptyset$. Show that using a {\it single call} to this oracle one
+can obtain an optimum solution for the LP
+$$\min\{c^T x: A x =b, x\geq 0\},$$
+assuming that this LP is feasible and bounded. 
+\fi
+%%%%%%%%%%%%%%%%%%%
+\item
+Consider a directed graph $G=(V,E)$ with nonnegative (upper) capacities $u: E \rightarrow {\mathbb R}$ (and no lower capacities). For any two vertices $s, t\in V$, define $\lambda_{st}\in {\mathbb R}$ to be the maximum flow value from $s$ to $t$. Given any 3 vertices $s, t, u\in V$, show that $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$. 
+
+\iffalse
+\newpage
+\item
+Consider the complete (i.e.~all possible edges are present) graph $K_n=(V,E)$ on $n$ vertices (and ${n \choose 2}$ edges). Consider the polytope $P_n$ defined as the convex hull of incidence vectors of 1-trees. What is the dimension of $P_n$? Justify.
+\fi
+
+
+\newpage
+\item
+Suppose we are using the ellipsoid algorithm to find a point in a polytope $P\subseteq {\mathbb R}^n$. Suppose we are given a ball $B_0$ of radius $R$ containing $P$ and we are told that $P$ is non-empty and contains a ball of radius $R/k$. Give an upper bound (as a function of $n$ and $k$) on the number of iterations the ellipsoid algorithm will take to find a point in $P$. (State precisely any results you use.)
+
+\newpage
+%%%%%%%%%%%%%%%
+\item
+Describe a tour-improvement heuristic and a tour-construction heuristic for the traveling salesman problem. 
+
+
+%%%%%%%%%%%%%%%%%%%%
+\iffalse
+\newpage
+\item
+Define what is a totally unimodular matrix $A$. Is the following matrix $A$ totally unimodular? Justify. 
+
+\[ 
+A=\left(\begin{array}{ccccccc}
+0 & 1 & 1 & 0 & 0 & 1 & 0 \\
+1 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 & 1 & 1 
+\end{array} \right)
+\]
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\item 
+Let $M=(E,{\cal I})$ be  a matroid. Suppose we have a map $f$ from $E$ to $S=\{1,2,\cdots,k\}$, and define ${\cal J}=\{f(I)|I\in {\cal I}\}$ (where $f(I)=\{f(e) | e\in I\}\subseteq S$). Show that $(S,{\cal J})$ also defines a matroid. (Notationwise this means that we have a partition of $E$ into $E_1, \cdots, E_k$ where $E_j=f^{-1}(j)=\{e\in E: f(e)=j\}$ and with ${\cal J}=\{J\subseteq S|\exists I\in {\cal I} \mbox{ with } I\cap E_j\neq \emptyset \mbox{ for all }j\in J\}$.)     
+%%%%%%%%%%%%%%%%
+\newpage
+\item
+Let $M=(E,{\cal I})$ be a matroid with rank function $r$ and suppose we have a cost function $c: E \rightarrow {\mathbb R}_{\geq 0}$ (for simplicity we are assuming that all the costs are positive). We are interested in finding a base $B$ of maximum total cost, i.e.~maximizing $\sum_{e \in B} c(e)$, and we hope to derive algorithms different from the one seen in lecture. {\bf Solve one of the following subquestions (a) or (b).}
+\begin{enumerate}
+\item
+Consider the following greedy algorithm, different from the one covered in lecture. 
+\begin{pseudocode}
+\item Sort the elements (from smallest to largest) such that $c(e_1)\leq
+  c(e_2)\leq \cdots \leq c(e_{m})$ where $m=|E|$
+\item $S=E$
+\item For $j=1$ to $m$
+\begin{pseudocode}
+\item
+ if $r(S \setminus \{e_j\})=r(E)$ then $S\leftarrow S\setminus \{e_j\}$
+ \end{pseudocode}
+ \item Output $S$
+ \end{pseudocode}
+Does this algorithm return a maximum cost basis in the matroid? Prove it, or give a counterexample. 
+
+\item
+Consider the following local search algorithm. Start from any base of $M$. At
+any point, define the neighborhood $N(B)$ of a base $B$ to be those
+bases that can be obtained from $B$ by adding an element in $E\setminus
+B$ and removing an element of $B$ (so as to maintain a base).  Keep replacing the base with a maximum weight base in its
+neighborhood (and stop whenever the current base is of maximum weight in its neighborhood). 
+
+Is this an {\it exact} neighborhood, in the sense that whenever this
+local search algorithm terminates, we are guaranteed to have a maximum
+base? Explain. State precisely any result you use from the class.
+(There are several ways to approach this; one approach may involve the
+exchange graph.) 
+
+\end{enumerate}
+%%%%%%%%%%%%%%%
+\newpage
+~
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\item
+A {\it derangement} on $\{1,\cdots, n\}$ is a permutation $\sigma$ such that $\sigma(i)\neq i$ for all $i\in\{1,\cdots,n\}$. There are no derangements for $n=1$, only one derangement for $n=2$ (namely $\sigma=(2,1)$) and only two derangements for  
+$n=3$ ($\sigma=(2,3,1)$ or $\sigma=(3,1,2)$). Suppose we are given costs $c(i)$ for $i\in\{1,\cdots,n\}$, and our goal is to find  a derangement $\sigma$ on $\{1,\cdots, n\}$ minimizing $\sum_{i=1}^n c(i) \sigma(i)$. Give a polynomial-time  algorithm for this problem (there is no need to give the most efficient algorithm, but the algorithm should be polynomial). (You can refer to any algorithm we have seen in class.)  
+
+\end{enumerate}
+\newpage
+~
+\newpage
+~
+\newpage
+~
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+
+\usepackage{../lp,amsmath}
+\input{../newmac}
+\usepackage{graphicx}
+\setlength{\topmargin}{-1.0in}
+\setlength{\textheight}{9.5in}
+\begin{document}
+
+% \handout{Final}{May 18th, 2015}
+
+\paragraph{18.453 final.} This exam is closed book.  Be neat!  {\bf In any problem, you can refer to results we have covered in class, but you need to state them precisely. } If you can't solve one part of a problem, but need the result for a later part of the problem, you can assume that the earlier part of the problem has been proved for the sake of the later part.
+% If you need more space for a question, you can continue on one of the extra pages at the end, but write a pointer to it. 
+%Don't worry; the exam is probably pretty challenging but that way, the learning process continues... 
+Have a great summer! 
+ \vspace*{0.1in}
+
+%\vspace*{0.1in}
+
+%{\Large {\bf Your Name:}}
+
+
+
+\begin{enumerate}
+\item
+
+% optimal permutation with restrictions
+
+For $k \le n$ an integer, define a $k$-\emph{bounded permutation} on $\{1, ..., n\}$ to be a permutation $\sigma$ such that $|\sigma(i) - i| \le k$ for all $i \in \{1, ..., n\}$.
+
+Suppose we are given an integer $k \le n$ and costs $c(i)$ for $i\in\{1,...,n\}$, and our goal is to find a $k$-bounded permutation $\sigma$ on $\{1, ..., n\}$ minimizing $\sum_{i=1}^n c(i) \sigma(i)$. Give a polynomial-time  algorithm for this problem (there is no need to give the most efficient algorithm, but the algorithm should be polynomial in $n$ and $k$). (You can refer to any algorithm we have seen in class.)  
+
+\bigskip
+
+%\newpage 
+%~
+%%%%%%%%%%%%%%%%
+%\newpage
+\item
+
+% greedy
+
+Let $M=(E,{\cal I})$ be a matroid with rank function $r$ and suppose we have a cost function $c: E \rightarrow {\mathbb R}_{\geq 0}$ (for simplicity we are assuming that all the costs are nonnegative). We are interested in finding a base $B$ of maximum total cost, i.e.~maximizing $\sum_{e \in B} c(e)$.%, and we hope to derive an algorithm different from the one seen in lecture.
+
+Consider the following greedy algorithm, different from the one covered in lecture, where instead of starting from an empty set and repeatedly adding elements of highest cost, we start from a full set and repeatedly remove elements of lowest cost.
+\begin{pseudocode}
+\item Sort the elements (from smallest to largest) such that $c(e_1)\leq
+  c(e_2)\leq \cdots \leq c(e_{m})$ where $m=|E|$
+\item $S=E$
+\item For $j=1$ to $m$
+\begin{pseudocode}
+\item
+ if $r(S \setminus \{e_j\})=r(E)$ then $S\leftarrow S\setminus \{e_j\}$
+ \end{pseudocode}
+ \item Output $S$
+ \end{pseudocode}
+Prove that this algorithm returns a maximum cost basis in the matroid. 
+
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%
+%\newpage
+\item
+
+% network flows
+
+\begin{enumerate}
+	\item
+Consider a directed graph $G=(V,E)$ with nonnegative (upper) capacities $u: E \rightarrow {\mathbb R}$ (and no lower capacities). For any two vertices $s, t\in V$, define $\lambda_{st}\in {\mathbb R}$ to be the maximum flow value from $s$ to $t$. Given any 3 vertices $s, t, u\in V$, show that $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$. 
+
+%\newpage
+\item If the graph is undirected, the previous result still holds: $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$ for all $s, t, u$. Furthermore, $\lambda_{st}=\lambda_{ts}$. Now, consider the complete graph $K_V$ on the vertex set $V$ with weight $\lambda_{uv}$ on edge $(u,v)$ for all $u,v$. Let $T$ be a {\it maximum weight} spanning tree on $K_V$ with respect to these weights $\lambda_{uv}$. Argue that for every $(s,t)\notin T$, we have
+\[
+\lambda_{st}=\min_{(u,v)\in P_{st}} \lambda_{uv}
+\]
+where $P_{st}$ denotes the edges (of $K_V$) of the unique path in $T$ between $s$ and $t$. (This implies the somewhat surprising result that, over all pairs $(s,t)$, $\lambda_{st}$ can take at most $|V|-1$ values (those along the edges of $T$).)
+\end{enumerate}
+
+
+\bigskip
+
+%%%%%%%%%%%%%%%
+%\newpage
+\item 
+
+% matching matroid
+
+Consider a bipartite graph $G = (A,B,E)$ with parts $A,B$ and edges $E \subseteq A\times B$. Suppose we have a matroid $M_A = (A,\mathcal{I}_A)$ on $A$ with rank function $r_A$. Define a family of sets $\mathcal{I}_B$ to be the collection of sets $T \subseteq B$ such that there exists a matching $M$ of $G$ with vertex set $V(M) = S\cup T$, such that $S \subseteq A$ and $S \in \mathcal{I}_A$.
+
+\begin{enumerate}
+\item Prove that $M_B = (B,\mathcal{I}_B)$ is a matroid. (For {\bf partial credit}, you can do this in the special case where every vertex of $A$ has degree $1$, so that $G$ is the graph of a function from $A$ to $B$.)
+
+\item Prove the following generalization of K\"onig's Theorem, which gives a formula for the rank of $M_B = (B,\mathcal{I}_B)$:
+\[
+\max_{T \in \mathcal{I}_B} |T| = \min_{C \text{ a vertex cover of } G} r_A(C \cap A) + |C \cap B|.
+\]
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%
+
+\bigskip
+
+%\newpage
+\item ({\bf Extra Credit})
+
+% Commoner's criterion
+
+Given a matrix $A \in \mathbb{R}^{m\times n}$ with entries in $\{-1, 0, 1\}$, we can associate a directed bipartite graph $D_A$ with parts $\{r_1, ..., r_m\}$ and $\{c_1, ..., c_n\}$, which has an edge directed from $r_i$ to $c_j$ when $A_{ij} = +1$, has an edge directed from $c_j$ to $r_i$ when $A_{ij} = -1$, and has no edges between $r_i,c_j$ when $A_{ij} = 0$.
+
+Define a \emph{circuit} of $D_A$ to be a connected subgraph $C \subseteq D_A$ such that every vertex of $C$ has degree $2$. We say that a circuit $C$ of $D_A$ is \emph{odd} if we can flip the directions of an odd number of edges of $C$ to make it into a directed cycle, and otherwise we say that $C$ is \emph{even}.
+
+\begin{enumerate}
+\item Suppose that $D_A$ has an \emph{odd} circuit $C$. Show that it is possible to replace some of the entries of $A$ by $0$s to get a matrix $A'$ which is \emph{not} totally unimodular. (Hint: consider the case where $D_A$ consists of just a single circuit.)
+
+\item Suppose that every circuit of $D_A$ is \emph{even}. Show that it is possible to negate some of the rows of $A$ to get a matrix $A''$ with the property that for \emph{every} $k \le m$, the sum of the first $k$ rows of $A''$ is a row vector with all entries in $\{-1,0,1\}$. (Hint: pair up the nonzero entries of each column of $A$ into groups of two, and try to arrange for the corresponding pairs of entries of $A''$ to have opposite signs.)
+
+\item Prove Commoner's sufficient condition for total unimodularity: if every circuit of $D_A$ is \emph{even}, then $A$ is totally unimodular.
+
+%\item Suppose that every circuit of $D_A$ is \emph{even}, and that $D_A$ has at least two perfect matchings (so $A$ is square). Let $\mathcal{G}$ be the graph whose vertices correspond to perfect matchings $M$ of $D_A$, with an edge connecting two matchings $M_1, M_2$ of $D_A$ when the symmetric difference $M_1 \Delta M_2$ is a circuit of $D_A$. Show that in this case, $\mathcal{G}$ is itself a bipartite graph with a perfect matching, and use this to prove $\det(A) = 0$. (Hint: show that for any perfect matching $M$ of $D_A$ and any edge $e$ of $M$, there is at most one alternating cycle for $M$ which contains the edge $e$.)
+\end{enumerate}
+
+
+For part (b), you can use the following fact without proof: if you have a system of equations in variables $x_i \in \{-1,+1\}$, each of the form $x_i = x_j$ or of the form $x_i = -x_j$, then the system has a solution if and only if there are no ``bad cycles'' of the form $x_i = \pm x_j = \pm x_k = \cdots = -x_i$, with each equality coming from one of the equations of your system (possibly with both sides negated).
+
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

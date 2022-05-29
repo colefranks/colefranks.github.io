@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+
+\usepackage{../lp,amsmath}
+\input{../newmac}
+\usepackage{graphicx}
+\setlength{\topmargin}{-1.0in}
+\setlength{\textheight}{9.5in}
+\begin{document}
+
+% \handout{Final}{May 18th, 2015}
+
+\paragraph{18.453 final.} This exam is closed book.  Be neat!  {\bf In any problem, you can refer to results we have covered in class, but you need to state them precisely. } 
+% If you need more space for a question, you can continue on one of the extra pages at the end, but write a pointer to it. 
+Don't worry; the exam is probably pretty challenging but that way, the learning process continues... Have a great summer! 
+ \vspace*{0.1in}
+
+%\vspace*{0.1in}
+
+%{\Large {\bf Your Name:}}
+
+
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item
+Define when a matrix $A$ is totally unimodular. 
+
+\item
+State precisely the main property of a system of linear inequalities whose underlying matrix is totally unimodular.
+
+\item
+Let $A$ be a $0-1$ matrix. We say that $A$ has the consecutive-one property if for all rows of A, the value 1 appears consecutively (and the remaining entries are 0). Show that any consecutive-ones matrix is totally unimodular. 
+\end{enumerate}
+%\newpage 
+%~
+%%%%%%%%%%%%%%%%
+%\newpage
+\item
+\begin{enumerate}
+	\item
+Give a complete description in terms of linear inequalities of the matching polytope for an arbitrary graph $G=(V,E)$. Argue that your stated inequalities are valid for the matching polytope, but you do {\it not} need to prove that they form a complete description of it. 
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%
+%\newpage
+\item
+\begin{enumerate}
+	\item
+Consider a directed graph $G=(V,E)$ with nonnegative (upper) capacities $u: E \rightarrow {\mathbb R}$ (and no lower capacities). For any two vertices $s, t\in V$, define $\lambda_{st}\in {\mathbb R}$ to be the maximum flow value from $s$ to $t$. Given any 3 vertices $s, t, u\in V$, show that $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$. 
+
+%\newpage
+\item If the graph is undirected, the previous result still holds: $\lambda_{su} \geq \min(\lambda_{st},\lambda_{tu})$ for all $s, t, u$. Furthermore, $\lambda_{st}=\lambda_{ts}$. Now, consider the complete graph $K_V$ on the vertex set $V$ with weight $\lambda_{uv}$ on edge $(u,v)$ for all $u,v$. Let $T$ be a {\it maximum weight} spanning tree on $K_V$ with respect to these weights $\lambda_{uv}$. Argue that for every $(s,t)\notin T$, we have $$\lambda_{s,t}=\min_{(u,v)\in P_{st}} \lambda_{uv}$$ where $P_{st}$ denotes the (edges of $K_V$) of the unique path in $T$ between $s$ and $t$. (This implies the somewhat surprising result that, over all pairs $(s,t)$, $\lambda_{st}$ can take at most $|V|-1$ values (those along the edges of $T$).)
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%
+%\newpage
+\item For a matching $M$ in a graph $G=(V,E)$, let $V(M)$ denote the vertices matched in $M$. 
+\begin{enumerate}
+\item
+Suppose that we are given a set $S\subseteq V$ and a matching $M$ covering, i.e. such that $S\subseteq V(M)$. Given $v\notin S$, how would you decide (efficiently) 	whether there exists a matching $M'$ such that $S\cup\{v\} \subseteq V(M')$. You can use building blocks we have seen in lectures (state them, but no need to reprove them), but you should justify any additional statements. 
+
+
+%\newpage
+\item
+
+ Consider a (not necessarily bipartite) graph $G=(V,E)$ and a
+  profit function $p: V\rightarrow \R_+$. (The profit function is
+  defined on the vertices of $G$.) Our goal is to find a matching $M$
+  which maximizes $\sum_{v\in V(M)} p(v)$. How would you solve this problem? Justify
+  your solution.
+  
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%
+
+%\newpage
+\item Consider a bipartite graph $G=(V,E)$ with bipartition $(A,B)$
+  (so $V=A \cup B$). Suppose we are also given a matroid $M=(A,{\cal
+    I})$ defined on $A$ (one of the sides of the bipartition). We would
+  like to restrict our attention to {\it independent matchings} $M$
+  which are those matchings $M$ such that $\{a\in A: \exists b\in B$
+  with $(a,b)\in M\}\in {\cal I}$. The maximum independent matching
+  problem is the problem of finding an independent matching of maximum
+  cardinality. How can this problem be solved efficiently?  Justify your
+  answer. (You can use as building blocks things we have seen in
+  lectures (state them precisely though); anything else needs to be justified.)
+
+
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
